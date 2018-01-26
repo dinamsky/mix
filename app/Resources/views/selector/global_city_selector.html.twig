@@ -18,7 +18,7 @@
         </div>
         <hr>
         <div class="uk-column-1-1 uk-column-1-5@s">
-            <div class="city_block uk-margin-bottom" data-id="0" data-url="rus" data-header="Россия">Россия</div>
+            {#<div class="city_block uk-margin-bottom" data-id="0" data-url="rus" data-header="Россия">Россия</div>#}
             {% for city in t3_new.popularCities if city.total >= 10 %}
                 <div class="city_block" data-id="{{ city.id }}" data-url="{{ city.url }}" data-header="{{ city.header }}">{{ city.header }}</div>
             {% endfor %}

@@ -28,10 +28,10 @@ class LocaleSubscriber implements EventSubscriberInterface
         $ip = $event->getRequest()->getClientIp();
 
         if($this->env == 'dev' and $ip == '127.0.0.1'){
-            $_SERVER['LANG'] = 'ru';
+            $_SERVER['LANG'] = 'en';
         }
 
-        if(!isset($_SERVER['LANG'])) $_SERVER['LANG'] = 'ru';
+        if(!isset($_SERVER['LANG'])) $_SERVER['LANG'] = 'en';
 
         $request->setLocale($_SERVER['LANG']);
 
