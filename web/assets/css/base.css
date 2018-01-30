@@ -59,21 +59,29 @@ button{
     left: 0;
 }
 
+.header_inner{
+    height: 42px;
+}
+
 .top_sticky{
-    padding: 10px 0;
+    padding: 27px 0;
     background: white;
     box-shadow: 0 1px 1px grey;
 }
 
+.logo{
+    width: 105px;
+}
+
 .top_sticky .logo{
-    width: 200px;
+    width: 105px;
 }
 
 .top_sticky.uk-active{
 }
 
 .top_sticky.uk-active .logo{
-    width: 200px;
+    width: 105px;
 }
 
 .top_line_right{
@@ -1190,7 +1198,7 @@ top: 80%;
 }
 
 .search_popup_trigger{
-    border: 1px solid lightgray;
+
     padding: 5px;
     color: lightgray;
 }
