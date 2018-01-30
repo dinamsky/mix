@@ -31,6 +31,10 @@ class LocaleSubscriber implements EventSubscriberInterface
             $_SERVER['LANG'] = 'en';
         }
 
+        if($this->env == 'test'){
+            $_SERVER['LANG'] = 'en';
+        }
+
         if(!isset($_SERVER['LANG'])) $_SERVER['LANG'] = 'en';
 
         $request->setLocale($_SERVER['LANG']);
