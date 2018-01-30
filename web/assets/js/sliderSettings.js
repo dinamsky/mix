@@ -21,7 +21,7 @@ $( document ).ready(function() {
             'nav': true,
             'margin' : margin,
             'slideBy' : items,
-            'navText': ['<i uk-icon="icon:chevron-left"></i>', '<i uk-icon="icon:chevron-right"></i>'],
+            'navText': ['<i uk-icon="icon:chevron-left; ratio: 2"></i>', '<i uk-icon="icon:chevron-right; ratio: 2"></i>'],
             // 'autoHeight': true,
             'dots': dots,
             onInitialized: recount(fnc),

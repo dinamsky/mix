@@ -36,14 +36,87 @@
 
 {% block content %}
 
+<div class="top_categories uk-position-relative">
+
+    <div class="bg_blue cat_color_box"></div>
+
+    <h2>{% trans %}Категории{% endtrans %}</h2>
+
+    <div class="standard_wide top_categories_content">
+
+        <div uk-grid class="uk-grid-small uk-margin-large-bottom">
+            <div class="uk-width-1-4@s">
+                <a href="/rent/{{ in_city }}/all/cars" class="cat_main_header c_white uk-display-block">{% trans %}Легковые автомобили{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% for card in cars %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
+                    {% endfor %}
+                    {#{{ include('search/all_more.html.twig', {'title':'Все легковые автомобили', 'url':'/rent/'~in_city~'/all/cars'}) }}#}
+                </div>
+            </div>
+            <div class="uk-width-1-4@s">
+                <a href="/rent/{{ in_city }}/all/wedding" class="cat_main_header c_white uk-display-block">{% trans %}Свадебные авто{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% for card in wedding %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
+                    {% endfor %}
+                    {#{{ include('search/all_more.html.twig', {'title':'Все свадебные авто', 'url':'/rent/'~in_city~'/all/bikes'}) }}#}
+                </div>
+            </div>
+            <div class="uk-width-1-4@s">
+                <a href="/rent/{{ in_city }}/all/helicopters" class="cat_main_header c_white uk-display-block">{% trans %}Вертолеты{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% for card in heli %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
+                    {% endfor %}
+                    {#{{ include('search/all_more.html.twig', {'title':'Все вертолеты', 'url':'/rent/'~in_city~'/all/trucks'}) }}#}
+                </div>
+            </div>
+            <div class="uk-width-1-4@s">
+                <a href="/rent/{{ in_city }}/all/snowride" class="cat_main_header c_white uk-display-block">{% trans %}Снегоходы{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% for card in snow %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
+                    {% endfor %}
+                    {#{{ include('search/all_more.html.twig', {'title':'Все снегоходы', 'url':'/rent/'~in_city~'/all/bikes'}) }}#}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div uk-toggle="target: #all_gt" class="uk-text-center c_blue undln uk-margin-bottom">{% trans %}Все категории{% endtrans %}</div>
+
+    <div class="standard_wide">
+        <div id="all_gt" class="uk-position-relative uk-padding-top" hidden>
+            <div  uk-grid class="uk-flex uk-flex-center uk-padding-large-top uk-margin-bottom uk-grid-medium">
+
+                {% for gt in generalTypes if gt.carTypeIds %}
+                    <div>
+                        <a href="/rent/{{ in_city }}/all/{{ gt.url }}" class="all_gt_main_link">{{ lang == 'ru' ? gt.header : gt.url }}</a>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+            <div uk-close uk-toggle="target: #all_gt" class="uk-position-top-right"></div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
 
 
 <div class="top_slider_block">
     <div class="standard_wide uk-position-relative">
         <div class="uk-text-center tx_24 uk-margin-bottom">{% trans %}Лучшие предложения{% endtrans %}</div>
-        <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="6" data-dots="0">
+        <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="4" data-dots="0">
             {% for card in topSlider %}
-                {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px', 'micro':true}) }}
+                {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
             {% endfor %}
         </div>
         <div class="uk-text-center">
@@ -57,217 +130,95 @@
 </div>
 
 
-        <div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:100%; height:90px" class="uk-visible@s">
-            <canvas id="canvas" width="100%" height="90" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
-            <div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:100%; height:90px; position: absolute; left: 0px; top: 0px; display: block;">
-            </div>
-        </div>
 
 
-    <div id="top_selector_block" class="">
-        <div class="standard_wide top_selector_all" >
-
-            {% if custom_seo and custom_seo.h1 != ''%}
-                <h1 class="uk-text-center main_h1">{% include(template_from_string(custom_seo.h1)) %}</h1>
-            {% else %}
-                <h1 class="uk-text-center main_h1">{% trans %}Большой выбор транспорта в аренду{% endtrans %}</h1>
-            {% endif %}
-
-            {% if is_mobile() %}
-            <button class="uk-button uk-width-1-1" id="button_main_search">Поиск</button>
-            {% endif %}
-
-            <div id="the_main_selector" class="main_search" {% if is_mobile() %}hidden{% endif %} >
 
 
-                <div class="uk-margin-auto uk-width-3-4@s uk-margin-bottom">
-                    <form uk-grid id="main_search_form" class="uk-flex uk-flex-center uk-grid-small" >
-                        {#<div class="uk-width-1-1 uk-width-auto@s uk-position-relative">#}
-                            {#<div class="uk-hidden@s uk-text-small c_white">Город</div>#}
-                            {#<div class="top_selector_box">{{ include('selector/adress_block.html.twig') }}</div>#}
-                        {#</div>#}
 
-                        <input type="hidden" name="gtURL" id="gtURL" value="cars">
-
-                        <div class="uk-width-1-1 uk-width-auto@s uk-position-relative" >
-                            <div class="uk-hidden@s uk-text-small c_white">Марка</div>
-                            <div class="top_selector_box" id="mark_placement">{{ include('selector/mark_block.html.twig', {'mark_arr':mark_arr_sorted, 'type':'1'}) }}</div>
-                        </div>
-
-                        <div class="uk-width-1-1 uk-width-auto@s uk-position-relative" >
-                            <div class="uk-hidden@s uk-text-small c_white">Модель</div>
-                            <div class="top_selector_box" id="model_placement">{{ include('selector/model_block.html.twig', {'model_arr':models_in_mark, 'mark_id':mark.id}) }}</div>
-                        </div>
-
-                        <div class="uk-width-1-2 uk-width-auto@s">
-                            <button id="main_search_button" type="button" class="uk-button uk-button-primary uk-width-1-1">{% trans %}Найти{% endtrans %}</button>
-                        </div>
-                    </form>
-                </div>
-
-                <hr>
-                <div class="uk-margin-top main_gt_block">
-                    <div uk-grid class="uk-flex uk-flex-center uk-grid-small">
-                        {% for gt in generalTypes|slice(0,4) if gt.carTypeIds%}
-                            <div class="gt_selector" data-url="{{ gt.url }}" data-header="{{ gt.header }}">
-                                <a href="/rent/{{ in_city }}/all/{{ gt.url }}" class="inner c_white"><i class="fa fa-{{ gt.icon }}"></i> {{ lang == 'ru' ? gt.header : gt.url }}</a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="uk-text-center uk-margin-top cursor-pointer c_white" uk-toggle="target: #more_gt">{% trans %}еще категории{% endtrans %} <i uk-icon="icon:chevron-down"></i></div>
-                    <div id="more_gt" uk-grid class="uk-flex uk-flex-center uk-margin-top uk-grid-medium" hidden>
-                        {% for gt in generalTypes|slice(4) if gt.carTypeIds %}
-                            <div class="gt_selector uk-width-1-2 uk-width-auto@s" data-url="{{ gt.url }}" data-header="{{ gt.header }}">
-                                <a href="/rent/{{ in_city }}/all/{{ gt.url }}" class="inner c_white"><i class="fa fa-{{ gt.icon }}"></i> {{ lang == 'ru' ? gt.header : gt.url }}</a>
-                            </div>
-                        {% endfor %}
-                    </div>
-
-                    {#{{ include('selector/gt_adress_block.html.twig') }}#}
-
-                </div>
-            </div>
-        </div>
-        {#g#}
-    </div>
-
-    {% if not is_mobile() %}
-    <div class="top_counter bg_white c_grey uk-margin-large-bottom">
-        <div class="standard_wide">
-            <div uk-grid class="{% if is_mobile() %}{% else %}uk-grid-divider{% endif %}">
-                <div class="uk-width-1-4">
-                    <div class="uk-text-center">
-                        <i class="fa fa-file"></i><br>
-                        <span class="top_counter_desc">{% trans %}Объявлений{% endtrans %}</span><br>
-                        <b>{{ total.cards }}</b>
-                    </div>
-                </div>
-                <div class="uk-width-1-4">
-                    <div class="uk-text-center">
-                        <i class="fa fa-eye"></i><br>
-                        <span class="top_counter_desc">{% trans %}Просмотров объявлений{% endtrans %}</span><br>
-                        <b>{{ total.views }}</b>
-                    </div>
-                </div>
-                <div class="uk-width-1-4">
-                    <div class="uk-text-center">
-                        <i class="fa fa-home"></i><br>
-                        <span class="top_counter_desc">{% trans %}Городов{% endtrans %}</span><br>
-                        <b>{{ total.cities }}</b>
-                    </div>
-                </div>
-                <div class="uk-width-1-4">
-                    <div class="uk-text-center">
-                        <i class="fa fa-list"></i><br>
-                        <span class="top_counter_desc">{% trans %}Категорий{% endtrans %}</span><br>
-                        <b>{{ total.categories }}</b>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    <div class="standard_wide">
-
-        {#<div class="uk-margin-large">#}
-            {#<h2>Легковые авто <a class="tx_16 undln" href="/show/rus/all/cars">показать все</a></h2>#}
-            {#<div class="owl-carousel owl-theme uk-width-1-1" data-items="4">#}
-                {#{% for card in cars %}#}
-                    {#{{ include('search/one_grid_view.html.twig', {'card':card, 'height':'150px'}) }}#}
-                {#{% endfor %}#}
+    {#{% if not is_mobile() %}#}
+    {#<div class="top_counter bg_white c_grey uk-margin-large-bottom">#}
+        {#<div class="standard_wide">#}
+            {#<div uk-grid class="{% if is_mobile() %}{% else %}uk-grid-divider{% endif %}">#}
+                {#<div class="uk-width-1-4">#}
+                    {#<div class="uk-text-center">#}
+                        {#<i class="fa fa-file"></i><br>#}
+                        {#<span class="top_counter_desc">{% trans %}Объявлений{% endtrans %}</span><br>#}
+                        {#<b>{{ total.cards }}</b>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="uk-width-1-4">#}
+                    {#<div class="uk-text-center">#}
+                        {#<i class="fa fa-eye"></i><br>#}
+                        {#<span class="top_counter_desc">{% trans %}Просмотров объявлений{% endtrans %}</span><br>#}
+                        {#<b>{{ total.views }}</b>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="uk-width-1-4">#}
+                    {#<div class="uk-text-center">#}
+                        {#<i class="fa fa-home"></i><br>#}
+                        {#<span class="top_counter_desc">{% trans %}Городов{% endtrans %}</span><br>#}
+                        {#<b>{{ total.cities }}</b>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="uk-width-1-4">#}
+                    {#<div class="uk-text-center">#}
+                        {#<i class="fa fa-list"></i><br>#}
+                        {#<span class="top_counter_desc">{% trans %}Категорий{% endtrans %}</span><br>#}
+                        {#<b>{{ total.categories }}</b>#}
+                    {#</div>#}
+                {#</div>#}
             {#</div>#}
         {#</div>#}
+    {#</div>#}
+    {#{% endif %}#}
 
-        <div uk-grid class="uk-grid-small uk-margin-large-bottom">
-            <div class="uk-width-1-4@s">
-                <a href="/rent/{{ in_city }}/all/cars" class="cat_main_header padding20 c_grey bordered b_shadowed uk-display-block uk-text-center uk-margin-bottom">{% trans %}Легковые автомобили{% endtrans %}</a>
-                {#<div>#}
-                    {#{{ include('search/one_grid_view.html.twig', {'card':cars, 'height':'150px'}) }}#}
+
+
+    {#{% if is_mobile() %}#}
+        {#<div class="top_counter bg_white c_grey uk-margin-large-bottom">#}
+            {#<div class="standard_wide">#}
+                {#<div uk-grid class="{% if is_mobile() %}{% else %}uk-grid-divider{% endif %}">#}
+                    {#<div class="uk-width-1-1 uk-width-1-4@s">#}
+                        {#<div class="uk-text-center">#}
+                            {#<i class="fa fa-eye"></i><br>#}
+                            {#<span class="top_counter_desc">Просмотров объявлений</span><br>#}
+                            {#<b>{{ total.views }}</b>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="uk-width-1-3 uk-width-1-4@s">#}
+                        {#<div class="uk-text-center">#}
+                            {#<i class="fa fa-file"></i><br>#}
+                            {#<span class="top_counter_desc">Объявлений</span><br>#}
+                            {#<b>{{ total.cards }}</b>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="uk-width-1-3 uk-width-1-4@s">#}
+                        {#<div class="uk-text-center">#}
+                            {#<i class="fa fa-home"></i><br>#}
+                            {#<span class="top_counter_desc">Городов</span><br>#}
+                            {#<b>{{ total.cities }}</b>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="uk-width-1-3 uk-width-1-4@s">#}
+                        {#<div class="uk-text-center">#}
+                            {#<i class="fa fa-list"></i><br>#}
+                            {#<span class="top_counter_desc">Категорий</span><br>#}
+                            {#<b>{{ total.categories }}</b>#}
+                        {#</div>#}
+                    {#</div>#}
                 {#</div>#}
-                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
-                    {% for card in cars %}
-                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
-                    {% endfor %}
-                    {{ include('search/all_more.html.twig', {'title':'Все легковые автомобили', 'url':'/rent/'~in_city~'/all/cars'}) }}
-                </div>
-            </div>
-            <div class="uk-width-1-4@s">
-                <a href="/rent/{{ in_city }}/all/wedding" class="cat_main_header padding20 c_grey bordered b_shadowed uk-display-block uk-text-center uk-margin-bottom">{% trans %}Свадебные авто{% endtrans %}</a>
-                {#<div>#}
-                    {#{{ include('search/one_grid_view.html.twig', {'card':moto, 'height':'150px'}) }}#}
-                {#</div>#}
-                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
-                    {% for card in wedding %}
-                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
-                    {% endfor %}
-                    {{ include('search/all_more.html.twig', {'title':'Все свадебные авто', 'url':'/rent/'~in_city~'/all/bikes'}) }}
-                </div>
-            </div>
-            <div class="uk-width-1-4@s">
-                <a href="/rent/{{ in_city }}/all/helicopters" class="cat_main_header padding20 c_grey bordered b_shadowed uk-display-block uk-text-center uk-margin-bottom">{% trans %}Вертолеты{% endtrans %}</a>
-                {#<div>#}
-                    {#{{ include('search/one_grid_view.html.twig', {'card':trucks, 'height':'150px'}) }}#}
-                {#</div>#}
-                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
-                    {% for card in heli %}
-                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
-                    {% endfor %}
-                    {{ include('search/all_more.html.twig', {'title':'Все вертолеты', 'url':'/rent/'~in_city~'/all/trucks'}) }}
-                </div>
-            </div>
-            <div class="uk-width-1-4@s">
-                <a href="/rent/{{ in_city }}/all/snowride" class="cat_main_header padding20 c_grey bordered b_shadowed uk-display-block uk-text-center uk-margin-bottom">{% trans %}Снегоходы{% endtrans %}</a>
-                {#<div>#}
-                    {#{{ include('search/one_grid_view.html.twig', {'card':bicycles, 'height':'150px'}) }}#}
-                {#</div>#}
-                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
-                    {% for card in snow %}
-                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
-                    {% endfor %}
-                    {{ include('search/all_more.html.twig', {'title':'Все снегоходы', 'url':'/rent/'~in_city~'/all/bikes'}) }}
-                </div>
-            </div>
+            {#</div>#}
+        {#</div>#}
+    {#{% endif %}#}
+
+
+    <div style="background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6) ), url('/assets/images/interface/main_bottom_bg.jpg') center center; background-size: cover;min-height: 100px;padding: 70px 0;">
+        <h2 class="uk-text-center c_white">{% trans %}Сдать транспорт{% endtrans %}</h2>
+
+        <div class="uk-text-center uk-margin-large-top">
+            <a href="/card/new" class="uk-button uk-button-primary">{% trans %}Сдать{% endtrans %}</a>
         </div>
-
     </div>
-
-    {% if is_mobile() %}
-        <div class="top_counter bg_white c_grey uk-margin-large-bottom">
-            <div class="standard_wide">
-                <div uk-grid class="{% if is_mobile() %}{% else %}uk-grid-divider{% endif %}">
-                    <div class="uk-width-1-1 uk-width-1-4@s">
-                        <div class="uk-text-center">
-                            <i class="fa fa-eye"></i><br>
-                            <span class="top_counter_desc">Просмотров объявлений</span><br>
-                            <b>{{ total.views }}</b>
-                        </div>
-                    </div>
-                    <div class="uk-width-1-3 uk-width-1-4@s">
-                        <div class="uk-text-center">
-                            <i class="fa fa-file"></i><br>
-                            <span class="top_counter_desc">Объявлений</span><br>
-                            <b>{{ total.cards }}</b>
-                        </div>
-                    </div>
-                    <div class="uk-width-1-3 uk-width-1-4@s">
-                        <div class="uk-text-center">
-                            <i class="fa fa-home"></i><br>
-                            <span class="top_counter_desc">Городов</span><br>
-                            <b>{{ total.cities }}</b>
-                        </div>
-                    </div>
-                    <div class="uk-width-1-3 uk-width-1-4@s">
-                        <div class="uk-text-center">
-                            <i class="fa fa-list"></i><br>
-                            <span class="top_counter_desc">Категорий</span><br>
-                            <b>{{ total.categories }}</b>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
 
     {% set seo_text = '' %}
     {% if custom_seo and custom_seo.seoText != ''%}

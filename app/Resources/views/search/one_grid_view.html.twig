@@ -1,4 +1,4 @@
-<div class="bordered uk-position-relative">
+<div class="bg_white b_shadowed">
 
     {% set main_foto = main_foto(card.getFotos) %}
 
@@ -20,9 +20,9 @@
 
 
     {% set currency = {
-        'RUB': '<i class="fa fa-ruble"></i>',
+        'RUB': 'Р',
         'EUR': '<i class="fa fa-euro"></i>',
-        'USD': '<i class="fa fa-dollar"></i>'
+        'USD': '$'
     } %}
 
 
@@ -32,50 +32,61 @@
             display: block;
             position: relative;"
     >
-        <div class="card_grid_price">
 
-            {% set c_price = '' %}
-            {% set c_ed = '' %}
-
-            {% for price in card.cardPrices if price.priceId == 2 %}
-
-                {% set c_price = price.value %}
-                {% set c_ed = '/'~'день'|trans %}
-            {% endfor %}
-
-            {% for price in card.cardPrices if price.priceId == 1 and c_price == '' %}
-
-                {% set c_price = price.value %}
-                {% set c_ed = '/'~'час'|trans %}
-            {% endfor %}
-
-            {% for price in card.cardPrices if price.priceId == 6 and c_price == '' %}
-
-                {% set c_price = price.value %}
-                {% set c_ed = '' %}
-            {% endfor %}
-
-            {% if c_price != '' %}
-            <b>{{ c_price|number_format(0,'.','<span class="thousand_separator"></span>')|raw }}</b> {{ currency[card.currency]|raw }} <span class="">{{ c_ed }}</span>
-            {% endif %}
-
-        </div>
     </a>
 
 
 
 
-    <div class="padding20 bg_darkgrey uk-position-relative">
-        <a target="_blanc" class="uk-text-truncate uk-display-block uk-position-relative c_white" href="/card/{{ card.id }}" title="{{ serviceType }} {% if card.generalType.chegoSingular is defined %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} в {{ card.city.gde }}">
-            {{ card.markModel.Mark.header }} {{ card.markModel.header }}
-        </a>
-        {#<div class="uk-text-truncate uk-text-small c_grey"></div>#}
-        <div uk-grid class="uk-grid-collapse">
-            <div class="uk-width-expand uk-text-truncate uk-text-small c_grey {{ micro is defined ? 'micro' : '' }}">
-                <i class="fa fa-map-marker"></i> {{ card.city.header }}
+    <div class="padding10 bg_white uk-position-relative">
+        <div class="uk-grid uk-grid-small" uk-grid>
+            <div class="uk-width-expand">
+                <a target="_blanc" class="uk-text-truncate uk-text-small uk-display-block uk-position-relative c_grey {{ micro is defined ? 'micro' : '' }}" href="/card/{{ card.id }}" title="{{ serviceType }} {% if card.generalType.chegoSingular is defined %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} в {{ card.city.gde }}">
+                    {{ card.markModel.Mark.header }} {{ card.markModel.header }}
+                </a>
             </div>
-            <div class="uk-width-auto uk-text-small c_grey {{ micro is defined ? 'micro' : '' }}"><i class="fa fa-eye"></i> {{ card.views }}</div>
+            <div class="uk-width-auto uk-text-right">
+                <div class="uk-text-small c_grey {{ micro is defined ? 'micro' : '' }}">
+                    <i class="fa fa-eye"></i> {{ card.views }}
+                </div>
+            </div>
         </div>
+        <div class="uk-grid uk-grid-small uk-margin-remove-top" uk-grid>
+            <div class="uk-width-expand">
+                <div class="card_grid_price c_blue {{ micro is defined ? 'micro' : '' }}">
+                    {% set c_price = '' %}
+                    {% set c_ed = '' %}
+
+                    {% for price in card.cardPrices if price.priceId == 2 %}
+                        {% set c_price = price.value %}
+                        {% set c_ed = '/'~'день'|trans %}
+                    {% endfor %}
+
+                    {% for price in card.cardPrices if price.priceId == 1 and c_price == '' %}
+                        {% set c_price = price.value %}
+                        {% set c_ed = '/'~'час'|trans %}
+                    {% endfor %}
+
+                    {% for price in card.cardPrices if price.priceId == 6 and c_price == '' %}
+                        {% set c_price = price.value %}
+                        {% set c_ed = '' %}
+                    {% endfor %}
+
+                    {% if c_price != '' %}
+                    {{ c_price|number_format(0,'.','<span class="thousand_separator"></span>')|raw }}{{ currency[card.currency]|raw }}<span class="">{{ c_ed }}</span>
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="uk-width-auto uk-text-right">
+                <div class="uk-text-small c_grey {{ micro is defined ? 'micro' : '' }}">
+                   {{ card.city.header }}
+                </div>
+            </div>
+        </div>
+
+
+
 
         {% if card.dateRentFinish > date() %}
             <div class="reserved">бронь до {{ card.dateRentFinish|date("d.m.Y") }}</div>

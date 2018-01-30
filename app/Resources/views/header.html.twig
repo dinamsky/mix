@@ -67,11 +67,11 @@
                 </div>
                 <div class="uk-width-expand">
 
-                    <div class="uk-grid uk-grid-small uk-flex-right">
+                    <div class="uk-height-1-1 uk-grid uk-grid-small uk-flex-right uk-flex uk-flex-middle">
 
-                        <div>
-                            <a href="/promo" class="uk-button uk-button-success">Сдать авто</a>
-                        </div>
+                        {#<div>#}
+                            {#<a href="/promo" class="uk-button uk-button-success">Сдать авто</a>#}
+                        {#</div>#}
 
                         <div class="c_grey uk-position-relative">
                             {% if not is_mobile() %}
@@ -87,9 +87,10 @@
                             {% endif %}
 
                         </div>
-                        <div>{{ include('user/auth_button_modal.html.twig') }}</div>
 
-                        <div>
+                        {{ include('user/auth_button_modal.html.twig') }}
+
+                        <div class="uk-height-1-1">
                             {#{% if app.session.has('logged_user') %}#}
                                 {#<a href="/card/new" class="uk-button uk-button-success add_card_button">Сдать</a>#}
                             {#{% elseif app.session.has('admin') %}#}
@@ -97,7 +98,7 @@
                             {#{% else %}#}
                                 {#<a uk-toggle="target: #sign_in" class="uk-button uk-button-success add_card_button">Сдать</a>#}
                             {#{% endif %}#}
-                            <a href="/card/new" class="add_card_button just_plus" title="Добавить транспорт"><i class="fa fa-plus-circle"></i></a>
+                            <a href="/card/new" class="add_card_button" title="Добавить транспорт">{% trans %}Сдать{% endtrans %}</a>
                         </div>
                     </div>
                 </div>

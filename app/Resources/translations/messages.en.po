@@ -790,3 +790,11 @@ msgstr "Our categories"
 
 msgid ""
 msgstr ""
+
+# -------------------------------------------- booking form -----------------------------------------
+
+msgid "Все категории"
+msgstr "All categories"
+
+msgid "Сдать транспорт"
+msgstr "Rent out transport"

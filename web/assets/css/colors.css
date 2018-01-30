@@ -46,6 +46,10 @@
     color:grey;
 }
 
+.c_blue{
+    color:#2D9CDB;
+}
+
 .c_gold{
     color:gold;
 }
@@ -68,4 +72,9 @@
 
 .border_white{
     border: 1px solid white;
+}
+
+.icon_outline_blue{
+    text-shadow: 1px 0 0 #2D9CDB,-1px 0 0 #2D9CDB,0 1px 0 #2D9CDB,0 -1px 0 #2D9CDB;
+    color:white;
 }

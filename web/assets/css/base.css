@@ -1,3 +1,7 @@
+*,h1,h2,h3,h4,h5,h6{
+    font-family: 'Roboto', sans-serif;
+}
+
 body{
     background: #f9f9f9;
 }
@@ -103,17 +107,18 @@ button{
 }
 
 .top_user_actions a:hover, .top_user_actions_button:hover{
-    background: lightgrey;
+    /*background: lightgrey;*/
     text-decoration: none;
 }
 
 .sticky_top_city_selector{
     padding: 5px;
     color: #07d;
+    min-height: 28px;
 }
 
 .sticky_top_city_selector:hover{
-    background: lightgrey;
+    /*background: lightgrey;*/
 }
 
 .card_cover_description{
@@ -429,7 +434,7 @@ button{
 }
 
 .uk-button-primary{
-    background: #06a7ea !important;
+    background: #2d9cdb !important;
     color:white !important;
 }
 
@@ -556,14 +561,18 @@ button{
 }
 
 .add_card_button{
-    width: 190px;
-    font-size: 13px;
-    padding: 0;
+    font-size: 17px;
+    padding: 7px 22px;
     text-align: center;
+    color: white;
+    background: #2D9CDB;
+    font-weight: 300;
+    border-radius: 25px;
+    display: block;
 }
 
 .top_sticky.uk-active .add_card_button{
-    width: 190px;
+    /*width: 190px;*/
 }
 
 .add_card_button:hover{
@@ -646,8 +655,7 @@ footer a:hover{
 
 .cat_main_header:hover{
     color: white;
-    background: green;
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 #gt_popular .gt_selector:hover{
@@ -731,14 +739,7 @@ footer a:hover{
 }
 
 .card_grid_price{
-    position: absolute;
-    background: rgb(37, 180, 91);
-    color: white;
-    padding: 3px 5px;
-    right: 7px;
-    bottom: -13px;
-    font-size: 14px;
-    z-index: 1;
+    font-weight: 300;
 }
 
 .uk-offcanvas-close{
@@ -966,7 +967,7 @@ footer a:hover{
 }
 
 .uk-button{
-    box-shadow: 2px 2px 1px lightgrey;
+    /*box-shadow: 2px 2px 1px lightgrey;*/
 }
 
 .newcard_reglog_block{
@@ -1465,4 +1466,48 @@ top: 80%;
 
 .top_sticky.uk-active .add_card_button.just_plus {
     width: auto;
+}
+
+.top_categories{
+    padding-top: 1px;
+}
+
+.top_categories h2{
+    color: white;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.cat_color_box{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    z-index: 0;
+}
+
+.top_categories_content{
+    position: relative;
+    z-index: 1;
+}
+
+.all_gt_main_link{
+    border: 1px solid #06a7ea;
+    padding: 5px 12px;
+    border-radius: 15px;
+    color: #444;
+}
+
+.top_categories_content .owl-stage-outer{
+    box-shadow: 0 0 7px #bbbbbb;
+}
+
+.top_slider_block .owl-stage-outer{
+    padding:3px;
+}
+
+.top_slider_block .owl-item{
+    box-shadow: 0 0 7px #bbbbbb;
 }

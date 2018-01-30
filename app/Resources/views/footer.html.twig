@@ -1,10 +1,35 @@
-<footer class="uk-margin-top">
+<footer class="">
 
 
 
     <div class="footer_info bg_dark">
         <div class="standard_wide c_white">
             <div uk-grid>
+
+                <div class="uk-width-1-4@l">
+                    <div>
+                        <img class="logo" src="/assets/images/interface/logo.svg" alt="">
+                    </div>
+                    <div class="uk-margin-top">
+                            <a class="c_grey" rel="nofollow" href="https://www.facebook.com/multiprokatcom/"><span uk-icon="icon:facebook"></span></a>
+                            &nbsp;
+                            <a class="c_grey" rel="nofollow" href="https://twitter.com/multiprokat"><span uk-icon="icon:twitter"></span></a>
+                            &nbsp;
+                            <a class="c_grey" rel="nofollow" href="https://plus.google.com/u/1/102220936243060868002"><span uk-icon="icon:google-plus"></span></a>
+                            &nbsp;
+                            <a class="c_grey" rel="nofollow" href="https://www.instagram.com/multiprokat/"><span uk-icon="icon:instagram"></span></a>
+                            &nbsp;
+                            <a class="c_grey" rel="nofollow" href="https://vk.com/multiprokatcom"><span class="fa fa-vk"></span></a>
+                            &nbsp;
+                            <a class="c_grey" rel="nofollow" href="https://www.youtube.com/channel/UCj-igu9KFIbzdzVCezy1qFg"><span uk-icon="icon:youtube"></span></a>
+                        </div>
+
+                    <div>
+                        <div class="uk-text-small uk-margin-top c_grey">&copy; {{ date()|date("Y") }} {{ app.request.host }} | {% trans %}Сервис аренды автотранспорта{% endtrans %}</div>
+                    </div>
+
+                </div>
+
                 <div class="uk-width-1-4@l">
                     <div class="uk-margin-bottom uk-text-uppercase"><b>{% trans %}Категории{% endtrans %}</b></div>
                     <a rel="nofollow" href="/rent/{{ city.url }}/all/cars" class="c_grey">{% trans %}Легковые автомобили{% endtrans %}</a>
@@ -17,18 +42,8 @@
                     <hr>
                     <a rel="nofollow" href="/rent/{{ city.url }}/all/trucks" class="c_grey">{% trans %}Грузовые автомобили{% endtrans %}</a>
                 </div>
-                <div class="uk-width-1-4@l uk-visible@l">
-                    <div class="uk-margin-bottom uk-text-uppercase"><b>{% trans %}Лучшие предложения{% endtrans %}</b></div>
-                    {% for card in t3_new.getTop3 %}
-                        {{ include(':footer:top_new_tpl.html.twig', {'card':card}) }}
-                    {% endfor %}
-                </div>
-                <div class="uk-width-1-4@l uk-visible@l">
-                    <div class="uk-margin-bottom uk-text-uppercase"><b>{% trans %}Новые на сайте{% endtrans %}</b></div>
-                    {% for card in t3_new.getNew %}
-                        {{ include(':footer:top_new_tpl.html.twig', {'card':card}) }}
-                    {% endfor %}
-                </div>
+
+
                 <div class="uk-width-1-4@l">
                     <div class="uk-margin-bottom uk-text-uppercase"><b>{% trans %}Информация{% endtrans %}</b></div>
                         <a rel="nofollow" href="/news" class="c_grey">{% trans %}Новости{% endtrans %}</a>
@@ -42,58 +57,37 @@
                             <a href="/promo" class="c_grey">{% trans %}Сдать свой автомобиль{% endtrans %}</a>
                         {% endif %}
 
-                        <hr>
-
-                        {% if lang == 'ru' %}
-                            <a href="/regions" class="c_grey">Россия. Регионы</a>
-                            <hr>
-                        {%  endif %}
 
 
-                        <div class="">
-                            <a class="c_grey" rel="nofollow" href="https://www.facebook.com/multiprokatcom/"><span uk-icon="icon:facebook"></span></a>
-                            &nbsp;
-                            <a class="c_grey" rel="nofollow" href="https://twitter.com/multiprokat"><span uk-icon="icon:twitter"></span></a>
-                            &nbsp;
-                            <a class="c_grey" rel="nofollow" href="https://plus.google.com/u/1/102220936243060868002"><span uk-icon="icon:google-plus"></span></a>
-                            &nbsp;
-                            <a class="c_grey" rel="nofollow" href="https://www.instagram.com/multiprokat/"><span uk-icon="icon:instagram"></span></a>
-                            &nbsp;
-                            <a class="c_grey" rel="nofollow" href="https://vk.com/multiprokatcom"><span class="fa fa-vk"></span></a>
-                            &nbsp;
-                            <a class="c_grey" rel="nofollow" href="https://www.youtube.com/channel/UCj-igu9KFIbzdzVCezy1qFg"><span uk-icon="icon:youtube"></span></a>
-                        </div>
-                    </div>
+
+
+
+                </div>
+
+                <div class="uk-width-1-4@l uk-visible@l">
+                    <div class="uk-margin-bottom uk-text-uppercase"><b>{% trans %}Новые на сайте{% endtrans %}</b></div>
+                    {% for card in t3_new.getNew %}
+                        {{ include(':footer:top_new_tpl.html.twig', {'card':card}) }}
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 
-    {% if generalTypes is defined and city is defined and not is_mobile() %}
-    <div class="mid_footer">
-        <div class="standard_wide c_white">
-            <div uk-grid class="uk-grid-small">
-                {% for gt in generalTypes %}
-                    <div class="uk-width-1-3"><a href="/rent/{{ city.url }}/all/{{ gt.url }}" class="uk-text-small c_grey">{{ gt.url == 'special-machines' or gt.url == 'airplanes' ? 'Аренда' : 'Прокат и аренда' }} {{ gt.chegoPlural }} в {{ city.gde }}</a></div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% endif %}
 
-    <div class="bottom_line bg_black">
-        <div class="standard_wide uk-clearfix">
-            <div uk-grid>
-                <div class="uk-width-2-5@s">&copy; {{ date()|date("Y") }} {{ app.request.host }} | {% trans %}Сервис аренды автотранспорта{% endtrans %}</div>
-                <div class="uk-width-2-5@s">
-                    <a rel="nofollow" href="/article/term-conditions" class="c_grey">{% trans %}Условия и положения{% endtrans %}</a> /
-                    <a rel="nofollow" href="/article/politika-konfidentsialnosti" class="c_grey">{% trans %}Конфиденциальность{% endtrans %}</a>
+
+    {#<div class="bottom_line bg_black">#}
+        {#<div class="standard_wide uk-clearfix">#}
+            {#<div uk-grid>#}
+                {#<div class="uk-width-2-5@s">#}
+                    {#<a rel="nofollow" href="/article/term-conditions" class="c_grey">{% trans %}Условия и положения{% endtrans %}</a> /#}
+                    {#<a rel="nofollow" href="/article/politika-konfidentsialnosti" class="c_grey">{% trans %}Конфиденциальность{% endtrans %}</a>#}
                     {#<a rel="nofollow" href="/promo" class="c_grey uk-margin-left">Промо</a>#}
-                </div>
+                {#</div>#}
 
-            </div>
-        </div>
-    </div>
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
 </footer>
 
 {% if is_mobile() %}
