@@ -3,13 +3,20 @@
 
     {#<div class="cursor-pointer">{{ include('selector/adress_block.html.twig') }}</div>#}
 
-    <div class="cursor-pointer"><div class="border_selector">{{ include('selector/general_new_block.html.twig') }}</div></div>
+    <div class="cursor-pointer uk-margin-bottom">
+        <span class="uk-text-small">{% trans %}Тип транспорта{% endtrans %}</span>
+        <div class="border_selector">{{ include('selector/general_new_block.html.twig') }}</div>
+    </div>
 
-    <div class="cursor-pointer" id="mark_placement"><div class="border_selector">{{ include('selector/mark_block.html.twig', {'mark_arr':mark_arr_sorted,'type':car_type_id}) }}</div></div>
+    <div class="cursor-pointer uk-margin-bottom" id="mark_placement">
+        <span class="uk-text-small">{% trans %}Марка{% endtrans %}</span>
+        <div class="border_selector">{{ include('selector/mark_block.html.twig', {'mark_arr':mark_arr_sorted,'type':car_type_id}) }}</div>
+    </div>
 
-
-
-    <div class="cursor-pointer" id="model_placement"><div class="border_selector">{{ include('selector/model_block.html.twig', {'model_arr':models_in_mark, 'mark_id':mark.id}) }}</div></div>
+    <div class="cursor-pointer" id="model_placement">
+        <span class="uk-text-small">{% trans %}Модель{% endtrans %}</span>
+        <div class="border_selector">{{ include('selector/model_block.html.twig', {'model_arr':models_in_mark, 'mark_id':mark.id}) }}</div>
+    </div>
 
 
 

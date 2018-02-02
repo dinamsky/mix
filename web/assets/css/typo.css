@@ -45,3 +45,6 @@ h2{
     padding-top:30px;
 }
 
+.border_bottom{
+    border-bottom: 1px solid lightgrey;
+}

@@ -31,7 +31,7 @@ class LocaleSubscriber implements EventSubscriberInterface
             $_SERVER['LANG'] = 'en';
         }
 
-        if($this->env == 'test'){
+        if($this->env == 'dev'){
             $_SERVER['LANG'] = 'en';
         }
 

@@ -66,6 +66,10 @@
     box-shadow: 2px 2px 1px #b7b7b7;
 }
 
+.all_shadowed{
+    box-shadow: 0 0 7px #bbbbbb;
+}
+
 .border_green{
     border: 1px solid #25b45b;
 }

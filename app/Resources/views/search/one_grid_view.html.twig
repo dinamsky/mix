@@ -1,4 +1,4 @@
-<div class="bg_white b_shadowed">
+<div class="bg_white all_shadowed">
 
     {% set main_foto = main_foto(card.getFotos) %}
 
@@ -20,8 +20,8 @@
 
 
     {% set currency = {
-        'RUB': 'Р',
-        'EUR': '<i class="fa fa-euro"></i>',
+        'RUB': '₽',
+        'EUR': '€',
         'USD': '$'
     } %}
 
@@ -80,7 +80,7 @@
             </div>
             <div class="uk-width-auto uk-text-right">
                 <div class="uk-text-small c_grey {{ micro is defined ? 'micro' : '' }}">
-                   {{ card.city.header }}
+                   {{ lang=='ru' ? card.city.header : card.city.url }}
                 </div>
             </div>
         </div>

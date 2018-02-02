@@ -150,7 +150,7 @@ msgstr "Choose 'Premium' to be in TOP"
 
 
 msgid "Найдено"
-msgstr "Founded"
+msgstr "Found"
 
 msgid "объявлений"
 msgstr "cards"
@@ -798,3 +798,21 @@ msgstr "All categories"
 
 msgid "Сдать транспорт"
 msgstr "Rent out transport"
+
+msgid "в"
+msgstr "in"
+
+msgid "Легковые"
+msgstr "Cars"
+
+msgid "Учитывать"
+msgstr "Allow"
+
+msgid "Отфильтровать"
+msgstr "Filter results"
+
+msgid "Сбросить фильтры"
+msgstr "Reset filters"
+
+msgid "Сбросить характеристики"
+msgstr "Reset characteristics"

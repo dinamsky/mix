@@ -4,11 +4,14 @@ $( document ).ready(function() {
         var dots = $(this).data('dots');
         var full = $(this).data('full');
         var fnc = '';
+        var nav = true;
         if (dots === 0) {
             dots = false;
+            nav = true;
             fnc = 'recount';
         } else {
             dots = true;
+            nav = false;
             fnc = '';
         }
         var st_padding = 50;
@@ -18,12 +21,16 @@ $( document ).ready(function() {
         var margin = 0;
         if(items>1) margin = 20;
         $(this).owlCarousel({
-            'nav': true,
+            'nav': nav,
             'margin' : margin,
             'slideBy' : items,
             'navText': ['<i uk-icon="icon:chevron-left; ratio: 2"></i>', '<i uk-icon="icon:chevron-right; ratio: 2"></i>'],
             // 'autoHeight': true,
             'dots': dots,
+            'loop': dots,
+            'autoplay': dots,
+            'autoplayTimeout': 7000,
+            'autoplayHoverPause': true,
             onInitialized: recount(fnc),
             responsive:{
                 0:{

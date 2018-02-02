@@ -265,7 +265,7 @@ class SearchController extends Controller
 
         $filter_type = [];
 
-        if ($filter_ready and $general and $this->get('session')->has('admin')) {
+        if ($filter_ready and $general) {
             $dql = "SELECT cf FROM AppBundle:CardField cf WHERE cf.generalTypeId = ?1";
             $query = $em->createQuery($dql);
             $query->setParameter(1, $general->getId());
@@ -282,6 +282,7 @@ class SearchController extends Controller
                         $filter[] = [
                             'id' => $ft->getId(),
                             'label' => $ft->getHeader(),
+                            'label_en' => $ft->getHeaderEn(),
                             'type' => 'checkbox',
                             'set' => $query_sf->getResult(),
                         ];
@@ -293,6 +294,7 @@ class SearchController extends Controller
                         $filter[] = [
                             'id' => $ft->getId(),
                             'label' => $ft->getHeader(),
+                            'label_en' => $ft->getHeaderEn(),
                             'type' => 'input',
                         ];
 
@@ -303,7 +305,7 @@ class SearchController extends Controller
         }
 
         $features = false;
-        if($general and $this->get('session')->has('admin')) {
+        if($general) {
             $dql = "SELECT f FROM AppBundle:Feature f";
             $query = $em->createQuery($dql);
             foreach ($query->getResult() as $f) {
@@ -483,6 +485,7 @@ class SearchController extends Controller
         if ($city) {
             $seo['city']['chto'] = $city->getHeader();
             $seo['city']['gde'] = $city->getGde();
+            $seo['city']['url'] = $city->getUrl();
         } else {
             $seo['city']['chto'] = 'России';
             $seo['city']['gde'] = 'России';

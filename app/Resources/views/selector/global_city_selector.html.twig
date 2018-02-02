@@ -2,10 +2,13 @@
 <input type="hidden" id="cityId" name="cityId" value="{{ city.id }}">
 <div uk-toggle="target: #city_popular" class="cursor-pointer sticky_top_city_selector">
     <i class="fa fa-map-marker icon_outline_blue"></i>
-    {#<span class="city_selector">{{ city.header }}#}
+    {% if lang=='ru' %}
+        {{ app.session.has('city')  ? app.session.get('city').header : city.header }}
+    {% else %}
+        {{ app.session.has('city')  ? app.session.get('city').url : city.url }}
+    {% endif %}
 
-        {#{{ app.session.has('city')[0] ? app.session.get('city')[0].header }}#}
-        {{ app.session.has('city') ? app.session.get('city').header : city.header }}
+
     </span>
 </div>
 
@@ -20,7 +23,7 @@
         <div class="uk-column-1-1 uk-column-1-5@s">
             {#<div class="city_block uk-margin-bottom" data-id="0" data-url="rus" data-header="Россия">Россия</div>#}
             {% for city in t3_new.popularCities if city.total >= 10 %}
-                <div class="city_block" data-id="{{ city.id }}" data-url="{{ city.url }}" data-header="{{ city.header }}">{{ city.header }}</div>
+                <div class="city_block" data-id="{{ city.id }}" data-url="{{ city.url }}" data-header="{{ city.header }}">{{ lang=='en' ? city.url : city.header }}</div>
             {% endfor %}
         </div>
         <hr>
@@ -28,7 +31,7 @@
         <div id="more_cities" hidden>
             <div class="uk-column-1-1 uk-column-1-5@s">
                 {% for city in t3_new.popularCities if city.total < 10 %}
-                    <div class="city_block" data-id="{{ city.id }}" data-url="{{ city.url }}" data-header="{{ city.header }}">{{ city.header }}</div>
+                    <div class="city_block" data-id="{{ city.id }}" data-url="{{ city.url }}" data-header="{{ city.header }}">{{ lang=='en' ? city.url : city.header }}</div>
                 {% endfor %}
             </div>
         </div>

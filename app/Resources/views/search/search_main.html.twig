@@ -28,117 +28,108 @@
 
 {% block content %}
 
-    <div id="main_finder" class="standard_wide">
-        <div uk-grid>
-            <div class="uk-width-3-4@s">
 
-                {% set x_uri = app.request.pathinfo|split('/') %}
+    {% set x_uri = app.request.pathinfo|split('/') %}
 
-                {% if bodyTypes and model.id == null %}
-                    {% set body_url = '/rent/'~x_uri[2]~'/'~x_uri[3]~'/'~x_uri[4] %}
-                    {% if mark.id != null %}
-                        {% set body_url = '/rent/'~x_uri[2]~'/'~x_uri[3]~'/'~x_uri[4]~'/'~x_uri[5] %}
-                    {% endif %}
-                {% endif %}
+    {% if bodyTypes and model.id == null %}
+        {% set body_url = '/rent/'~x_uri[2]~'/'~x_uri[3]~'/'~x_uri[4] %}
+        {% if mark.id != null %}
+            {% set body_url = '/rent/'~x_uri[2]~'/'~x_uri[3]~'/'~x_uri[4]~'/'~x_uri[5] %}
+        {% endif %}
+    {% endif %}
 
+
+    <div id="main_finder" class="standard_wide uk-margin-top">
+
+
+        <div class="uk-grid" uk-grid>
+            <div class="uk-width-1-4">
+                &nbsp;
+            </div>
+            <div class="uk-width-3-4">
                 {% if custom_seo and custom_seo.h1 != ''%}
                     <h1>{% include(template_from_string(custom_seo.h1)) %}</h1>
                 {% else %}
                     <h1>{% include 'seo_templates/c_h1.html.twig' %}</h1>
                 {% endif %}
+            </div>
 
-                {% if total_cards > 0 %}
-                    <div class="uk-text-center found_row">{% trans %}Найдено{% endtrans %}: {{ total_cards }} {% trans %}объявлений{% endtrans %}</div>
-                {% else %}
-                    <div class="uk-text-center found_row">{% trans %}Объявлений не найдено{% endtrans %} ...</div>
-                {% endif %}
+        </div>
 
+        <div class="uk-grid uk-margin-remove-top" uk-grid>
 
-                <div {{ not is_mobile() ? 'uk-sticky="offset: 0"' }} class="uk-margin-bottom filter_sticky">
-                    <div class="uk-visible@s">{{ include('search/search_form.html.twig',{'top':true}) }}</div>
+            <div class="uk-width-1-4@s">
 
-                        {% if bodyTypes and model.id == null and not is_mobile() %}
-                            <hr>
-                            <div uk-grid class="uk-grid-small">
-                                <div class="body_button"><a href="{{ body_url }}">{% trans %}Любой кузов{% endtrans %}</a></div>
-                                {% for body in bodyTypes %}
-                                    {% if mark.id == null %}
-                                        <div class="body_button"><a href="/rent/{{ x_uri[2] }}/{{ x_uri[3] }}/{{ x_uri[4] }}/{{ body.url }}">{{ lang == 'ru' ? body.header : body.url|capitalize }}</a></div>
-                                    {% else %}
-                                        <div class="body_button"><a href="/rent/{{ x_uri[2] }}/{{ x_uri[3] }}/{{ x_uri[4] }}/{{ x_uri[5] }}/{{ body.url }}">{{ lang == 'ru' ? body.header : body.url|capitalize }}</a></div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <hr>
-                        {% endif %}
-
-
-
-                    <div uk-grid class="uk-grid-small">
-                        {% if total_cards > 0 %}
-                        <div class="uk-width-1-3@s">
-                            <input type="hidden" id="order" name="order" value="{{ app.request.get('order') is defined ? app.request.get('order') : 0 }}">
-                            <span class="uk-text-small">{% trans %}Цена{% endtrans %}:</span>
-                            <button class="sort_button price_sort {{ app.request.get('order') is defined and app.request.get('order') == 'price_asc' ? 'active' }}" value="price_asc">{% trans %}дешевле{% endtrans %}</button>
-                            <button class="sort_button price_sort {{ app.request.get('order') is defined and app.request.get('order') == 'price_desc' ? 'active' }}" value="price_desc">{% trans %}дороже{% endtrans %}</button>
-                        </div>
-                        {% endif %}
-                        {% if bodyTypes and model.id == null and is_mobile() %}
-                        <div class="uk-width-1-3@s">
-                            <div class="body_type_main">
-                                <span class="uk-text-small">{% trans %}Кузов{% endtrans %}: </span>
-                                <a class="sort_button {{ is_body is defined and is_body == 'sedan' ? 'active' }}" href="{{ body_url~'/sedan' }}">{% trans %}седан{% endtrans %}</a>
-                                <a class="sort_button {{ is_body is defined and is_body == 'hatchback' ? 'active' }}" href="{{ body_url~'/hatchback' }}">{% trans %}хетчбек{% endtrans %}</a>
-                                <a class="sort_button {{ is_body is defined and is_body == 'crossover' ? 'active' }}" href="{{ body_url~'/crossover' }}">{% trans %}кроссовер{% endtrans %}</a>
-                                <span class="uk-text-small body_more">{% trans %}ещё{% endtrans %} <i uk-icon="icon:chevron-down; ratio: 0.7"></i></span>
-                            </div>
-                            <div class="body_type_all uk-grid-small" hidden uk-grid>
-                                <div class="uk-width-1-1">
-                                    <a class="sort_button uk-width-1-1 " href="{{ body_url }}">{% trans %}Любой кузов{% endtrans %}</a>
-                                </div>
-                                {% for body in bodyTypes %}
-                                    <div class="uk-width-1-4 ">
-                                        <a class="sort_button uk-width-1-1 uk-text-truncate {{ is_body is defined and is_body == body.url ? 'active' }}" href="{{ body_url~'/'~body.url }}">{{ lang == 'ru' ? body.header: body.url }}</a>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if general.url != 'alltypes' %}
-                        <div class="uk-width-1-3@s {{ not is_mobile() and total_cards>0 ? 'uk-text-center' }}">
-                            <span class="uk-text-small">{% trans %}Марка{% endtrans %}: </span>
-                            <button class="sort_button" uk-toggle="target: #top_mark_links">{% trans %}выбрать{% endtrans %}</button>
-                        </div>
-                        {% endif %}
-
-                        {% if total_cards > 0 %}
-                            <div class="uk-width-1-3@s {{ not is_mobile() ? 'uk-text-right' : 'uk-text-center' }}">
-                                {% if service == 'all' %}
-                                    <a class="sort_button {{ is_mobile() ? 'uk-width-1-1' }}" href="/rent/{{ city.url }}/leasebuyout/{{ general.url }}{{ mark and mark.header !='' ? '/'~mark.header }}{{ model and model.header!='' and model.header !='Любая модель' and mark and mark.header !='' ? '/'~model.header }}">{{ 'Аренда с правом выкупа'|trans }}</a>
-                                {% endif %}
-                                {% if service == 'leasebuyout' %}
-                                    <a class="sort_button {{ is_mobile() ? 'uk-width-1-1' }}" href="/rent/{{ city.url }}/all/{{ general.url }}{{ mark ? '/'~mark.header }}{{ model ? '/'~model.header }}">{{ 'Прокат и аренда'|trans }}</a>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-
+                <div class="uk-grid uk-grid-collapse" uk-grid>
+                    <div class="uk-width-1-3">
+                        <button class="uk-width-1-1 view_select {{ view == 'grid_view' ? 'uk-button-primary' : '' }}" type="button" value="grid_view" uk-icon="icon:grid"></button>
+                    </div>
+                    <div class="uk-width-1-3">
+                        <button class="uk-width-1-1 view_select {{ view == 'list_view' ? 'uk-button-primary' : '' }}" type="button" value="list_view" uk-icon="icon:list"></button>
+                    </div>
+                    <div class="uk-width-1-3">
+                        <button class="uk-width-1-1 view_select {{ view == 'map_view' ? 'uk-button-primary' : '' }}" type="button" value="map_view" uk-icon="icon:location"></button>
                     </div>
                 </div>
 
-                {#{% include 'search/search_top_sort.html.twig' %}#}
+                {% if total_cards > 0 %}
+                    <div class="border_bottom uk-margin-top">
+                        {% trans %}Найдено{% endtrans %}: {{ total_cards }}
+                    </div>
+                {% endif %}
+
+                {% if total_cards > 0 %}
+                    <input type="hidden" id="order" name="order" value="{{ app.request.get('order') is defined ? app.request.get('order') : 0 }}">
+                    <div class="uk-grid uk-grid-collapse uk-margin-top" uk-grid>
+                        <div class="uk-width-1-3 uk-text-center">
+                            {% trans %}Цена{% endtrans %}:
+                        </div>
+                        <div class="uk-width-1-3">
+                            <button class="uk-width-1-1 sort_button price_sort {{ app.request.get('order') is defined and app.request.get('order') == 'price_asc' ? 'active' }}" value="price_asc">{% trans %}дешевле{% endtrans %}</button>
+                        </div>
+                        <div class="uk-width-1-3">
+                            <button class="uk-width-1-1 sort_button price_sort {{ app.request.get('order') is defined and app.request.get('order') == 'price_desc' ? 'active' }}" value="price_desc">{% trans %}дороже{% endtrans %}</button>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                <div class="uk-margin-top uk-visible@s">{{ include('search/search_form.html.twig') }}</div>
+
+
+                <div class="uk-margin-top">
+                    {% if service == 'all' and  total_cards > 0%}
+                        <a class="sort_button buyout_link {{ is_mobile() ? 'uk-width-1-1' }}" href="/rent/{{ city.url }}/leasebuyout/{{ general.url }}{{ mark and mark.header !='' ? '/'~mark.header }}{{ model and model.header!='' and model.header !='Любая модель' and mark and mark.header !='' ? '/'~model.header }}">
+                            <span class="buyout_box c_blue"><i class="fa fa-check"></i></span></span> {{ 'Аренда с правом выкупа'|trans }}
+                        </a>
+                    {% endif %}
+                    {% if service == 'leasebuyout' %}
+                        <a class="sort_button buyout_link {{ is_mobile() ? 'uk-width-1-1' }}" href="/rent/{{ city.url }}/all/{{ general.url }}{{ mark ? '/'~mark.header }}{{ model and model.header!='Any vehicle model' ? '/'~model.header }}">
+                            <span class="buyout_box"><i class="fa fa-check"></i></span> {{ 'Аренда с правом выкупа'|trans }}
+                        {#{{ 'Прокат и аренда'|trans }}#}
+                        </a>
+                    {% endif %}
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-bottom">
+                    {% if filter or features %}
+                        {{ include('search/right_filter.html.twig') }}
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <div class="uk-width-3-4@s">
+
+                {% if total_cards < 1 %}
+                    <div class="uk-text-center found_row">{% trans %}Объявлений не найдено{% endtrans %} ...</div>
+                {% endif %}
 
                 {% include 'search/' ~ view ~ '.html.twig' %}
 
-                {#{% if is_mobile() %}#}
-                    {% include 'search/mobile_search_pager.html.twig' %}
-                {#{% else %}#}
-                    {#{% include 'search/search_pager.html.twig' %}#}
-                {#{% endif %}#}
-
-                {#{% if app.request.pathinfo == '/rent/rus' %}#}
-                    {#{{ include('search/city_block.html.twig') }}#}
-                {#{% endif %}#}
+                {% include 'search/mobile_search_pager.html.twig' %}
 
                 {% if total_cards == 0 %}
 
@@ -146,7 +137,6 @@
                         {% trans %}Пока никто не разместил объявление в этом городе и категории.{% endtrans %}<br>
                         {% trans %}Будь первым - добавь объявления и получай клиентов!{% endtrans %}
                     </div>
-
 
                     {% if app.session.has('logged_user') %}
                         <a href="/card/new" class="uk-button uk-button-success zero_button">{% trans %}Разместить объявление!{% endtrans %}</a>
@@ -173,17 +163,17 @@
 
 
 
-                    {% if x_uri[2] is defined and x_uri[2] != 'rus' and x_uri|length == 3 %}
-                        {{ include('search/gt_block.html.twig') }}
-                    {% endif %}
+                    {#{% if x_uri[2] is defined and x_uri[2] != 'rus' and x_uri|length == 3 %}#}
+                        {#{{ include('search/gt_block.html.twig') }}#}
+                    {#{% endif %}#}
 
-                    {% if x_uri[2] is defined and x_uri[2] != 'rus' and x_uri|length > 4 and mark.id == null %}
-                        {{ include('search/mark_block.html.twig') }}
-                    {% endif %}
+                    {#{% if x_uri[2] is defined and x_uri[2] != 'rus' and x_uri|length > 4 and mark.id == null %}#}
+                        {#{{ include('search/mark_block.html.twig') }}#}
+                    {#{% endif %}#}
 
-                    {% if x_uri[2] is defined and x_uri[2] != 'rus' and x_uri|length > 5 and model.id == null %}
-                        {{ include('search/model_block.html.twig') }}
-                    {% endif %}
+                    {#{% if x_uri[2] is defined and x_uri[2] != 'rus' and x_uri|length > 5 and model.id == null %}#}
+                        {#{{ include('search/model_block.html.twig') }}#}
+                    {#{% endif %}#}
 
 
 
@@ -198,31 +188,6 @@
                     <div>{{ seo_text }}</div>
                 {% endif %}
             </div>
-            <div class="uk-width-1-4 uk-visible@s">
-
-                {% if app.session.has('admin') %}
-                    {% if filter or features %}
-                        {{ include('search/right_filter.html.twig') }}
-                    {% endif %}
-                {% endif %}
-
-                <h3 class="pf_style_header"><span>{% trans %}Лучшие предложения{% endtrans %}</span></h3>
-                {% for card in t3_new.getTop3 %}
-                    {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'150px'}) }}
-                    <hr>
-                {% endfor %}
-                <div class="uk-text-center">
-                    {% if app.session.has('logged_user') %}
-                        <a href="/card/new" class="" title="Хотите сюда?<br>Разместите объявление!" uk-tooltip>{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
-                    {% else %}
-                        <a class="" title="Хотите сюда?<br>Разместите объявление!" uk-tooltip uk-toggle="target: #sign_in_or_up">{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
-                    {% endif %}
-                </div>
-
-
-                {{ include('selector/mark_block_link.html.twig', {'mark_arr':mark_arr_sorted,'type':car_type_id}) }}
-
-            </div>
         </div>
     </div>
 
@@ -230,3 +195,46 @@
 
 
 
+{#{% if bodyTypes and model.id == null and not is_mobile() %}#}
+                            {#<hr>#}
+                            {#<div uk-grid class="uk-grid-small">#}
+                                {#<div class="body_button"><a href="{{ body_url }}">{% trans %}Любой кузов{% endtrans %}</a></div>#}
+                                {#{% for body in bodyTypes %}#}
+                                    {#{% if mark.id == null %}#}
+                                        {#<div class="body_button"><a href="/rent/{{ x_uri[2] }}/{{ x_uri[3] }}/{{ x_uri[4] }}/{{ body.url }}">{{ lang == 'ru' ? body.header : body.url|capitalize }}</a></div>#}
+                                    {#{% else %}#}
+                                        {#<div class="body_button"><a href="/rent/{{ x_uri[2] }}/{{ x_uri[3] }}/{{ x_uri[4] }}/{{ x_uri[5] }}/{{ body.url }}">{{ lang == 'ru' ? body.header : body.url|capitalize }}</a></div>#}
+                                    {#{% endif %}#}
+                                {#{% endfor %}#}
+                            {#</div>#}
+                            {#<hr>#}
+                        {#{% endif %}#}
+
+{#{% if bodyTypes and model.id == null and is_mobile() %}#}
+                        {#<div class="uk-width-1-3@s">#}
+                            {#<div class="body_type_main">#}
+                                {#<span class="uk-text-small">{% trans %}Кузов{% endtrans %}: </span>#}
+                                {#<a class="sort_button {{ is_body is defined and is_body == 'sedan' ? 'active' }}" href="{{ body_url~'/sedan' }}">{% trans %}седан{% endtrans %}</a>#}
+                                {#<a class="sort_button {{ is_body is defined and is_body == 'hatchback' ? 'active' }}" href="{{ body_url~'/hatchback' }}">{% trans %}хетчбек{% endtrans %}</a>#}
+                                {#<a class="sort_button {{ is_body is defined and is_body == 'crossover' ? 'active' }}" href="{{ body_url~'/crossover' }}">{% trans %}кроссовер{% endtrans %}</a>#}
+                                {#<span class="uk-text-small body_more">{% trans %}ещё{% endtrans %} <i uk-icon="icon:chevron-down; ratio: 0.7"></i></span>#}
+                            {#</div>#}
+                            {#<div class="body_type_all uk-grid-small" hidden uk-grid>#}
+                                {#<div class="uk-width-1-1">#}
+                                    {#<a class="sort_button uk-width-1-1 " href="{{ body_url }}">{% trans %}Любой кузов{% endtrans %}</a>#}
+                                {#</div>#}
+                                {#{% for body in bodyTypes %}#}
+                                    {#<div class="uk-width-1-4 ">#}
+                                        {#<a class="sort_button uk-width-1-1 uk-text-truncate {{ is_body is defined and is_body == body.url ? 'active' }}" href="{{ body_url~'/'~body.url }}">{{ lang == 'ru' ? body.header: body.url }}</a>#}
+                                    {#</div>#}
+                                {#{% endfor %}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#{% endif %}#}
+
+                        {#{% if general.url != 'alltypes' %}#}
+                        {#<div class="uk-width-1-3@s {{ not is_mobile() and total_cards>0 ? 'uk-text-center' }}">#}
+                            {#<span class="uk-text-small">{% trans %}Марка{% endtrans %}: </span>#}
+                            {#<button class="sort_button" uk-toggle="target: #top_mark_links">{% trans %}выбрать{% endtrans %}</button>#}
+                        {#</div>#}
+                        {#{% endif %}#}

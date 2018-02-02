@@ -35,10 +35,5 @@
         </select>
         {% trans %}объявлений{% endtrans %}
     </div>
-    <div class="uk-text-center uk-margin-top">
-        {% trans %}Показать{% endtrans %}
-        <button class="view_select {{ view == 'grid_view' ? 'uk-button-primary' : '' }}" type="button" value="grid_view" uk-icon="icon:grid"></button>
-        {% trans %}или{% endtrans %}
-        <button class="view_select {{ view == 'list_view' ? 'uk-button-primary' : '' }}" type="button" value="list_view" uk-icon="icon:list"></button>
-    </div>
+
 {% endif %}
