@@ -788,8 +788,8 @@ msgstr "Select vehicle category"
 msgid "Наши категории"
 msgstr "Our categories"
 
-msgid ""
-msgstr ""
+msgid "Отправить заявку"
+msgstr "Send order"
 
 # -------------------------------------------- booking form -----------------------------------------
 
@@ -816,3 +816,26 @@ msgstr "Reset filters"
 
 msgid "Сбросить характеристики"
 msgstr "Reset characteristics"
+
+
+msgid "Авто"
+msgstr "Vehicle"
+
+msgid "Похожие"
+msgstr "Similar"
+
+
+msgid "Доставка до клиента"
+msgstr "Delivery"
+
+msgid "нет, клиент забирает транспорт самостоятельно"
+msgstr "no, only self"
+
+msgid "да, мы доставляем транспорт"
+msgstr "yes, we drive to you"
+
+msgid "возможна, по согласованию"
+msgstr "possible if accepted"
+
+
+

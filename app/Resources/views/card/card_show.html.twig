@@ -6,6 +6,7 @@
     <link href="{{ asset('assets/css/owl.theme.default.css') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/datepicker.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/main_page/top_slider.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block javascripts %}
@@ -55,14 +56,14 @@
 {% block content %}
 
     <!-- FB -->
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.10&appId=1747516202216504";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
+    {#<div id="fb-root"></div>#}
+    {#<script>(function(d, s, id) {#}
+            {#var js, fjs = d.getElementsByTagName(s)[0];#}
+            {#if (d.getElementById(id)) return;#}
+            {#js = d.createElement(s); js.id = id;#}
+            {#js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.10&appId=1747516202216504";#}
+            {#fjs.parentNode.insertBefore(js, fjs);#}
+        {#}(document, 'script', 'facebook-jssdk'));</script>#}
     <!-- FB -->
 
 
@@ -71,6 +72,73 @@
         {{ app.session.remove('share') }}
     {% endif %}
 
+    <div class="standard_wide breadcrumbs uk-margin-top uk-margin-bottom">
+        <a class="c_grey" href="/">{% trans %}Главная{% endtrans %}</a>
+        <i uk-icon="icon:chevron-right"></i>
+        <a class="c_grey" href="/rent/{{ card.city.url }}">{{ lang=='ru' ? card.city.header : card.city.url }}</a>
+        <i uk-icon="icon:chevron-right"></i>
+        <a class="c_grey" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}">{{ lang == 'ru' ? card.generalType.header : card.generalType.url }}</a>
+
+        {% if bodyType %}
+            <i uk-icon="icon:chevron-right"></i>
+            <a class="c_grey" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ bodyType.url }}">{{ lang == 'ru' ? bodyType.header : bodyType.url }}</a>
+        {% endif %}
+
+        {% if card.modelId != 20991 %}
+            <i uk-icon="icon:chevron-right"></i>
+            <a class="c_grey" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}">{{ card.serviceTypeId == 1 ? 'Прокат'|trans : 'Аренда'|trans }} {{ card.markModel.mark.header }} в {{ card.city.gde }}</a>
+            <i uk-icon="icon:chevron-right"></i>
+            <a class="c_grey" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}/{{ card.markModel.header }}">{{ card.markModel.mark.header }} {{ card.markModel.header }}</a>
+        {% endif %}
+    </div>
+
+    <div class="uk-position-relative">
+
+
+
+        <div id="page_slider" class="owl-carousel owl-carousel-all owl-theme" data-items="1" data-full="1" data-dots="2">
+            {% for k,foto in card.getFotos %}
+                <div uk-lightbox>
+                <a href="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" class="slide uk-width-1-1" style="
+                        background:url('/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg') center center;
+                        background-size: cover;
+                        display: block;
+                        height: {% if is_mobile() %}150px{% else %}600px{% endif %};
+                        "
+                {% if k == 0 %}
+                title="{{ card.serviceTypeId == 1 ? 'Прокат' : 'Аренда' }} {% if card.generalType.chegoSingular is defined %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} в {{ card.city.gde }}"
+                {% endif %}
+                >
+                    {% if k == 0 %}
+                    <img src="https://multiprokat.com/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" alt="" style="visibility: hidden; height: 0;width: 0;" itemprop="image">
+                    {% endif %}
+                    {#<img src="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" alt="" style="max-height: auto">#}
+                </a>
+                </div>
+
+
+
+
+            {% endfor %}
+        </div>
+
+        <div class="standard_wide uk-position-absolute" style="top: 0;left:0;right: 0;">
+            <div class="likes" data-card_id="{{ card.id }}">
+                {% if app.session.has('likes') and app.session.get('likes')[card.id] is defined %}
+                    <i class="fa fa-heart c_red"></i>
+                {% else %}
+                    <i class="fa fa-heart-o c_white t_shadowed"></i>
+                {% endif %}
+            </div>
+
+            {% if reserved %}
+                <div class="page_reserved">Бронь до {{ card.dateRentFinish|date("d.m.Y") }}</div>
+            {% endif %}
+        </div>
+
+
+
+    </div>
 
 
 
@@ -79,396 +147,165 @@
         <div uk-grid itemscope itemtype="http://schema.org/Product">
             <div class="uk-width-3-4@s ">
 
-                <div class="">
-                    <h1 itemprop="name">{{ include(':seo_templates:p_h1.html.twig') }}</h1>
-                    <div>
-                        {% if card.address != '' %}
-                            <i class="fa fa-map-marker"></i> {{ card.address }}
-                        {% else %}
-                            <i class="fa fa-map-marker"></i> {{ card.getCity.header }}, {{ card.getCity.getParent.header }}, {{ card.getCity.country }}
-                        {% endif %}
-                    </div>
-                    <div><i class="fa fa-calendar"></i> {{ card.dateCreate|date("d.m.Y") }} <i class="fa fa-eye"></i> {{ card.views }}</div>
-                </div>
 
-                <div class=" uk-margin-bottom">
-                    <div class="standard_wide breadcrumbs">
-                        <a href="/">{% trans %}Главная{% endtrans %}</a>
-                        <i uk-icon="icon:chevron-right"></i>
-                        <a href="/rent/{{ card.city.url }}">{{ card.city.header }}</a>
-                        <i uk-icon="icon:chevron-right"></i>
-                        <a href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}">{{ lang == 'ru' ? card.generalType.header : card.generalType.url }}</a>
-
-                        {% if bodyType %}
-                            <i uk-icon="icon:chevron-right"></i>
-                            <a href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ bodyType.url }}">{{ lang == 'ru' ? bodyType.header : bodyType.url }}</a>
-                        {% endif %}
-
-                        {% if card.modelId != 20991 %}
-                            <i uk-icon="icon:chevron-right"></i>
-                            <a href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}">{{ card.serviceTypeId == 1 ? 'Прокат'|trans : 'Аренда'|trans }} {{ card.markModel.mark.header }} в {{ card.city.gde }}</a>
-                            <i uk-icon="icon:chevron-right"></i>
-                            <a href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}/{{ card.markModel.header }}">{{ card.markModel.mark.header }} {{ card.markModel.header }}</a>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="uk-position-relative">
-
-                    <div class="likes" data-card_id="{{ card.id }}">
-                        {% if app.session.has('likes') and app.session.get('likes')[card.id] is defined %}
-                            <i class="fa fa-heart c_red"></i>
-                        {% else %}
-                            <i class="fa fa-heart-o c_white t_shadowed"></i>
-                        {% endif %}
-                    </div>
-
-                    <div id="page_slider" class="owl-carousel owl-carousel-all owl-theme" data-items="1" data-full="1">
-                        {% for k,foto in card.getFotos %}
-                            <div uk-lightbox>
-                            <a href="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" class="slide uk-width-1-1" style="
-                                    background:url('/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg') center center;
-                                    background-size: cover;
-                                    display: block;
-                                    height: {% if is_mobile() %}150px{% else %}500px{% endif %};
-                                    "
-                            {% if k == 0 %}
-                            title="{{ card.serviceTypeId == 1 ? 'Прокат' : 'Аренда' }} {% if card.generalType.chegoSingular is defined %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} в {{ card.city.gde }}"
-                            {% endif %}
-                            >
-                                {% if k == 0 %}
-                                <img src="https://multiprokat.com/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" alt="" style="visibility: hidden; height: 0;width: 0;" itemprop="image">
-                                {% endif %}
-                                {#<img src="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" alt="" style="max-height: auto">#}
-                            </a>
-                            </div>
-
-
-
-
-                        {% endfor %}
-                    </div>
-
-                    {% if reserved %}
-                        <div class="page_reserved">Бронь до {{ card.dateRentFinish|date("d.m.Y") }}</div>
-                    {% endif %}
-
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4 uk-text-right">{% trans %}Авто{% endtrans %}:</div>
+                    <div class="uk-width-3-4"><h1 itemprop="name">{{ include(':seo_templates:p_h1.html.twig') }}</h1></div>
                 </div>
 
 
 
-                {% if not is_mobile() %}
-                <div class="uk-text-right">
-                    <button type="button" class="uk-button uk-button-default" uk-toggle="target: #user_abuse">{% trans %}Пожаловаться{% endtrans %}</button>
-                </div>
-                {% endif %}
-
-                {% if is_mobile() %}
-                <div class="uk-margin-bottom card_blanc2 uk-margin-top">
-                    {% for price in card.getCardPrices %}
-                        <div class="uk-text-center {{ price.priceId == 2 ? 'price_highlighted' : ''}}">
-                            <span class="price_value">{{ price.value|number_format(0,'.','<span class="thousand_separator"></span>')|raw }}</span>
-
-
-                            {% if card.currency == 'RUB' %}
-                                {% set currency = 'ruble' %}
-                            {% endif %}
-                            {% if card.currency == 'EUR' %}
-                                {% set currency = 'euro' %}
-                            {% endif %}
-                            {% if card.currency == 'USD' %}
-                                {% set currency = 'dollar' %}
-                            {% endif %}
-
-
-                            <span class="price_descriptor uk-text-truncate"> <i class="fa fa-{{ currency }}"></i> / {{ price.getPrice.header|trans }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                {% if is_mobile() and not is_admin_card%}
-                <div class="uk-margin-bottom card_blanc border_green">
-                    <div class="cursor-pointer uk-text-center c_green" uk-toggle="target: #user_book_form"><i class="fa fa-pencil-square-o"></i> {% trans %}Отправить заявку{% endtrans %}</div>
-                </div>
-                {% endif %}
-
-                <ul id="tt" uk-tab>
-                    <li><a href="#">{% trans %}Информация{% endtrans %}</a></li>
-                    {% if card.coords != NULL and card.coords != ''%}
-                    <li><a href="#">{% trans %}Карта{% endtrans %}</a></li>
-                    {% endif %}
-                    {% if streetView %}
-                        <li><a href="#">{% trans %}Местность{% endtrans %}</a></li>
-                    {% endif %}
-                    {% if video %}
-                        <li><a href="#">{% trans %}Видео{% endtrans %}</a></li>
-                    {% endif %}
-                </ul>
-
-                <ul id="cardTabs" class="uk-switcher uk-margin">
-                    <li class="card_blanc">
-                        <div uk-grid>
-                            <div class="uk-width-1-2@s">
-
-                                {% if card.prodYear != 0 %}<div>{% trans %}Год выпуска{% endtrans %}: {{ card.prodYear }}</div>{% endif %}
-
-                                <div>{% trans %}Состояние{% endtrans %}: {{ card.getCondition.header }}</div>
-
-                                <div>{{ card.getColor != null ? 'Цвет'|trans~': '~card.getColor.header }}</div>
-
-
-                                {% for subfield in sub_fields if subfield.value is not null %}
-                                    {% if subfield.type == 'subfield' %}
-                                        <div>
-                                            {{ subfield.label }}: {{ subfield.value.getHeader }}
-                                        </div>
-                                    {% elseif subfield.value.getValue != 0 and subfield.value.getValue != '' %}
-                                        <div>
-                                            {{ subfield.label }}: {{ subfield.value.getValue }}
-                                        </div>
-                                    {% endif %}
-
-                                {% endfor %}
-
-                                <div>Доставка до клиента:
-                                    {{ card.deliveryStatus == 0 ? 'нет, клиент забирает транспорт самостоятельно' }}
-                                    {{ card.deliveryStatus == 1 ? 'да, мы доставляем транспорт' }}
-                                    {{ card.deliveryStatus == 2 ? 'возможна, по согласованию' }}
-                                </div>
-
-                            </div>
-                            <div class="uk-width-1-2@s">
-                                <div id="card_content" itemprop="description">{{ card.content|striptags('<br><p>')|raw }}</div>
-                                {% if card.content|length>300 %}
-                                <div class="uk-text-small uk-text-center uk-margin-top show_full_content cursor-pointer">{% trans %}показать полностью{% endtrans %}</div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                    </li>
-
-                    {% if card.coords != NULL and card.coords != ''%}
-                    <li id="card_tab" class="card_blanc">
-                            {% set coords = card.coords|split(',') %}
-                            <div id="map" data-lat="{{ coords[0] }}" data-lng="{{ coords[1] }}"></div>
-                            <script async defer
-                                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWdm1zrblFjsdUfi1-6fsPvj30ACCiCxk">
-                            </script>
-                    </li>
-                    {% endif %}
-
-                    {% if streetView and card.coords != NULL %}
-                        <li class="card_blanc">
-                            <iframe
-                                    width="100%"
-                                    height="400"
-                                    frameborder="0" style="border:0"
-                                    src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyDWdm1zrblFjsdUfi1-6fsPvj30ACCiCxk&location={{ coords[0] }},{{ coords[1] }}&heading={{ streetView.heading }}&pitch={{ streetView.pitch }}&fov=35"
-                                    allowfullscreen>
-                            </iframe>
-                        </li>
-                    {% endif %}
-                    {% if video %}
-                        <li class="card_blanc">
-                            <iframe width="100%" height="400"
-                                    src="https://www.youtube.com/embed/{{ video }}?feature=oembed" frameborder="0"
-                                    allowfullscreen></iframe>
-                        </li>
-                    {% endif %}
-                </ul>
 
 
                 {% if card.getCardFeatures is not empty%}
-                    <h2 class="pf_style_header"><span>{% trans %}Характеристики{% endtrans %}</span>{{ is_mobile() ? '<a class="toggle_chars" uk-toggle="target: #car_chars">Развернуть</a>' }}</h2>
+                    <div class="uk-grid" uk-grid>
+                        <div class="uk-width-1-4 uk-text-right">{% trans %}Характеристики{% endtrans %}:</div>
+                        <div class="uk-width-3-4">
+                            <div class="">
 
-                    <div id="car_chars" class="card_blanc" {{ is_mobile() ? 'hidden' }}>
-                        <div uk-grid>
-                            {% for feature in card.getCardFeatures %}
-                                <div class="">
-                                    <span class="check_icon"
-                                          uk-icon="icon:check; ratio: 1"></span>{{ feature.getFeature.header }}
+                                    {% for feature in card.getCardFeatures %}
+                                        <div class="">
+                                            <span class="check_icon"
+                                                  uk-icon="icon:check; ratio: 1"></span>{{ feature.getFeature.header }}
+                                        </div>
+                                    {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4 uk-text-right">{% trans %}Информация{% endtrans %}:</div>
+                    <div class="uk-width-3-4">
+                        <div class="">
+
+                            {% if card.prodYear != 0 %}<div>{% trans %}Год выпуска{% endtrans %}: {{ card.prodYear }}</div>{% endif %}
+
+                            <div>{% trans %}Состояние{% endtrans %}: {{ card.getCondition.header }}</div>
+
+                            <div>{{ card.getColor != null ? 'Цвет'|trans~': '~card.getColor.header }}</div>
+
+
+                            {% for subfield in sub_fields if subfield.value is not null %}
+                                {% if subfield.type == 'subfield' %}
+                                    <div>
+                                        {{ subfield.label }}: {{ subfield.value.getHeader }}
+                                    </div>
+                                {% elseif subfield.value.getValue != 0 and subfield.value.getValue != '' %}
+                                    <div>
+                                        {{ subfield.label }}: {{ subfield.value.getValue }}
+                                    </div>
+                                {% endif %}
+
+                            {% endfor %}
+
+                            <div>{% trans %}Доставка до клиента{% endtrans %}:
+                                {{ card.deliveryStatus == 0 ? 'нет, клиент забирает транспорт самостоятельно'|trans }}
+                                {{ card.deliveryStatus == 1 ? 'да, мы доставляем транспорт'|trans }}
+                                {{ card.deliveryStatus == 2 ? 'возможна, по согласованию'|trans }}
+                            </div>
+
+                        </div>
+                        <div class="uk-margin-top">
+                            <div id="card_content" itemprop="description">{{ card.content|striptags('<br><p>')|raw }}</div>
+                            {% if card.content|length>300 %}
+                            <div class="uk-text-small uk-text-center uk-margin-top show_full_content cursor-pointer">{% trans %}показать полностью{% endtrans %}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4 uk-text-right">{% trans %}Отзывы{% endtrans %}:</div>
+                    <div class="uk-width-3-4">
+                        {% if app.session.has('logged_user') %}
+                            <form action="/userAddOpinion" method="POST">
+                                <div class="stars uk-margin-bottom">
+                                    {% for i in 1..5 %}
+                                        <span class="star {{ i == 1 ? 'active' }}" data-star="{{ i }}"><i class="fa fa-star"></i></span>
+                                    {% endfor %}
+                                    <span id="stars">1</span>
+                                </div>
+                                <textarea name="content" class="uk-textarea" placeholder="{% trans %}Ваш отзыв{% endtrans %}" required></textarea>
+                                <input type="hidden" name="stars" value="1">
+                                <input type="hidden" name="user_id" value="{{ app.session.get('logged_user').id }}">
+                                <input type="hidden" name="card_id" value="{{ card.id }}">
+                                <input type="hidden" name="return" value="{{ app.request.requestUri }}">
+                                <button class="uk-button uk-button-primary uk-margin-top">{% trans %}Отправить{% endtrans %}</button>
+                            </form>
+
+                        {% else %}
+                            <div>
+                                <a uk-toggle="target: #sign_in">{% trans %}Войдите{% endtrans %}</a> {% trans %}или{% endtrans %} <a uk-toggle="target: #sign_up">{% trans %}зарегистрируйтесь{% endtrans %}</a>, {% trans %}чтобы оставить отзыв{% endtrans %}.
+                            </div>
+                        {% endif %}
+
+                        {% if card.opinions is not empty %}
+                            <hr>
+                            <div class="uk-margin-top">
+                                {% for opinion in card.opinions %}
+                                    <div class="uk-margin-bottom">
+                                        <i class="fa fa-calendar"></i> {{ opinion.dateCreate|date('d.m.Y H:i') }}
+                                        <i class="fa fa-user"></i> {{ opinion.user.header }}
+                                        <i class="fa fa-star c_gold"></i> {{ opinion.stars }}
+                                        <div><i class="fa fa-comment-o"></i> {{ opinion.content }}</div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4 uk-text-right">{% trans %}Комментарии{% endtrans %}:</div>
+                    <div class="uk-width-3-4">
+                        {% if app.session.has('logged_user') %}
+                            <form action="/userAddComment" method="POST">
+                                <textarea name="comment" class="uk-textarea" placeholder="{% trans %}Ваш комментарий{% endtrans %}" required></textarea>
+                                <input type="hidden" name="user_id" value="{{ app.session.get('logged_user').id }}">
+                                <input type="hidden" name="card_id" value="{{ card.id }}">
+                                <input type="hidden" name="return" value="{{ app.request.requestUri }}">
+                                <button class="uk-button uk-button-primary uk-margin-top">{% trans %}Отправить{% endtrans %}</button>
+                            </form>
+                        {% else %}
+                            <div>
+                                <a uk-toggle="target: #sign_in">{% trans %}Войдите{% endtrans %}</a> {% trans %}или{% endtrans %} <a uk-toggle="target: #sign_up">{% trans %}зарегистрируйтесь{% endtrans %}</a>, {% trans %}чтобы написать комментарий{% endtrans %}.
+                            </div>
+                        {% endif %}
+
+                        {% if card.comments is not empty %}
+                            <hr>
+                        <div class="uk-margin-top">
+                            {% for comment in card.comments %}
+                                <div class="uk-margin-bottom">
+                                    <i class="fa fa-calendar"></i> {{ comment.dateCreate|date('d.m.Y H:i') }}
+                                    <i class="fa fa-user"></i> {{ comment.user.header }}
+                                    <div><i class="fa fa-comment-o"></i> {{ comment.content }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4 uk-text-right">{% trans %}Похожие{% endtrans %}:</div>
+                    <div class="uk-width-3-4">
+                        <div uk-grid class="uk-grid-small uk-grid-match">
+                            {% for card in similar %}
+                                <div class="uk-width-1-2@s">
+                                {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'150px'}) }}
                                 </div>
                             {% endfor %}
                         </div>
                     </div>
-
-                {% endif %}
-
-                {% if is_mobile() %}
-                <div class="user_block uk-text-center uk-margin-bottom">
-
-                    <div uk-grid class="uk-grid-small">
-                        {% if user_foto %}
-                            <div class="uk-width-auto">
-                                <a href="/user/{{ card.user.id }}" style="background: url('{{ user_foto }}') center center no-repeat;
-                                        background-size: contain;
-                                        width: 50px;
-                                        height: 50px;
-                                        display: inline-block;
-                                        ">
-                                </a>
-                            </div>
-                        {% else %}
-                        {% endif %}
-
-                        <div class="uk-width-expand">
-                            <div class="uk-text-small">{% trans %}Собственник{% endtrans %}</div>
-                            <h3 class="uk-margin-remove uk-text-truncate" style="line-height: 31px;"><a href="/user/{{ card.user.id }}" class="uk-text-truncate">{{ card.user.header }}</a></h3>
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="">
-                        {% for info in card.user.information %}
-                            {% if info.uiKey == 'vk' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_vk"><i class="fa fa-vk"></i></a>{% endif %}
-                            {% if info.uiKey == 'fb' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_fb"><i class="fa fa-facebook"></i></a>{% endif %}
-                            {% if info.uiKey == 'ok' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_ok"><i class="fa fa-odnoklassniki"></i></a>{% endif %}
-                            {% if info.uiKey == 'tw' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_tw"><i class="fa fa-twitter"></i></a>{% endif %}
-                            {% if info.uiKey == 'gp' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_gp"><i class="fa fa-google-plus"></i></a>{% endif %}
-                            {% if info.uiKey == 'ig' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_ig"><i class="fa fa-instagram"></i></a>{% endif %}
-                            {% if info.uiKey == 'yt' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_yt"><i class="fa fa-youtube"></i></a>{% endif %}
-                        {% endfor %}
-                    </div>
                 </div>
-
-                {% if not is_admin_card %}
-                <div class="uk-margin-bottom card_blanc">
-                    <div class="cursor-pointer uk-text-center" uk-toggle="target: #user_message_form"><i class="fa fa-commenting"></i> {% trans %}Написать сообщение{% endtrans %}</div>
-                </div>
-                {% endif %}
-
-                <div class="uk-margin-bottom card_blanc">
-                    <div><i class="fa fa-eye c_green"></i> {{ card.views }} <span class="uk-text-small c_grey">{% trans %}просмотров{% endtrans %}</span></div>
-                    <div><i class="fa fa-heart c_red"></i> <span id="card_likes">{{ card.likes }}</span> <span class="uk-text-small c_grey">{% trans %}лайков{% endtrans %}</span></div>
-                    <div>
-                        <i class="fa fa-star c_gold"></i> {{ opinions }}/5 <span class="uk-text-small c_grey">{% trans %}звезд из{% endtrans %}</span> {{ total_opinions }}
-                        <span class="uk-text-small c_grey">{% trans %}отзывов{% endtrans %}</span>
-                    </div>
-                    <hr>
-                    <div class="uk-text-center"><a href="/user/{{ card.user.id }}">{% trans %}Все объявления{% endtrans %}<br>{% trans %}пользователя{% endtrans %} ({{ card.user.cards|length }})</a></div>
-
-                </div>
-                {% endif %}
-
-
-
-
-                {% if not app.session.has('first_card') %}
-
-
-                    {% if is_mobile() %}
-                        <button class="uk-button uk-button-default uk-width-1-1" uk-toggle="target: #coms_opins">{% trans %}Комментарии и отзывы{% endtrans %}</button>
-                    {% endif %}
-
-                    <div uk-grid class="uk-margin-top" {{ is_mobile() ? 'id="coms_opins" hidden' }}>
-                        <div class="uk-width-1-2@s">
-                            <h2 class="pf_style_header"><span>{% trans %}Комментарии{% endtrans %}</span></h2>
-
-                            <div class="card_blanc">
-                                {% if app.session.has('logged_user') %}
-                                    <form action="/userAddComment" method="POST">
-                                        <textarea name="comment" class="uk-textarea" placeholder="{% trans %}Ваш комментарий{% endtrans %}" required></textarea>
-                                        <input type="hidden" name="user_id" value="{{ app.session.get('logged_user').id }}">
-                                        <input type="hidden" name="card_id" value="{{ card.id }}">
-                                        <input type="hidden" name="return" value="{{ app.request.requestUri }}">
-                                        <button class="uk-button uk-button-primary uk-margin-top">{% trans %}Отправить{% endtrans %}</button>
-                                    </form>
-                                {% else %}
-                                    <div>
-                                        <a uk-toggle="target: #sign_in">{% trans %}Войдите{% endtrans %}</a> {% trans %}или{% endtrans %} <a uk-toggle="target: #sign_up">{% trans %}зарегистрируйтесь{% endtrans %}</a>, {% trans %}чтобы написать комментарий{% endtrans %}.
-                                    </div>
-                                {% endif %}
-
-                                {% if card.comments is not empty %}
-                                    <hr>
-                                <div class="uk-margin-top">
-                                    {% for comment in card.comments %}
-                                        <div class="uk-margin-bottom">
-                                            <i class="fa fa-calendar"></i> {{ comment.dateCreate|date('d.m.Y H:i') }}
-                                            <i class="fa fa-user"></i> {{ comment.user.header }}
-                                            <div><i class="fa fa-comment-o"></i> {{ comment.content }}</div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-
-                            </div>
-                        </div>
-                        <div class="uk-width-1-2@s">
-                            <h2 class="pf_style_header"><span>{% trans %}Отзывы{% endtrans %}</span></h2>
-
-                            <div class="card_blanc">
-                                {% if app.session.has('logged_user') %}
-                                    <form action="/userAddOpinion" method="POST">
-                                        <div class="stars uk-margin-bottom">
-                                            {% for i in 1..5 %}
-                                                <span class="star {{ i == 1 ? 'active' }}" data-star="{{ i }}"><i class="fa fa-star"></i></span>
-                                            {% endfor %}
-                                            <span id="stars">1</span>
-                                        </div>
-                                        <textarea name="content" class="uk-textarea" placeholder="{% trans %}Ваш отзыв{% endtrans %}" required></textarea>
-                                        <input type="hidden" name="stars" value="1">
-                                        <input type="hidden" name="user_id" value="{{ app.session.get('logged_user').id }}">
-                                        <input type="hidden" name="card_id" value="{{ card.id }}">
-                                        <input type="hidden" name="return" value="{{ app.request.requestUri }}">
-                                        <button class="uk-button uk-button-primary uk-margin-top">{% trans %}Отправить{% endtrans %}</button>
-                                    </form>
-
-                                {% else %}
-                                    <div>
-                                        <a uk-toggle="target: #sign_in">{% trans %}Войдите{% endtrans %}</a> {% trans %}или{% endtrans %} <a uk-toggle="target: #sign_up">{% trans %}зарегистрируйтесь{% endtrans %}</a>, {% trans %}чтобы оставить отзыв{% endtrans %}.
-                                    </div>
-                                {% endif %}
-
-                                {% if card.opinions is not empty %}
-                                    <hr>
-                                    <div class="uk-margin-top">
-                                        {% for opinion in card.opinions %}
-                                            <div class="uk-margin-bottom">
-                                                <i class="fa fa-calendar"></i> {{ opinion.dateCreate|date('d.m.Y H:i') }}
-                                                <i class="fa fa-user"></i> {{ opinion.user.header }}
-                                                <i class="fa fa-star c_gold"></i> {{ opinion.stars }}
-                                                <div><i class="fa fa-comment-o"></i> {{ opinion.content }}</div>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                {% else %}
-                    <a href="/card/new" class="uk-button uk-button-success uk-width-1-1 uk-margin-top">{% trans %}Разместить еще объявление{% endtrans %}</a>
-                {% endif %}
-
-
-                {% if app.session.has('admin') or ( app.session.has('logged_user') and card.user.id == app.session.get('logged_user').id ) %}
-                    <hr>
-                    <a class="uk-button uk-button-primary" href="/user/edit/card/{{ card.id }}">{% trans %}Редактировать объявление{% endtrans %}</a>
-                {% endif %}
-
-
-                <h2 class="pf_style_header"><span>{% trans %}Похожие объявления{% endtrans %}</span></h2>
-                <div uk-grid class="uk-grid-small uk-grid-match">
-                    {% for card in similar %}
-                        <div class="uk-width-1-3@s">
-                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'150px'}) }}
-                        </div>
-                    {% endfor %}
-                </div>
-
-                {% if is_mobile() %}
-                    <div class="uk-margin-top">
-                        {{ include('search/search_form.html.twig') }}
-                    </div>
-                {% endif %}
-
 
             </div>
 
@@ -479,7 +316,7 @@
             <div class="uk-width-1-4@s">
 
                 {% if not reserved %}
-                <div class="uk-margin-bottom card_page_phone" {{ is_mobile() ? '' : 'uk-sticky="offset: 64"' }}>
+                <div class="uk-margin-bottom card_page_phone" {{ is_mobile() ? '' : 'uk-sticky="offset: 110"' }}>
                     <div uk-grid class="uk-grid-collapse uk-grid-match b_shadowed">
                         <div class="phone_block uk-width-1-1">
                             {% if app.session.get('phone')[card.user.id] is not defined %}
@@ -499,106 +336,67 @@
                 </div>
                 {% endif %}
 
-                {% if not is_mobile() and not is_admin_card %}
-                <div class="uk-margin-bottom card_blanc border_green">
-                    <div class="cursor-pointer uk-text-center c_green" uk-toggle="target: #user_book_form"><i class="fa fa-pencil-square-o"></i> {% trans %}Отправить заявку{% endtrans %}</div>
-                </div>
-                {% endif %}
+                <div class="bordered padding10">
 
-                {% if not is_mobile() %}
-                <div class="uk-margin-bottom card_blanc2" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                    {% for price in card.getCardPrices %}
-                        <div class="uk-text-right {{ price.priceId == 2 ? 'price_highlighted' : ''}}">
-
-
-
-                            <span class="price_value">{{ price.value|number_format(0,'.','<span class="thousand_separator"></span>')|raw }}</span>
-
-                            {% if card.currency == 'RUB' %}
-                                {% set currency = 'ruble' %}
-                            {% endif %}
-                            {% if card.currency == 'EUR' %}
-                                {% set currency = 'euro' %}
-                            {% endif %}
-                            {% if card.currency == 'USD' %}
-                                {% set currency = 'dollar' %}
-                            {% endif %}
-
-                            {% if price.priceId == 2%}
-                                <span itemprop="price" style="visibility: hidden;height: 0;width: 0;display: none;">{{ price.value }}</span>
-                                <span itemprop="priceCurrency" style="visibility: hidden;height: 0;width: 0;display: none;">{{ card.currency }}</span>
-                            {% endif %}
-
-                            <span class="price_descriptor uk-text-truncate"> <i class="fa fa-{{ currency }}"></i> / {{ price.getPrice.header|trans }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                {% if not is_mobile() %}
-                <div class="user_block uk-text-center uk-margin-bottom">
-
-                    <div uk-grid class="uk-grid-small">
-                        {% if user_foto %}
-                            <div class="uk-width-auto">
-                                <a href="/user/{{ card.user.id }}" style="background: url('{{ user_foto }}') center center no-repeat;
-                                        background-size: contain;
-                                        width: 50px;
-                                        height: 50px;
-                                        display: inline-block;
-                                        ">
-                                </a>
+                    <div class="" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                        <div class="uk-clearfix">
+                            <div class="uk-float-left">
+                                {% for price in card.getCardPrices if price.priceId == 2%}
+                                    <div class="">
+                                        <span class="price_value">{{ price.value|number_format(0,'.','<span class="thousand_separator"></span>')|raw }}</span>
+                                        {% set currency = {
+                                            'RUB': '₽',
+                                            'EUR': '€',
+                                            'USD': '$'
+                                        } %}
+                                        {% if price.priceId == 2%}
+                                            <span itemprop="price" style="visibility: hidden;height: 0;width: 0;display: none;">{{ price.value }}</span>
+                                            <span itemprop="priceCurrency" style="visibility: hidden;height: 0;width: 0;display: none;">{{ card.currency }}</span>
+                                        {% endif %}
+                                        <span class="price_descriptor uk-text-truncate">{{ currency[card.currency] }}/{{ price.getPrice.header|trans }}</span>
+                                    </div>
+                                {% endfor %}
                             </div>
-                        {% else %}
-                        {% endif %}
 
-                        <div class="uk-width-expand">
-                            <div class="uk-text-small">{% trans %}Собственник{% endtrans %}</div>
-                            <h3 class="uk-margin-remove uk-text-truncate" style="line-height: 31px;"><a href="/user/{{ card.user.id }}" class="uk-text-truncate">{{ card.user.header }}</a></h3>
+                            <div class="uk-float-right uk-text-right">
+                                <div uk-toggle="target: #share_butons"><i uk-icon="icon:social"></i></div>
+                            </div>
                         </div>
+
+                        <button class="uk-button uk-button-primary uk-width-1-1" uk-toggle="target: #user_book_form">{% trans %}Отправить заявку{% endtrans %}</button>
                     </div>
 
-
-
-
-                    <div class="">
-                        {% for info in card.user.information %}
-                            {% if info.uiKey == 'vk' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_vk"><i class="fa fa-vk"></i></a>{% endif %}
-                            {% if info.uiKey == 'fb' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_fb"><i class="fa fa-facebook"></i></a>{% endif %}
-                            {% if info.uiKey == 'ok' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_ok"><i class="fa fa-odnoklassniki"></i></a>{% endif %}
-                            {% if info.uiKey == 'tw' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_tw"><i class="fa fa-twitter"></i></a>{% endif %}
-                            {% if info.uiKey == 'gp' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_gp"><i class="fa fa-google-plus"></i></a>{% endif %}
-                            {% if info.uiKey == 'ig' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_ig"><i class="fa fa-instagram"></i></a>{% endif %}
-                            {% if info.uiKey == 'yt' and info.uiValue != '' %}<a rel="nofollow" href="{{ info.uiValue }}" class="card_soc_icon s_yt"><i class="fa fa-youtube"></i></a>{% endif %}
-                        {% endfor %}
-                    </div>
                 </div>
-                {% if not is_admin_card %}
-                {#<div class="uk-margin-bottom card_blanc">#}
-                    {#<div class="cursor-pointer uk-text-center" uk-toggle="target: #user_message_form"><i class="fa fa-commenting"></i> {% trans %}Email сообщение{% endtrans %}</div>#}
-                {#</div>#}
-                {% endif %}
 
-                {% if app.session.has('logged_user') and blockings[app.session.get('logged_user').id] is not defined%}
-                    <div class="uk-margin-bottom card_blanc">
-                        <div class="open_chat cursor-pointer uk-text-center" data-user_id="{{ card.user.id }}" data-visitor_id="{{ app.session.get('logged_user').id }}" data-card_id="{{ card.id }}"><i class="fa fa-comments"></i> {% trans %}Написать сообщение{% endtrans %}</div>
+                <div class="bordered padding10 uk-margin-top">
+                    <div class="uk-text-small uk-margin-bottom">
+                    {% trans %}Собственник{% endtrans %}: <a class="c_blue" href="/user/{{ card.user.id }}" class="uk-text-truncate">{{ card.user.header }}</a>
                     </div>
-                    {{ include('user/chat_modal.html.twig') }}
-                {% endif %}
-
-
-                <div class="uk-margin-bottom card_blanc">
-                    <div><i class="fa fa-eye c_green"></i> {{ card.views }} <span class="uk-text-small c_grey">{% trans %}просмотров{% endtrans %}</span></div>
-                    <div><i class="fa fa-heart c_red"></i> <span id="card_likes">{{ card.likes }}</span> <span class="uk-text-small c_grey">{% trans %}лайков{% endtrans %}</span></div>
+                    <div><i class="fa fa-map-marker c_blue"></i>
+                        <span class="uk-text-small">
+                            {% if card.address != '' %}
+                                {{ card.address }}
+                            {% else %}
+                                {{ card.getCity.header }}, {{ card.getCity.getParent.header }}, {{ card.getCity.country }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div><i class="fa fa-calendar c_blue"></i> {{ card.dateCreate|date("d.m.Y") }}</div>
+                    <div><i class="fa fa-eye c_blue"></i> {{ card.views }} <span class="uk-text-small c_grey">{% trans %}просмотров{% endtrans %}</span></div>
+                    <div><i class="fa fa-heart c_blue"></i> <span id="card_likes">{{ card.likes }}</span> <span class="uk-text-small c_grey">{% trans %}лайков{% endtrans %}</span></div>
                     <div>
-                        <i class="fa fa-star c_gold"></i> {{ opinions }}/5 <span class="uk-text-small c_grey">{% trans %}звезд из{% endtrans %}</span> {{ total_opinions }}
+                        <i class="fa fa-star c_blue"></i> {{ opinions }}/5 <span class="uk-text-small c_grey">{% trans %}звезд из{% endtrans %}</span> {{ total_opinions }}
                         <span class="uk-text-small c_grey">{% trans %}отзывов{% endtrans %}</span>
                     </div>
                     <hr>
-                    <div class="uk-text-center"><a href="/user/{{ card.user.id }}">{% trans %}Все объявления{% endtrans %}<br>{% trans %}пользователя{% endtrans %} ({{ card.user.cards|length }})</a></div>
+                    <div class="uk-text-center"><a class="c_blue" href="/user/{{ card.user.id }}">{% trans %}Все объявления{% endtrans %} {% trans %}пользователя{% endtrans %} ({{ card.user.cards|length }})</a></div>
 
+                    {% if app.session.has('logged_user') and blockings[app.session.get('logged_user').id] is not defined%}
+                        <div class="open_chat cursor-pointer uk-text-center" data-user_id="{{ card.user.id }}" data-visitor_id="{{ app.session.get('logged_user').id }}" data-card_id="{{ card.id }}">{% trans %}Написать сообщение{% endtrans %}</div>
+                        {{ include('user/chat_modal.html.twig') }}
+                    {% endif %}
                 </div>
-                {% endif %}
+
 
 
 
@@ -703,7 +501,7 @@
                 </div>
 
 
-                <div uk-toggle="target: #share_butons" class="share_button uk-margin-bottom"><i uk-icon="icon:social"></i> {% trans %}Поделиться{% endtrans %}</div>
+
 
                 <div id="share_butons" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
@@ -733,24 +531,7 @@
                     </div>
                 </div>
 
-                <div class="uk-visible@s">
-                    <h3 class="pf_style_header"><span>{% trans %}Поиск{% endtrans %}</span></h3>
-                    {{ include('search/search_form.html.twig') }}
 
-                    <h3 class="pf_style_header"><span>{% trans %}Лучшие предложения{% endtrans %}</span></h3>
-                    {% for card in t3_new.getTop3 %}
-                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'150px'}) }}
-                        <hr>
-                    {% endfor %}
-
-                    <div class="uk-text-center">
-                        {% if app.session.has('logged_user') %}
-                            <a href="/card/new" class="" title="Хотите сюда?<br>Разместите объявление!" uk-tooltip>{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
-                        {% else %}
-                            <a class="" title="Хотите сюда?<br>Разместите объявление!" uk-tooltip uk-toggle="target: #sign_in_or_up">{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
-                        {% endif %}
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -770,6 +551,12 @@
     {% if app.session.has('first_card') %}
         {{ app.session.remove('first_card') }}
     {% endif %}
+
+
+    {{ include(':main_page:top_slider.html.twig') }}
+
+    {{ include(':main_page:bottom_rent.html.twig') }}
+
 
     <div id="user_abuse" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
@@ -801,6 +588,9 @@
             </form>
         </div>
     </div>
+
+
+
 
     {#<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"#}
         {#async defer>#}

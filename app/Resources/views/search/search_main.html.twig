@@ -4,11 +4,13 @@
     {{ parent() }}
     <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/main_page/top_slider.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('assets/js/city_general_mark_selector.js') }}"></script>
+    <script src="{{ asset('assets/js/sliderSettings.js') }}"></script>
     <script src="{{ asset('assets/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('assets/js/search_page.js') }}"></script>
     <script src="{{ asset('assets/js/auto-complete.min.js') }}"></script>
@@ -163,17 +165,6 @@
 
 
 
-                    {#{% if x_uri[2] is defined and x_uri[2] != 'rus' and x_uri|length == 3 %}#}
-                        {#{{ include('search/gt_block.html.twig') }}#}
-                    {#{% endif %}#}
-
-                    {#{% if x_uri[2] is defined and x_uri[2] != 'rus' and x_uri|length > 4 and mark.id == null %}#}
-                        {#{{ include('search/mark_block.html.twig') }}#}
-                    {#{% endif %}#}
-
-                    {#{% if x_uri[2] is defined and x_uri[2] != 'rus' and x_uri|length > 5 and model.id == null %}#}
-                        {#{{ include('search/model_block.html.twig') }}#}
-                    {#{% endif %}#}
 
 
 
@@ -191,50 +182,13 @@
         </div>
     </div>
 
+    {{ include(':main_page:top_slider.html.twig') }}
+
+    {{ include(':main_page:bottom_rent.html.twig') }}
+
+</div>
+
 {% endblock %}
 
 
 
-{#{% if bodyTypes and model.id == null and not is_mobile() %}#}
-                            {#<hr>#}
-                            {#<div uk-grid class="uk-grid-small">#}
-                                {#<div class="body_button"><a href="{{ body_url }}">{% trans %}Любой кузов{% endtrans %}</a></div>#}
-                                {#{% for body in bodyTypes %}#}
-                                    {#{% if mark.id == null %}#}
-                                        {#<div class="body_button"><a href="/rent/{{ x_uri[2] }}/{{ x_uri[3] }}/{{ x_uri[4] }}/{{ body.url }}">{{ lang == 'ru' ? body.header : body.url|capitalize }}</a></div>#}
-                                    {#{% else %}#}
-                                        {#<div class="body_button"><a href="/rent/{{ x_uri[2] }}/{{ x_uri[3] }}/{{ x_uri[4] }}/{{ x_uri[5] }}/{{ body.url }}">{{ lang == 'ru' ? body.header : body.url|capitalize }}</a></div>#}
-                                    {#{% endif %}#}
-                                {#{% endfor %}#}
-                            {#</div>#}
-                            {#<hr>#}
-                        {#{% endif %}#}
-
-{#{% if bodyTypes and model.id == null and is_mobile() %}#}
-                        {#<div class="uk-width-1-3@s">#}
-                            {#<div class="body_type_main">#}
-                                {#<span class="uk-text-small">{% trans %}Кузов{% endtrans %}: </span>#}
-                                {#<a class="sort_button {{ is_body is defined and is_body == 'sedan' ? 'active' }}" href="{{ body_url~'/sedan' }}">{% trans %}седан{% endtrans %}</a>#}
-                                {#<a class="sort_button {{ is_body is defined and is_body == 'hatchback' ? 'active' }}" href="{{ body_url~'/hatchback' }}">{% trans %}хетчбек{% endtrans %}</a>#}
-                                {#<a class="sort_button {{ is_body is defined and is_body == 'crossover' ? 'active' }}" href="{{ body_url~'/crossover' }}">{% trans %}кроссовер{% endtrans %}</a>#}
-                                {#<span class="uk-text-small body_more">{% trans %}ещё{% endtrans %} <i uk-icon="icon:chevron-down; ratio: 0.7"></i></span>#}
-                            {#</div>#}
-                            {#<div class="body_type_all uk-grid-small" hidden uk-grid>#}
-                                {#<div class="uk-width-1-1">#}
-                                    {#<a class="sort_button uk-width-1-1 " href="{{ body_url }}">{% trans %}Любой кузов{% endtrans %}</a>#}
-                                {#</div>#}
-                                {#{% for body in bodyTypes %}#}
-                                    {#<div class="uk-width-1-4 ">#}
-                                        {#<a class="sort_button uk-width-1-1 uk-text-truncate {{ is_body is defined and is_body == body.url ? 'active' }}" href="{{ body_url~'/'~body.url }}">{{ lang == 'ru' ? body.header: body.url }}</a>#}
-                                    {#</div>#}
-                                {#{% endfor %}#}
-                            {#</div>#}
-                        {#</div>#}
-                        {#{% endif %}#}
-
-                        {#{% if general.url != 'alltypes' %}#}
-                        {#<div class="uk-width-1-3@s {{ not is_mobile() and total_cards>0 ? 'uk-text-center' }}">#}
-                            {#<span class="uk-text-small">{% trans %}Марка{% endtrans %}: </span>#}
-                            {#<button class="sort_button" uk-toggle="target: #top_mark_links">{% trans %}выбрать{% endtrans %}</button>#}
-                        {#</div>#}
-                        {#{% endif %}#}

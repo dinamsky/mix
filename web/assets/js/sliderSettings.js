@@ -5,14 +5,19 @@ $( document ).ready(function() {
         var full = $(this).data('full');
         var fnc = '';
         var nav = true;
-        if (dots === 0) {
+        if(dots === 0){
             dots = false;
             nav = true;
             fnc = 'recount';
-        } else {
+        }
+        if(dots === 1){
             dots = true;
             nav = false;
             fnc = '';
+        }
+        if(dots === 2){
+            dots = true;
+            nav = true;
         }
         var st_padding = 50;
         if (full){
@@ -56,5 +61,9 @@ $( document ).ready(function() {
     {
         // if (fnc === 'recount') $(".owl-carousel-all").find('div.owl-item').height($(".owl-carousel").height());
     }
+
+
+    $('#page_slider .owl-nav').css('width',$('.standard_wide').width());
+    $('#page_slider .owl-nav').css('bottom',$('#page_slider').height()/2+'px');
 
 });

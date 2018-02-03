@@ -614,7 +614,9 @@ class SearchController extends Controller
         // ---------------------------- end of similar ----------------------------------
 
 
-
+        $topSlider = $this->getDoctrine()
+                    ->getRepository(Card::class)
+                    ->getTopSlider($this->get('session')->get('city')->getId());
 
         return $this->render('search/search_main.html.twig', [
 
@@ -670,7 +672,9 @@ class SearchController extends Controller
             'is_feature' => $is_feature,
             'get_filter' => isset($get['filter']) ? $get['filter'] : [],
             'get_feature' => isset($get['feature']) ? $get['feature'] : [],
-            'features' => $features
+            'features' => $features,
+            'topSlider' => $topSlider
+
 
         ]);
     }

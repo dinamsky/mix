@@ -132,7 +132,7 @@ class ShowCardController extends Controller
         $query->setParameter(1, $card->getCityId());
         $query->setParameter(2, $card->getId());
         $query->setParameter(3, $card->getModelId());
-        $query->setMaxResults(9);
+        $query->setMaxResults(6);
 
         if (count($query->getScalarResult()) < 1) { // -- get by mark
             $dql = 'SELECT m.id FROM MarkBundle:CarModel m WHERE m.carMarkId=?1';
@@ -145,26 +145,26 @@ class ShowCardController extends Controller
             $query = $em->createQuery($dql);
             $query->setParameter(1, $card->getCityId());
             $query->setParameter(2, $card->getId());
-            $query->setMaxResults(9);
+            $query->setMaxResults(6);
 
             if (count($query->getScalarResult()) < 1) {
                 $dql = 'SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.cityId=?1 AND c.id != ?2 AND c.generalTypeId = ' . $card->getGeneralTypeId() . ' ORDER BY t.weight DESC, c.dateTariffStart DESC, c.dateUpdate DESC';
                 $query = $em->createQuery($dql);
                 $query->setParameter(1, $card->getCityId());
                 $query->setParameter(2, $card->getId());
-                $query->setMaxResults(9);
+                $query->setMaxResults(6);
 
                 if (count($query->getScalarResult()) < 1) {
                     $dql = 'SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.id != ?2 AND c.generalTypeId = ' . $card->getGeneralTypeId() . ' ORDER BY t.weight DESC, c.dateTariffStart DESC, c.dateUpdate DESC';
                     $query = $em->createQuery($dql);
                     $query->setParameter(2, $card->getId());
-                    $query->setMaxResults(9);
+                    $query->setMaxResults(6);
 
                     if (count($query->getScalarResult()) < 1) {
                         $dql = 'SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.id != ?2 ORDER BY t.weight DESC, c.dateTariffStart DESC, c.dateUpdate DESC';
                         $query = $em->createQuery($dql);
                         $query->setParameter(2, $card->getId());
-                        $query->setMaxResults(9);
+                        $query->setMaxResults(6);
                     }
                 }
 
@@ -220,6 +220,7 @@ class ShowCardController extends Controller
         $seo['model'] = $model->getHeader();
         $seo['city']['chto'] = $city->getHeader();
         $seo['city']['gde'] = $city->getGde();
+        $seo['city']['url'] = $city->getUrl();
 
         $mark_arr = $mm->getExistMarks('',$mark->getCarTypeId());
         $mark_arr_sorted = $mark_arr['sorted_marks'];
@@ -287,6 +288,10 @@ class ShowCardController extends Controller
         }
 
 
+        $topSlider = $this->getDoctrine()
+                    ->getRepository(Card::class)
+                    ->getTopSlider($this->get('session')->get('city')->getId());
+
         return $this->render('card/card_show.html.twig', [
 
             'card' => $card,
@@ -338,7 +343,9 @@ class ShowCardController extends Controller
             'reserved' => $card->getDateRentFinish() > new \DateTime() ? true : false,
             'is_admin_card' => $is_admin_card,
 
-            'blockings' => $blk
+            'blockings' => $blk,
+
+            'topSlider' => $topSlider,
 
         ]);
     }
