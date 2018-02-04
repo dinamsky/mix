@@ -48,3 +48,7 @@ h2{
 .border_bottom{
     border-bottom: 1px solid lightgrey;
 }
+
+.bold{
+    font-weight: bold;
+}

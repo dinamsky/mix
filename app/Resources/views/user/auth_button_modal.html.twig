@@ -1,6 +1,15 @@
 <div class="top_user_actions">
     {% if app.session.has('logged_user') %}
-        <a class="user_image_block" href="/user/cards"><img src="/assets/images/users/t/{{ app.session.get('user_pic') }}.jpg" alt="" style="height: 40px"> {{ app.session.get('logged_user').header }}
+        <a class="user_image_block" href="/user/cards">
+            <div style="background: url(/assets/images/users/t/{{ app.session.get('user_pic') }}.jpg) center center;
+                        background-size: cover;
+                        width:40px;
+                        height:40px;
+                        border-radius:20px;
+                        display:inline-block;
+                        vertical-align: middle;
+                        margin-right: 10px;"></div>
+            {{ app.session.get('logged_user').header }}
             {% if t3_new.getUnread>0 %}<span class="uk-badge red_badge">{{ t3_new.getUnread }}</span>{% endif %}
         </a>
 

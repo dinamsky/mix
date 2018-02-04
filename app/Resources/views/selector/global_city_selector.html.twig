@@ -1,7 +1,7 @@
 <input type="hidden" id="cityURL" name="cityURL" value="{{ city.url }}">
 <input type="hidden" id="cityId" name="cityId" value="{{ city.id }}">
 <div uk-toggle="target: #city_popular" class="cursor-pointer sticky_top_city_selector">
-    <i class="fa fa-map-marker icon_outline_blue"></i>
+    <span uk-icon="icon:location" class="c_blue"></span>
     {% if lang=='ru' %}
         {{ app.session.has('city')  ? app.session.get('city').header : city.header }}
     {% else %}
