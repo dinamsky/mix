@@ -885,10 +885,13 @@ footer a:hover{
 .bottom_share{
     background: #b5b5b5;
     display: block;
-    color: white;
+    color: #101010;
     text-align: center;
     font-size: 12px;
-    padding: 5px;
+    padding: 1px;
+    position: absolute;
+    right: 26px;
+    top: 0;
 }
 
 .top_find_button button{
@@ -1267,12 +1270,13 @@ top: 80%;
 }
 
 .promote_card_link{
-    color: black;
-    padding: 2px 20px 3px 20px;
+    color: white;
+    padding: 6px 20px 7px 20px;
     box-sizing: border-box;
     display: inline-block;
-    margin: 5px 0;
-    background: #f1c40f;
+    margin: 5px 0 10px;
+    background: #b7b7b7;
+    width: 90%;
 }
 
 .promote_card_link:hover{
@@ -1282,9 +1286,10 @@ top: 80%;
 }
 
 .pay_pro_button{
-    background: #ffffff !important;
-    border: 1px solid green !important;
-    color: black !important;
+    background: #2d9cdb !important;
+    border: 0;
+    color: white !important;
+    width: 100%;
 }
 
 .promo .select2-container {

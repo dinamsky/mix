@@ -5,6 +5,8 @@
         <h1>{% trans %}Мои объявления{% endtrans %}</h1>
         {{ include('search/grid_view.html.twig') }}
 
+        <div class="uk-margin"></div>
+
         {% if app.session.has('first_jump') %}
 
             <div id="first_jump" class="uk-modal" uk-modal>

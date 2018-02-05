@@ -837,5 +837,26 @@ msgstr "yes, we drive to you"
 msgid "возможна, по согласованию"
 msgstr "possible if accepted"
 
+msgid "Мои сообщения"
+msgstr "My messages"
 
+msgid "Тариф"
+msgstr "Tariff"
 
+msgid "Стандарт"
+msgstr "Standart"
+
+msgid "Экспресс"
+msgstr "Express"
+
+msgid "Премиум"
+msgstr "Premium"
+
+msgid "Продвинуть"
+msgstr "Promote"
+
+msgid "Записать фото"
+msgstr "Save foto"
+
+msgid "Сохранить профиль"
+msgstr "Save profile"

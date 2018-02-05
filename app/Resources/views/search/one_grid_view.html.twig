@@ -1,4 +1,4 @@
-<div class="bg_white all_shadowed">
+<div class="bg_white all_shadowed uk-position-relative">
 
     {% set main_foto = main_foto(card.getFotos) %}
 
@@ -96,14 +96,18 @@
 
 
     {% if share is defined %}
-        <a href="/card_share/{{ card.id }}" class="bottom_share">Разместить в своих соцсетях</a>
-        <div class="uk-text-center uk-text-small">Ваш тариф: "
-        {{ card.tariffId == 1 ? 'Стандарт' }}
-        {{ card.tariffId == 2 ? 'Экспресс' }}
-        {{ card.tariffId == 3 ? 'Премиум' }}"
+        <a href="/card_share/{{ card.id }}" class="bottom_share"><span uk-icon="icon: social"></span></a>
+        <div class="uk-text-center uk-text-small" style="border-top: 1px solid #d4d4d4;
+                                                    padding-top: 5px;">
+            {% trans %}Тариф{% endtrans %}:
+            <span class="c_blue">
+                {{ card.tariffId == 1 ? 'Стандарт'|trans }}
+                {{ card.tariffId == 2 ? 'Экспресс'|trans }}
+                {{ card.tariffId == 3 ? 'Премиум'|trans }}
+            </span>
         </div>
         <div class="uk-text-center">
-            <a href="/promote_card/{{ card.id }}" class="promote_card_link">Продвинуть</a>
+            <a href="/promote_card/{{ card.id }}" class="promote_card_link">{% trans %}Продвинуть{% endtrans %}</a>
         </div>
     {% endif %}
 
@@ -114,12 +118,12 @@
        or ( app.session.has('logged_user') and card.user.id == app.session.get('logged_user').id )
     ) %}
         {% if in_edit is not defined %}
-            <form action="/card/update" method="POST" style="position: absolute;top:0;right:0;" onsubmit="return confirm('Вы уверены?');">
+            <form action="/card/update" method="POST" style="position: absolute;top:0;left:0;" onsubmit="return confirm('Вы уверены?');">
                 <input type="hidden" name="cardId" value="{{ card.id }}">
                 <input type="hidden" name="return" value="{{ app.request.requestUri }}">
-                <button class="uk-button-danger c_white" name="delete" uk-close></button>
+                <button class="uk-button-danger c_white" name="delete" style="padding: 0;border:0;vertical-align: top;"><span uk-icon="icon: close"></span></button>
             </form>
-            <a class="uk-button-primary uk-position-top-left icon_button" href="/user/edit/card/{{ card.id }}" ><i class="fa fa-pencil"></i></a>
+            <a class="uk-button-primary uk-position-top-right icon_button" href="/user/edit/card/{{ card.id }}" ><i class="fa fa-pencil"></i></a>
         {% endif %}
     {% endif %}
 </div>
