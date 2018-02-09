@@ -7,10 +7,10 @@
         <span class="expander_button" uk-toggle="target: #city_selector"><span id="xpb_name">{{ city.header }}</span> <i uk-icon="icon:chevron-down"></i></span>
 
         <div class="uk-display-inline-block uk-margin-left">
-            Доставка транспорта клиенту:
-            <label><input type="radio" name="deliveryStatus" value="0"> нет</label>
-            <label><input type="radio" name="deliveryStatus" value="1"> да</label>
-            <label><input type="radio" name="deliveryStatus" value="2" checked> возможна</label>
+            {% trans %}Доставка транспорта клиенту{% endtrans %}:
+            <label><input type="radio" name="deliveryStatus" value="0"> {% trans %}нет{% endtrans %}</label>
+            <label><input type="radio" name="deliveryStatus" value="1"> {% trans %}да{% endtrans %}</label>
+            <label><input type="radio" name="deliveryStatus" value="2" checked> {% trans %}возможна{% endtrans %}</label>
         </div>
 
         <div class="expandable_block" id="city_selector" hidden>

@@ -164,12 +164,21 @@
                     </div>
                 {% endif %}
 
-                <div class="uk-hidden uk-margin-medium-top" id="new_tariffs">
-                    <h3>{% trans %}Выберите тариф размещения{% endtrans %}</h3>
-                    {{ include(':card:tariff_selector.html.twig', {'tariffId':0}) }}
+                <div class="uk-hidden uk-margin-medium-top uk-margin-bottom" id="new_tariffs">
+                    {#<h3>{% trans %}Выберите тариф размещения{% endtrans %}</h3>#}
+                    {#{{ include(':card:tariff_selector.html.twig', {'tariffId':0}) }}#}
                     <div class="uk-margin-top">
-                        {% trans %}После выбора тарифа на ваш email будет отправлено письмо. Перейдите по ссылке в письме для завершения регистрации.{% endtrans %}<br>
-                        <input type="checkbox" name="subscriber" checked> {% trans %}Получать новости и спецпредложения{% endtrans %}
+                        {#{% trans %}После выбора тарифа на ваш email будет отправлено письмо. Перейдите по ссылке в письме для завершения регистрации.{% endtrans %}<br>#}
+                        {#<input type="checkbox" name="subscriberz" checked> {% trans %}Получать новости и спецпредложения{% endtrans %}#}
+
+                    <div>
+                        <input type="checkbox" name="subscriber" id="subscriber" class="css-checkbox" checked> <label for="subscriber" class="css-label">{% trans %}Получать новости и спецпредложения{% endtrans %}</label>
+                    </div>
+
+                    <div class="uk-text-center">
+                        <button class="uk-button pay_tariff_button uk-margin-top" name="change_tariff">{% trans %}Разместить бесплатно{% endtrans %}</button>
+                    </div>
+
                     </div>
                 </div>
 
@@ -187,7 +196,7 @@
 
 
 
-        <input type="hidden" name="tariffId" value="3">
+        <input type="hidden" name="tariffId" value="1">
 
         {#<hr>#}
         {#<button class="uk-button uk-button-primary">Готово</button>#}

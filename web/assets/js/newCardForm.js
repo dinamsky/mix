@@ -158,8 +158,8 @@ $( document ).ready(function() {
             data: {modelId:modelId},
             success: function(html){
                 if(html!='') {
-                    var content = '<div class="count_price_block arrow_box"><h4>Минимальная и максимальная цена на сайте</h4><b>' + mark_name + ' ' + model_name + '</b><br>';
-                    var footer = '<p>Подсказка!<br>Если поставить цены ниже, чем у конкурентов, звонков будет больше.</p></div>';
+                    var content = '<div class="count_price_block arrow_box"><h4>'+$('#nprh').html()+'</h4><b>' + mark_name + ' ' + model_name + '</b><br>';
+                    var footer = '<p>'+$('#nprf').html()+'</p></div>';
                     $('#counted_prices').html(content + html + footer);
                 }
             }

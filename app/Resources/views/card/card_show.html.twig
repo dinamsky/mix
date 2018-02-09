@@ -397,7 +397,7 @@
                     {% endif %}
                 </div>
 
-
+<button class="uk-button uk-button-default uk-width-1-1 uk-margin-top" uk-toggle="target: #user_abuse">{% trans %}Жалоба{% endtrans %}</button>
 
 
                 <div id="user_message_form" uk-modal>
@@ -490,6 +490,7 @@
 
                 <div id="user_phone_form" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
+                        <h2 class="uk-modal-title">{% trans %}Телефон{% endtrans %}</h2>
                         <button class="uk-modal-close-default" type="button" uk-close></button>
                         <div class="modal_name"><i class="fa fa-user"></i> {{ card.user.header }}</div>
                         <a class="modal_phone" href=""></a>
@@ -510,16 +511,16 @@
                         <div class="">
                             <div class="">
                                 <div uk-grid class="uk-flex uk-flex-center uk-grid-small">
-                                    <div><!-- VK like -->
-                                        <div id="vk_like"></div>
-                                        <script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button"});</script>
-                                    </div>
-                                    <div class="  vk_share"><!-- VK share -->
-                                        <script type="text/javascript">document.write(VK.Share.button(false,{type: "round", text: "Поделиться"}));</script>
-                                    </div>
-                                    <div class="uk-width-2-3">
-                                        <div class="fb-like" data-href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-                                    </div>
+                                    {#<div><!-- VK like -->#}
+                                        {#<div id="vk_like"></div>#}
+                                        {#<script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button"});</script>#}
+                                    {#</div>#}
+                                    {#<div class="  vk_share"><!-- VK share -->#}
+                                        {#<script type="text/javascript">document.write(VK.Share.button(false,{type: "round", text: "Поделиться"}));</script>#}
+                                    {#</div>#}
+                                    {#<div class="uk-width-2-3">#}
+                                        {#<div class="fb-like" data-href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>#}
+                                    {#</div>#}
                                     <div>
                                         <script src="https://apis.google.com/js/platform.js" async defer></script>
                                         <g:plusone></g:plusone>

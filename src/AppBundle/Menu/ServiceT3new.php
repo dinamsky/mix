@@ -44,11 +44,11 @@ class ServiceT3new extends Controller
     {
 
         $cityId = $this->sess->get('city')->getId();
-        $query = $this->em->createQuery('SELECT c.id FROM AppBundle:Card c WHERE c.cityId = ?1 ORDER BY c.dateCreate DESC');
-        $query->setParameter(1, $cityId);
+        $query = $this->em->createQuery('SELECT c.id FROM AppBundle:Card c WHERE c.cityId > 1260 ORDER BY c.dateCreate DESC');
+        //$query->setParameter(1, $cityId);
         $query->setMaxResults(3);
         if(count($query->getResult())<3) {
-            $query = $this->em->createQuery('SELECT c.id FROM AppBundle:Card c WHERE c.cityId < 1260 ORDER BY c.dateCreate DESC');
+            $query = $this->em->createQuery('SELECT c.id FROM AppBundle:Card c WHERE c.cityId > 1260 ORDER BY c.dateCreate DESC');
             $query->setMaxResults(3);
         }
 

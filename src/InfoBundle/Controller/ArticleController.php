@@ -14,6 +14,8 @@ class ArticleController extends Controller
     public function indexAction($slug)
     {
 
+        $city = $this->get('session')->get('city');
+
         $article = $this->getDoctrine()
             ->getRepository(Article::class)
             ->findOneBy(['slug' => $slug]);
@@ -22,6 +24,8 @@ class ArticleController extends Controller
 
         return $this->render('InfoBundle::article.html.twig', [
             'article' => $article,
+            'city' => $city,
+            'lang' => $_SERVER['LANG']
         ]);
     }
 
@@ -30,8 +34,10 @@ class ArticleController extends Controller
      */
     public function contactsAction()
     {
+        $city = $this->get('session')->get('city');
         return $this->render('InfoBundle::contacts.html.twig', [
-
+            'city' => $city,
+            'lang' => $_SERVER['LANG']
         ]);
     }
 }

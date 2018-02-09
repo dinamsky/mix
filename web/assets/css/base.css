@@ -264,7 +264,7 @@ button{
 }
 
 .red_star{
-    color:red;
+    color:#2D9CDB;
 }
 
 .hide_on_click_out{
@@ -298,25 +298,25 @@ button{
 
 
 #tariff_3 .tariff_block_inner{
-    background: #feae00;
+    background: #14274D;
     color: white;
 }
 
 #tariff_2 .tariff_block_inner{
-    background: #3992fd;
+    background: #14274D;
     color: white;
 }
 
 #tariff_1 .tariff_block_inner{
-    background: #eceff3;
+    background: #14274D;
     color: grey;
 }
 
 .pay_tariff_button{
-    width: 100%;
-    margin-top: 5px;
+    min-width: 50%;
+    margin-top: 20px;
     text-align: center;
-    background: #55bb00;
+    background: #2d9cdb;
     color: white;
 }
 
@@ -335,17 +335,17 @@ button{
 }
 
 .t_3.active{
-    background: #feae00;
+    background: #14274D;
     color: white;
 }
 
 .t_2.active{
-    background: #3992fd;
+    background: #14274D;
     color: white;
 }
 
 .t_1.active{
-    background: #eceff3;
+    background: #14274D;
     color: grey;
 }
 
@@ -1200,7 +1200,7 @@ position: absolute;
 
 .top_pop_carousel .owl-prev{
      top: 80%;
-    left: 10px;
+    left: 11px;
 }
 
 .top_pop_carousel .owl-prev.disabled{
@@ -1210,7 +1210,7 @@ position: absolute;
 
 .top_pop_carousel .owl-next{
 top: 80%;
-    right: 10px;
+    right: 28px;
 }
 
 .popup_city_search input{
@@ -1531,7 +1531,7 @@ top: 80%;
     top: 0;
     left: 0;
     width: 100%;
-    height: 50%;
+    height: 40%;
     z-index: 0;
 }
 
@@ -1649,4 +1649,45 @@ top: 80%;
     border: 1px solid grey;
     margin-top: 10px;
     padding: 8px;
+}
+
+.newcard_continue{
+
+}
+
+.newcard_continue::after{
+    content:""
+}
+
+#new_card_form .expander_button{
+    padding: 10px 15px;
+}
+
+#new_card_form .expandable_block{
+    border: 0;
+    padding: 0;
+    margin: 20px 0;
+}
+
+
+
+.uk-modal-title{
+    position: absolute;
+    background: #2D9CDB;
+    left: 0;
+    top: 0;
+    width: 100%;
+    color: white;
+    font-size: 19px;
+    font-weight: 300;
+    padding: 10px 30px;
+    box-sizing: border-box;
+}
+
+.uk-modal-body {
+    padding: 80px 30px 30px 30px;
+}
+
+.uk-modal-close-default.uk-close.uk-icon{
+    color: white;
 }

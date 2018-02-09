@@ -860,3 +860,39 @@ msgstr "Save foto"
 
 msgid "Сохранить профиль"
 msgstr "Save profile"
+
+msgid "Доставка транспорта клиенту"
+msgstr "Delivery to client"
+
+msgid "да"
+msgstr "yes"
+
+msgid "нет"
+msgstr "no"
+
+msgid "возможна"
+msgstr "possible"
+
+msgid "Выберите фотографии транспорта"
+msgstr "Select your vehicle fotos"
+
+msgid "Возможности продвижения объявления"
+msgstr "Card promo possibilities"
+
+msgid "Минимальная и максимальная цена на сайте"
+msgstr "Minimal and maximal price in site"
+
+msgid "Подсказка!<br>Если поставить цены ниже, чем у конкурентов, звонков будет больше."
+msgstr "Advice!<br>If you put prices lower than those of competitors, there will be more calls."
+
+msgid "Купить"
+msgstr "Buy"
+
+msgid "Заявка"
+msgstr "Order"
+
+msgid "Ваш коментарий к заявке"
+msgstr "Your comment to order"
+
+msgid ""
+msgstr ""

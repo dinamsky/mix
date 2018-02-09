@@ -33,6 +33,7 @@ $( document ).ready(function() {
             // 'autoHeight': true,
             'dots': dots,
             'loop': dots,
+            'lazyLoad': true,
             'autoplay': dots,
             'autoplayTimeout': 7000,
             'autoplayHoverPause': true,
