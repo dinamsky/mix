@@ -61,7 +61,7 @@
                 <div >
                     <div class="uk-inline uk-width-1-1">
                         <a class="uk-form-icon uk-form-icon-flip" href="#" uk-icon="icon: pencil"></a>
-                        <input name="left_city_input" id="left_city_input" class="uk-input uk-form-small uk-width-1-1" type="text" value="{{ city ? city.url : 'New York' }}" >
+                        <input name="left_city_input" id="left_city_input" class="uk-input uk-form-small uk-width-1-1" type="text" value="{{ city ? city.url|replace({'_':', '}) : 'New York' }}" >
                         <input id="left_city_input_url" type="hidden" value="{{ city ? city.url : 'New York' }}" >
                     </div>
                 </div>

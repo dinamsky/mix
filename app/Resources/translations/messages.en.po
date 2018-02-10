@@ -1,5 +1,5 @@
 msgid "Сдать"
-msgstr "Rent out"
+msgstr "Add listing"
 
 msgid "Лучшие предложения"
 msgstr "Best offers"
@@ -797,7 +797,7 @@ msgid "Все категории"
 msgstr "All categories"
 
 msgid "Сдать транспорт"
-msgstr "Rent out transport"
+msgstr "List your transport"
 
 msgid "в"
 msgstr "in"
@@ -893,6 +893,24 @@ msgstr "Order"
 
 msgid "Ваш коментарий к заявке"
 msgstr "Your comment to order"
+
+msgid "Самолеты"
+msgstr "Airplanes"
+
+msgid "Катера"
+msgstr "Boats"
+
+msgid "Яхты"
+msgstr "Yachts"
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
 
 msgid ""
 msgstr ""
