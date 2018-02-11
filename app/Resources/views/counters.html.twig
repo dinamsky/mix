@@ -1,27 +1,5 @@
-{% set page_ok = false %}
+{% if app.environment == 'prod' %}
 
-{% if card is defined and card.city.country == 'RUS' %}
-    {% set page_ok = true %}
-{% endif %}
-
-{% if card is defined and card.city.country != 'RUS' %}
-    {% set page_ok = false %}
-{% endif %}
-
-{% if card is not defined %}
-    {% set page_ok = true %}
-{% endif %}
-
-{% if app.environment == 'prod' and app.session.get('city').country == 'RUS' and page_ok %}
-    <!--Start of Zendesk Chat Script-->
-    {#<script type="text/javascript">#}
-        {#window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=#}
-            {#d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.#}
-        {#_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");#}
-            {#$.src="https://v2.zopim.com/?4coXz4CX01DBhwRvT6gl79yFYeHzrDuO";z.t=+new Date;$.#}
-                {#type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");#}
-    {#</script>#}
-    <!--End of Zendesk Chat Script-->
 
 
 
@@ -32,18 +10,12 @@
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', 'UA-92838585-1', 'auto');
+        ga('create', 'UA-113903552-1', 'auto');
         ga('send', 'pageview');
 
     </script>
 
 
-    {#{% if total_cards is defined and total_cards == 0 %}#}
-        {#<script type="text/javascript">#}
-            {#window.onload = function() {#}
-                {#yaCounter43151009.reachGoal('theEmptyPage')#}
-            {#}#}
-        {#</script>#}
-    {#{% endif %}#}
+
 
 {% endif %}
