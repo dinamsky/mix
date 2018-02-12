@@ -903,8 +903,8 @@ msgstr "Boats"
 msgid "Яхты"
 msgstr "Yachts"
 
-msgid ""
-msgstr ""
+msgid "Бронь до"
+msgstr "Reserved till"
 
 msgid ""
 msgstr ""

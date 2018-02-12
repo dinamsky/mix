@@ -132,7 +132,7 @@
             </div>
 
             {% if reserved %}
-                <div class="page_reserved">Бронь до {{ card.dateRentFinish|date("d.m.Y") }}</div>
+                <div class="page_reserved">{% trans %}Бронь до{% endtrans %} {{ card.dateRentFinish|date("d.m.Y") }}</div>
             {% endif %}
         </div>
 
@@ -183,15 +183,15 @@
 
                             {% if card.prodYear != 0 %}<div>{% trans %}Год выпуска{% endtrans %}: {{ card.prodYear }}</div>{% endif %}
 
-                            <div>{% trans %}Состояние{% endtrans %}: {{ card.getCondition.header }}</div>
+                            <div>{% trans %}Состояние{% endtrans %}: {{ lang=='ru' ? card.getCondition.header : card.getCondition.headerEn }}</div>
 
-                            <div>{{ card.getColor != null ? 'Цвет'|trans~': '~card.getColor.header }}</div>
+                            <div>{{ card.getColor != null ? 'Цвет'|trans~': '~ (lang=='ru' ? card.getColor.header : card.getColor.headerEn) }}</div>
 
 
                             {% for subfield in sub_fields if subfield.value is not null %}
                                 {% if subfield.type == 'subfield' %}
                                     <div>
-                                        {{ subfield.label }}: {{ subfield.value.getHeader }}
+                                        {{ subfield.label }}: {{ lang=='ru' ? subfield.value.getHeader : subfield.value.url }}
                                     </div>
                                 {% elseif subfield.value.getValue != 0 and subfield.value.getValue != '' %}
                                     <div>
@@ -341,7 +341,10 @@
                     <div class="" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                         <div class="uk-clearfix">
                             <div class="uk-float-left">
-                                {% for price in card.getCardPrices if price.priceId == 2%}
+
+
+
+
                                     <div class="">
                                         <span class="price_value">{{ price.value|number_format(0,'.','<span class="thousand_separator"></span>')|raw }}</span>
                                         {% set currency = {
@@ -355,7 +358,7 @@
                                         {% endif %}
                                         <span class="price_descriptor uk-text-truncate">{{ currency[card.currency] }}/{{ price.getPrice.header|trans }}</span>
                                     </div>
-                                {% endfor %}
+
                             </div>
 
                             <div class="uk-float-right uk-text-right">

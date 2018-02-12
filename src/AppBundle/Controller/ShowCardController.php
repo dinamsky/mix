@@ -292,6 +292,16 @@ class ShowCardController extends Controller
                     ->getRepository(Card::class)
                     ->getTopSlider($this->get('session')->get('city')->getId());
 
+        $prs = [];
+        //dump($card->getCardPrices());
+        foreach($card->getCardPrices() as $pr){
+            $prs[$pr->getPriceId()] = $pr;
+        }
+        //dump($prs);
+        if(isset($prs[6])) $price = $prs[6];
+        if(isset($prs[1])) $price = $prs[1];
+        if(isset($prs[2])) $price = $prs[2];
+
         return $this->render('card/card_show.html.twig', [
 
             'card' => $card,
@@ -346,6 +356,8 @@ class ShowCardController extends Controller
             'blockings' => $blk,
 
             'topSlider' => $topSlider,
+
+            'price' => $price
 
         ]);
     }

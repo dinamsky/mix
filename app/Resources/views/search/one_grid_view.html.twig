@@ -80,7 +80,7 @@
             </div>
             <div class="uk-width-auto uk-text-right">
                 <div class="uk-text-small c_grey {{ micro is defined ? 'micro' : '' }}">
-                   {{ lang=='ru' ? card.city.header : card.city.url }}
+                   {{ lang=='ru' ? card.city.header : card.city.url|replace({'_':', '}) }}
                 </div>
             </div>
         </div>
