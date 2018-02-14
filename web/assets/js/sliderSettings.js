@@ -19,7 +19,7 @@ $( document ).ready(function() {
             dots = true;
             nav = true;
         }
-        var st_padding = 50;
+        var st_padding = 20;
         if (full){
             st_padding = 0;
         }

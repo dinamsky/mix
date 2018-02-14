@@ -1,9 +1,9 @@
 <div uk-grid>
-    <div class="uk-width-1-5">
+    <div class="uk-width-1-5@s">
         {% trans %}Тип транспорта{% endtrans %} <span class="red_star">*</span>
         <div class="help_text">{% trans %}Выберите группу и тип транспорта{% endtrans %}</div>
     </div>
-    <div class="uk-width-3-5">
+    <div class="uk-width-3-5@s">
         <span class="expander_button" uk-toggle="target: #general_selector">{{ lang == 'ru' ? gt.header: gt.url }} <i uk-icon="icon:chevron-down"></i></span>
         <div class="expandable_block" id="general_selector" hidden>
             <div uk-grid class="uk-grid-small">
@@ -24,6 +24,6 @@
 
         </div>
     </div>
-    <div class="uk-width-1-5">
+    <div class="uk-width-1-5 uk-visible@s">
     </div>
 </div>

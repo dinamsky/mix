@@ -45,10 +45,10 @@
 
 
         <div class="uk-grid" uk-grid>
-            <div class="uk-width-1-4">
+            <div class="uk-width-1-4@s uk-visible@s">
                 &nbsp;
             </div>
-            <div class="uk-width-3-4">
+            <div class="uk-width-3-4@s">
                 {% if custom_seo and custom_seo.h1 != ''%}
                     <h1>{% include(template_from_string(custom_seo.h1)) %}</h1>
                 {% else %}

@@ -8,7 +8,7 @@ msgid "Разместить объявление в ТОП"
 msgstr "Move card to TOP"
 
 msgid "Большой выбор транспорта в аренду"
-msgstr "Wide choise for rent"
+msgstr "Wide transport offer to select"
 
 msgid "Найти"
 msgstr "Find"
@@ -107,7 +107,7 @@ msgid "Регистрация"
 msgstr "Signup"
 
 msgid "Введите название компании или ваше имя"
-msgstr "Type your name or company name"
+msgstr "Type the company name or your name "
 
 msgid "Зарегистрироваться"
 msgstr "Signup"
@@ -128,7 +128,7 @@ msgid "Сменить пароль"
 msgstr "Change password"
 
 msgid "Что дальше?"
-msgstr "What next?"
+msgstr "What’s next?"
 
 msgid "Войдите"
 msgstr "Login"
@@ -143,7 +143,7 @@ msgid "чтобы разместить ваше объявление"
 msgstr "to place your card"
 
 msgid "Выберите пакет 'Премиум', чтобы попасть в ТОП"
-msgstr "Choose 'Premium' to be in TOP"
+msgstr "Choose 'Premium' to get in TOP"
 
 
 # -------------------------------------------- catalog -----------------------------------------
@@ -168,7 +168,7 @@ msgid "дешевле"
 msgstr "cheaper"
 
 msgid "дороже"
-msgstr "expensive"
+msgstr "more expensive"
 
 msgid "Марка"
 msgstr "Vehicle brand"
@@ -180,7 +180,7 @@ msgid "Выберите тип транспорта"
 msgstr "Select vehicle type"
 
 msgid "Любой тип транспорта"
-msgstr "Any type"
+msgstr "Any vehicle type"
 
 msgid "Тип транспорта"
 msgstr "Vehicle type"
@@ -192,10 +192,10 @@ msgid "Выберите марку"
 msgstr "Select vehicle brand"
 
 msgid "или начните вводить наименование марки"
-msgstr "or start typing brand of vehicle"
+msgstr "or start typing a vehicle brand "
 
 msgid "показать все марки"
-msgstr "show all"
+msgstr "show all brands"
 
 msgid "Модель"
 msgstr "Vehicle model"
@@ -222,10 +222,10 @@ msgid "час"
 msgstr "hour"
 
 msgid "Пока никто не разместил объявление в этом городе и категории."
-msgstr "Nobody place card in this category and city."
+msgstr "So far, no one has placed a card in this city and category."
 
 msgid "Будь первым - добавь объявления и получай клиентов!"
-msgstr "Be first - add your card and get profit!"
+msgstr "Be first - add your card and get clients!"
 
 msgid "Разместить объявление!"
 msgstr "Place card!"
@@ -280,7 +280,7 @@ msgid "Видео"
 msgstr "Video"
 
 msgid "Год выпуска"
-msgstr "Production year"
+msgstr "Year of manufacture "
 
 msgid "Состояние"
 msgstr "Condition"
@@ -319,7 +319,7 @@ msgid "пользователя"
 msgstr "of user"
 
 msgid "Комментарии и отзывы"
-msgstr "Comments ans opinions"
+msgstr "Comments and opinions"
 
 msgid "Комментарии"
 msgstr "Comments"
@@ -367,7 +367,7 @@ msgid "Час"
 msgstr "Hour"
 
 msgid "3 дня"
-msgstr "3 day"
+msgstr "3 days"
 
 msgid "Неделя"
 msgstr "week"
@@ -391,10 +391,10 @@ msgid "Сообщение"
 msgstr "Message"
 
 msgid "Не забудьте сообщить владельцу, что звоните с сайта Мультипрокат и спросить скидку!"
-msgstr "Don't forget to message for owner: I am from mix.rent and I need discount!"
+msgstr "Don't forget to message the owner that you are calling from mix.rent and ask for a discount!"
 
 msgid "Расскажи всем!"
-msgstr "Share for all!"
+msgstr "Share with all!"
 
 msgid "Жалоба"
 msgstr "Complain"
@@ -403,10 +403,10 @@ msgid "Телефон не отвечает"
 msgstr "Phone don't answer"
 
 msgid "Объявление больше не актуально"
-msgstr "Card is not actual more"
+msgstr "Card is no longer relevant"
 
 msgid "Ворованные фото"
-msgstr "Illegal foto"
+msgstr "Stolen photos"
 
 msgid "Грубый владелец"
 msgstr "Rude owner"
@@ -419,7 +419,7 @@ msgid "Новое объявление"
 msgstr "New card"
 
 msgid "Разместите объявление и будьте готовы принимать звонки и email-сообщения от клиентов."
-msgstr "Place card and be ready to get calls and emails from your new clients"
+msgstr "Place your card and be ready to get calls and emails from your new clients"
 
 msgid "Заполните номер телефона"
 msgstr "Type your phone number"
@@ -437,7 +437,7 @@ msgid "Адрес"
 msgstr "Address"
 
 msgid "Укажите адрес размещения вашего транспорта"
-msgstr "Type address of your vehicle"
+msgstr "Type your vehicle address"
 
 msgid "Страна"
 msgstr "Country"
@@ -452,7 +452,7 @@ msgid "Тип транспорта"
 msgstr "Vehicle type"
 
 msgid "Выберите группу и тип транспорта"
-msgstr "Select group and type of vehicle"
+msgstr "Select vehicle group and type"
 
 msgid "Группа"
 msgstr "Group"
@@ -467,16 +467,16 @@ msgid "Выберите марку и модель транспорта"
 msgstr "Select vehicle brand and model"
 
 msgid "Если не нашли свою марку/модель - поставьте галочку и укажите требуемое"
-msgstr "Set checkbox if you don't find your vegicle brand/model"
+msgstr "Set checkbox if you don't find your vehicle brand/model"
 
 msgid "Марки нет в списке"
-msgstr "My vehicle brand not in list"
+msgstr "My vehicle brand is not listed"
 
 msgid "впишите свою марку"
 msgstr "type your vehicle brand"
 
 msgid "Модели нет в списке"
-msgstr "My model not in list"
+msgstr "My model is not listed"
 
 msgid "впишите свою модель"
 msgstr "type your model"
@@ -485,31 +485,31 @@ msgid "Фотографии"
 msgstr "Foto"
 
 msgid "Выберите фотографии транспорта"
-msgstr "Select vehicle foto"
+msgstr "Select vehicle photos"
 
 msgid "до 5 одновременно"
-msgstr "about 5 same time"
+msgstr "up to 5 at a time"
 
 msgid "Цены"
 msgstr "Prices"
 
 msgid "Укажите свои расценки по периодам"
-msgstr "Type your price by time periods"
+msgstr "Type your prices by time periods"
 
 msgid "Одна из расценок: в час/в день обязательна!"
-msgstr "One of price is obligatory"
+msgstr "One of prices: per hour / per day is required"
 
 msgid "Еще расценки"
-msgstr "More types of price"
+msgstr "More prices"
 
 msgid "Описание"
 msgstr "Description"
 
 msgid "Подробно опишите все условия аренды/проката вашего транспорта. Не указывайте здесь свой номер телефона!"
-msgstr "Write rent/lease details of your vehicle. Don't type your phone number here!"
+msgstr "Write your vehicle rent/lease details . Don't type your phone number here!"
 
 msgid "Тут можно указать условия аренды или проката"
-msgstr "Rent or lease condition may be here"
+msgstr "Rent or lease condition may be specified here"
 
 msgid "Можно"
 msgstr "You can"
@@ -527,19 +527,19 @@ msgid "Дополнительно"
 msgstr "Additional"
 
 msgid "Дополнительные параметры объявления будут участвовать в фильтрации"
-msgstr "Additional params will take part in filter"
+msgstr "Card additional parameters will take part in filtering"
 
 msgid "например"
-msgstr "for exapmle"
+msgstr "for example"
 
 msgid "ваш email не будет показан на сайте"
-msgstr "your email will not be shown in website"
+msgstr "your email will not be shown on website"
 
 msgid "необходимо, чтобы клиенты могли обращаться к вам"
-msgstr "need to client can call you"
+msgstr "necessary, so that clients could contact you"
 
 msgid "необходим для связи с вами"
-msgstr "need to connect with you"
+msgstr "necessary to connect with you"
 
 msgid "Выберите тариф размещения"
 msgstr "Select placement tariff"
@@ -557,16 +557,16 @@ msgid "Заполните поля"
 msgstr "Fill fields"
 
 msgid "Если вы уже зарегистрированы - выполните"
-msgstr "If you already registered - "
+msgstr "If you already registered - follow"
 
 msgid "и продолжайте подавать объявление."
-msgstr " and continue place your card"
+msgstr "and continue to place your card"
 
 msgid "Если вы здесь впервые - нажмите"
-msgstr "If you are new here - click"
+msgstr "If this is your first time here, click"
 
 msgid "заполните свою информацию и в конце вам будет предложено зарегистрироваться."
-msgstr "fill your info and we will offer you to register at the end"
+msgstr "fill in your info and we will offer you to sign up at the end"
 
 msgid "вход"
 msgstr "sign in"
@@ -610,28 +610,28 @@ msgid "Вы можете разместить не более 2-х объявл�
 msgstr "You can place no more than 2 cards"
 
 msgid "Оплатить PRO аккаунт"
-msgstr "Pay for PRO account"
+msgstr "Pay PRO account"
 
 msgid "Оплаченный PRO аккаунт действует бессрочно"
 msgstr "Payed PRO account has unlimited lifetime"
 
 msgid "и дает больше возможностей, в том числе: размещать больше объявлений и получать больше звонков от клиентов"
-msgstr "and give more possibilities, like: to place more cards and get more calls from customers"
+msgstr "and gives more possibilities, like: to place more cards and get more calls from clients"
 
 msgid "Вы можете разместить неограниченное количество объявлений"
 msgstr "You can place unlimited amount of cards"
 
 msgid "Кратко о себе/компании"
-msgstr "About"
+msgstr "Briefly about yourself / company"
 
 msgid "Ссылки на соцсети"
 msgstr "Social links"
 
 msgid "Фото"
-msgstr "Foto"
+msgstr "Photo"
 
 msgid "Объявления пользователя"
-msgstr "User cards"
+msgstr "User’s cards"
 
 msgid "все"
 msgstr "all"
@@ -644,31 +644,31 @@ msgstr "select"
 
 
 msgid "Премиум размещение"
-msgstr "Premium"
+msgstr "Premium placement"
 
 msgid "Экспресс продвижение"
-msgstr "Express"
+msgstr "Express promotion"
 
 msgid "Обычная публикация"
-msgstr "Standard"
+msgstr "Standard listing"
 
 msgid "ваш текущий тариф"
-msgstr "current tariff"
+msgstr "your current tariff"
 
 msgid "Разместить и оплатить"
-msgstr "Pay and place"
+msgstr "Place and pay"
 
 msgid "Разместить бесплатно"
 msgstr "Place for free"
 
 msgid "Ваше объявление на самом заметном месте сайта: на главной странице, на первом месте в выбранной вами категории.<br>Премиум размещение дает плюс 1000 просмотров.<br>Размещение объявления на главной странице сайта привлекает больше просмотров, вы повысите количество клиентов за короткий срок."
-msgstr "Your card will be in best position: on main page and first place in category<br>Premium give you +1000 views<br>Place in main page give your more views and customers for short time"
+msgstr "Your card will be  at the prominent site location: on the main page and in the first place in your chosen category<br>Premium placement gives you +1000 views<br>Placement on the main page gives you more views and customers in a short time"
 
 msgid "Разместите ваше объявление в разделе «похожие объявления».<br>Ваше объявление в течении 7-ми дней будет размещено в карточках похожих объявлений выбранного региона.<br>Будьте лидером в своем регионе!"
-msgstr "Place your card in «similars»<br>Your card will be in similar cards for one week in region<br>Be a leader in your region!"
+msgstr "Place your card in «similars»<br>Your card will be in similar cards for one week in the chosen region<br>Be a leader in your region!"
 
 msgid "Бесплатное размещение вашего объявления на 365 дней<br>Объявление вытесняется другими, не участвует в продвижении на сайте.<br>Нужно больше клиентов в вашем городе?<br>Воспользуйтесь тарифами"
-msgstr "Free placement for one year<br>Your card will move down with other new cards and not take part in advancement in website<br>Do you need more customers? Choose tariffs"
+msgstr "Free placement for one year<br>Your card will move down with other new cards and not take part in advancement on the website<br>Do you need more customers? Choose tariffs"
 
 
 # -------------------------------------------- modals -----------------------------------------
@@ -694,25 +694,25 @@ msgid "транспорта"
 msgstr "transport"
 
 msgid "Ваша жалоба успешно отправлена!"
-msgstr "Your complain has been sent"
+msgstr "Your complain has been sent successfully"
 
 msgid "Каптча не пройдена!"
 msgstr "Wrong captcha"
 
 msgid "Ваше сообщение успешно отправлено!"
-msgstr "Your message has been sent"
+msgstr "Your message has been sent successfully!"
 
 msgid "Сообщение от пользователя"
 msgstr "Message from user"
 
 msgid "Вы успешно вошли в аккаунт!"
-msgstr "Your logged in!"
+msgstr " You have successfully logged into your account!"
 
 msgid "Неправильная пара логин/пароль!"
 msgstr "Wrong login/password"
 
 msgid "Вы успешно вышли из аккаунта"
-msgstr "You log out!"
+msgstr "You have successfully logged out of your account!"
 
 msgid "Пользователь уже зарегистрирован!"
 msgstr "User already registered"
@@ -721,34 +721,34 @@ msgid "Регистрация на сайте multiprokat.com"
 msgstr "Sign up on mix.rent"
 
 msgid "На вашу почту было отправлено письмо для активации аккаунта!"
-msgstr "We sent mail to you to activate your account"
+msgstr "An email has been sent to your email to activate your account"
 
 msgid "Ваш аккаунт успешно активирован!"
-msgstr "Your account activated!"
+msgstr "Your account has been successfully activated!"
 
 msgid "Ваш новый пароль успешно активирован!"
-msgstr "Your new password activated!"
+msgstr "Your new password has been successfully activated!"
 
 msgid "Произошла ошибка, попробуйте еще раз."
-msgstr "Something wrong. Repeat please"
+msgstr "An error has occurred, please try again"
 
 msgid "Восстановление пароля на сайте multiprokat.com"
 msgstr "Password recovery on mix.rent"
 
 msgid "Вам отправлено письмо с активацией нового пароля"
-msgstr "We sent you mail with new password activation link"
+msgstr "You will be sent an email with a new password activation link"
 
 msgid "Пароли не совпадают!"
 msgstr "Passwords mismatch"
 
 msgid "Ваш новый тариф успешно оплачен!"
-msgstr "Your new tariff successfully payed!"
+msgstr "Your new tariff has been successfully payed!"
 
 msgid "Ваш PRO аккаунт успешно оплачен!"
-msgstr "Your PRO account successfully payed!"
+msgstr "Your PRO account has been successfully payed!"
 
 msgid "К сожалению оплата не прошла!"
-msgstr "Unfortunately payment not passed!"
+msgstr "Unfortunately payment has not passed!"
 
 # -------------------------------------------- booking form -----------------------------------------
 
@@ -762,25 +762,25 @@ msgid "Транспортное средство"
 msgstr "Vehicle"
 
 msgid "Дата приема"
-msgstr "Date pickup"
+msgstr "Pickup Date"
 
 msgid "Дата возврата"
-msgstr "Date drop"
+msgstr "Drop Date"
 
 msgid "Город приема"
-msgstr "City pickup"
+msgstr "Pickup City"
 
 msgid "Город возврата"
-msgstr "City drop"
+msgstr "Drop City"
 
 msgid "Имя и фамилия"
 msgstr "Full name"
 
 msgid "Укажите альтернативу, если выбранный транспорт окажется недоступен"
-msgstr "Type alternative variant of vehicle if chosen is busy"
+msgstr "Type alternative variant of vehicle if the chosen is busy"
 
 msgid "Напишите город, если он отличается от вашего"
-msgstr "Type city name if it differ than yours"
+msgstr "Type city name, if it differs from yours"
 
 msgid "Выберите категорию транспорта"
 msgstr "Select vehicle category"
@@ -806,7 +806,7 @@ msgid "Легковые"
 msgstr "Cars"
 
 msgid "Учитывать"
-msgstr "Allow"
+msgstr "Consider"
 
 msgid "Отфильтровать"
 msgstr "Filter results"
@@ -826,16 +826,16 @@ msgstr "Similar"
 
 
 msgid "Доставка до клиента"
-msgstr "Delivery"
+msgstr "Delivery to the client"
 
 msgid "нет, клиент забирает транспорт самостоятельно"
-msgstr "no, only self"
+msgstr "no, only self-pickup"
 
 msgid "да, мы доставляем транспорт"
-msgstr "yes, we drive to you"
+msgstr "yes, we deliver transport"
 
 msgid "возможна, по согласованию"
-msgstr "possible if accepted"
+msgstr "possible, as agreed"
 
 msgid "Мои сообщения"
 msgstr "My messages"
@@ -856,7 +856,7 @@ msgid "Продвинуть"
 msgstr "Promote"
 
 msgid "Записать фото"
-msgstr "Save foto"
+msgstr "Save photo"
 
 msgid "Сохранить профиль"
 msgstr "Save profile"
@@ -874,16 +874,16 @@ msgid "возможна"
 msgstr "possible"
 
 msgid "Выберите фотографии транспорта"
-msgstr "Select your vehicle fotos"
+msgstr "Select your vehicle photos"
 
 msgid "Возможности продвижения объявления"
 msgstr "Card promo possibilities"
 
 msgid "Минимальная и максимальная цена на сайте"
-msgstr "Minimal and maximal price in site"
+msgstr "Minimal and maximal price on site"
 
 msgid "Подсказка!<br>Если поставить цены ниже, чем у конкурентов, звонков будет больше."
-msgstr "Advice!<br>If you put prices lower than those of competitors, there will be more calls."
+msgstr "Hint!<br>If you put prices lower than those of competitors, there will be more calls."
 
 msgid "Купить"
 msgstr "Buy"

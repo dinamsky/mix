@@ -1,40 +1,29 @@
 <header>
 
         <div uk-grid class="uk-grid-collapse mobile_header  " uk-sticky>
-            <div class="uk-width-expand">
-                <div class="bg_blue left_part">
-                    <div uk-grid class="uk-grid-collapse">
-                        <div class="uk-width-auto"><button uk-icon="icon:menu" class="uk-button uk-button-small c_white" uk-toggle="target: #left_bar"></button></div>
-                        <div class="uk-width-auto">
-                            <a href="/" style="background: url('/assets/images/interface/multiprocat(32x32).png') center center;
-                                                background-size: cover;
-                                                width: 24px;
-                                                height: 24px;
-                                                display: block;
-                                                margin-right: 10px;
-                                                margin-left: 10px;
-                                                ">
 
-                            </a></div>
-                        <div class="uk-width-expand"><div class="uk-text-center uk-text-truncate">
-                                {% if is_mobile() %}
-                                {{ include('selector/global_city_selector.html.twig') }}
-                                {% endif %}
-                            </div></div>
-                    </div>
 
+
+                <div class="uk-width-auto uk-flex uk-flex-middle">
+                    <button uk-icon="icon:menu" class="uk-button uk-button-small c_grey" uk-toggle="target: #left_bar"></button>
                 </div>
-            </div>
-            <div class="uk-width-auto">
-                {% if app.session.has('logged_user') %}
-                    <a href="/card/new" class="uk-button uk-button-success uk-width-1-1 m_add_card_button">{% trans %}Сдать{% endtrans %}</a>
-                {% elseif app.session.has('admin') %}
-                    <a href="/card/new" class="uk-button uk-button-success uk-width-1-1 m_add_card_button">{% trans %}Сдать{% endtrans %}</a>
-                {% else %}
-                    <a uk-toggle="target: #sign_in" class="uk-button uk-button-success uk-width-1-1 m_add_card_button">{% trans %}Сдать{% endtrans %}</a>
-                {% endif %}
-                {#<a href="/card/new" class="uk-button uk-button-success uk-width-1-1 m_add_card_button">Сдать</a>#}
-            </div>
+
+                <div class="uk-width-auto uk-flex uk-flex-middle">
+                    <a href="/" class="uk-display-block" style="line-height: 10px"><img class="logo" src="/assets/images/interface/logo.svg" alt=""></a>
+                </div>
+
+                <div class="uk-width-expand uk-flex uk-flex-middle">
+                    &nbsp;
+                </div>
+
+                <div class="uk-width-auto uk-flex uk-flex-middle">
+                    <div class="search_popup_trigger">
+                        <i uk-icon="icon: search"></i>
+                    </div>
+                    {{ include('search_popup.html.twig') }}
+                </div>
+
+
         </div>
 
 

@@ -139,9 +139,11 @@
     }
 
     #left_bar .m_add_card_button {
-        padding: 0;
-        font-size: 16px;
-        width: 100%;
+        padding: 15px;
+    font-size: 16px;
+    width: 100%;
+    background: white;
+    color: #2d9cdb;
     }
 
     #button_main_search{
@@ -279,6 +281,45 @@
     .block_1 h1{
         font-size: 31px !important;
     }
+
+    .main_top_form{
+        position: initial;
+        margin-top: 0;
+        width: 100%;
+        padding-bottom: 10px;
+    }
+
+    .b_content_block{
+        left: 0;
+    width: 100%;
+    text-align: center;
+    top: 20px;
+    }
+
+    .cat_main_header{
+        text-align: center;
+    }
+
+    .top_categories_content .owl-stage-outer {
+        box-shadow: none;
+    }
+
+    .top_categories_content .owl-stage {
+        right: 20px;
+    }
+
+    .top_slider_block .owl-stage {
+        right: 20px;
+    }
+
+    .user_page_phone{
+        width: 100%;
+    }
+
+    .mobile_header{
+        background: white;
+    }
+
 }
 
 @media (min-width: 600px) and (max-width: 1024px){

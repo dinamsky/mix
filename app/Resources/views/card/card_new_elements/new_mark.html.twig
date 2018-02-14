@@ -1,9 +1,9 @@
 <div uk-grid>
-    <div class="uk-width-1-5">
+    <div class="uk-width-1-5@s">
         {% trans %}Марка и модель{% endtrans %} <span class="red_star">*</span>
         <div class="help_text">{% trans %}Выберите марку и модель транспорта{% endtrans %}</div>
     </div>
-    <div class="uk-width-3-5">
+    <div class="uk-width-3-5@s">
         <div uk-grid class="uk-grid-small">
 
             <input type="hidden" name="groupName" value="cars">
@@ -31,25 +31,25 @@
 
             <div class="uk-width-1-1 help_text">{% trans %}Если не нашли свою марку/модель - поставьте галочку и укажите требуемое{% endtrans %}</div>
 
-            <div class="uk-width-1-3">
+            <div class="uk-width-1-3@s">
                 <input type="checkbox" name="noMark" id="noMark" class="css-checkbox"> <label for="noMark" class="css-label">{% trans %}Марки нет в списке{% endtrans %}</label>
             </div>
 
-            <div class="uk-width-2-3">
+            <div class="uk-width-2-3@s">
                 <input name="ownMark" class="uk-input uk-hidden" placeholder="{% trans %}впишите свою марку{% endtrans %}">
             </div>
 
-            <div class="uk-width-1-3">
+            <div class="uk-width-1-3@s">
                 <input type="checkbox" name="noModel" id="noModel" class="css-checkbox"> <label for="noModel" class="css-label">{% trans %}Модели нет в списке{% endtrans %}</label>
             </div>
 
-            <div class="uk-width-2-3">
+            <div class="uk-width-2-3@s">
                 <input name="ownModel" class="uk-input uk-hidden" placeholder="{% trans %}впишите свою модель{% endtrans %}">
             </div>
 
         </div>
     </div>
-    <div class="uk-width-1-5">
+    <div class="uk-width-1-5 uk-visible@s">
 
     </div>
 </div>

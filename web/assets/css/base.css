@@ -153,7 +153,7 @@ button{
 }
 
 .check_icon{
-    background: green;
+    background: #2d9cdb;
     color: white;
     margin-right: 5px;
 }
@@ -456,8 +456,8 @@ button{
     z-index: 2;
 }
 
-.card_page_phone{
-
+.user_page_phone{
+    width: 30%;
 }
 
 .hidden_phone, .opened_phone{
@@ -628,6 +628,7 @@ footer a:hover{
     background: white;
     cursor: pointer;
     top: -9px;
+    padding: 10px;
 }
 
 .gt_selector .inner{
@@ -764,7 +765,7 @@ footer a:hover{
 
 .left_bar_more{
     border: 1px solid rgba(255, 255, 255, 0.33);
-    color: grey !important;
+    color: white !important;
     padding: 5px 0 7px 0;
 }
 
@@ -1689,5 +1690,10 @@ top: 80%;
 }
 
 .uk-modal-close-default.uk-close.uk-icon{
+    color: white;
+}
+
+.uk-offcanvas-bar{
+    background: #2D9CDB;
     color: white;
 }

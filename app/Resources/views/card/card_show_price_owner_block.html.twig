@@ -1,0 +1,54 @@
+<div class="bordered padding10">
+    <div class="" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <div class="uk-clearfix">
+            <div class="uk-float-left">
+                <div class="">
+                    <span class="price_value">{{ price.value|number_format(0,'.','<span class="thousand_separator"></span>')|raw }}</span>
+                    {% set currency = {
+                        'RUB': '₽',
+                        'EUR': '€',
+                        'USD': '$'
+                    } %}
+                    {% if price.priceId == 2%}
+                        <span itemprop="price" style="visibility: hidden;height: 0;width: 0;display: none;">{{ price.value }}</span>
+                        <span itemprop="priceCurrency" style="visibility: hidden;height: 0;width: 0;display: none;">{{ card.currency }}</span>
+                    {% endif %}
+                    <span class="price_descriptor uk-text-truncate">{{ currency[card.currency] }}/{{ price.getPrice.header|trans }}</span>
+                </div>
+            </div>
+            <div class="uk-float-right uk-text-right">
+                <div uk-toggle="target: #share_butons"><i uk-icon="icon:social"></i></div>
+            </div>
+        </div>
+        <button class="uk-button uk-button-primary uk-width-1-1" uk-toggle="target: #user_book_form">{% trans %}Отправить заявку{% endtrans %}</button>
+    </div>
+</div>
+
+<div class="bordered padding10 uk-margin-top">
+    <div class="uk-text-small uk-margin-bottom">
+    {% trans %}Собственник{% endtrans %}: <a class="c_blue" href="/user/{{ card.user.id }}" class="uk-text-truncate">{{ card.user.header }}</a>
+    </div>
+    <div><i class="fa fa-map-marker c_blue"></i>
+        <span class="uk-text-small">
+            {% if card.address != '' %}
+                {{ card.address }}
+            {% else %}
+                {{ card.getCity.header }}, {{ card.getCity.getParent.header }}, {{ card.getCity.country }}
+            {% endif %}
+        </span>
+    </div>
+    <div><i class="fa fa-calendar c_blue"></i> {{ card.dateCreate|date("d.m.Y") }}</div>
+    <div><i class="fa fa-eye c_blue"></i> {{ card.views }} <span class="uk-text-small c_grey">{% trans %}просмотров{% endtrans %}</span></div>
+    <div><i class="fa fa-heart c_blue"></i> <span id="card_likes">{{ card.likes }}</span> <span class="uk-text-small c_grey">{% trans %}лайков{% endtrans %}</span></div>
+    <div>
+        <i class="fa fa-star c_blue"></i> {{ opinions }}/5 <span class="uk-text-small c_grey">{% trans %}звезд из{% endtrans %}</span> {{ total_opinions }}
+        <span class="uk-text-small c_grey">{% trans %}отзывов{% endtrans %}</span>
+    </div>
+    <hr>
+    <div class="uk-text-center"><a class="c_blue" href="/user/{{ card.user.id }}">{% trans %}Все объявления{% endtrans %} {% trans %}пользователя{% endtrans %} ({{ card.user.cards|length }})</a></div>
+
+    {% if app.session.has('logged_user') and blockings[app.session.get('logged_user').id] is not defined%}
+        <div class="open_chat cursor-pointer uk-text-center" data-user_id="{{ card.user.id }}" data-visitor_id="{{ app.session.get('logged_user').id }}" data-card_id="{{ card.id }}">{% trans %}Написать сообщение{% endtrans %}</div>
+        {{ include('user/chat_modal.html.twig') }}
+    {% endif %}
+</div>

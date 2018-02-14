@@ -60,6 +60,7 @@ $( document ).ready(function() {
     $('#fill_dop_button').on('click', function(){
         $(this).parent().remove();
         $('#dop_fields').addClass('uk-animation-slide-right').removeAttr('hidden');
+        UIkit.update(event = 'update');
     });
 
     $('.service_selector button').on('click', function(){
@@ -102,6 +103,7 @@ $( document ).ready(function() {
             $(this).hide();
             $('.first_step').hide();
             $('.unknown').css('display', 'block');
+             UIkit.update(event = 'update');
             // $('#signup_block').append('<hr>');
             // $('html, body').animate({
             //     scrollTop: $(".unknown").offset().top - 80

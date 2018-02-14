@@ -1,7 +1,7 @@
 <input type="hidden" id="cityURL" name="cityURL" value="{{ city.url }}">
 <input type="hidden" id="cityId" name="cityId" value="{{ city.id }}">
 <div uk-toggle="target: #city_popular" class="cursor-pointer sticky_top_city_selector">
-    <span uk-icon="icon:location" class="c_blue"></span>
+    <span uk-icon="icon:location" class="{{ is_mobile() ? 'c_white' : 'c_blue' }}"></span>
     {% if lang=='ru' %}
         {{ app.session.has('city')  ? app.session.get('city').header : city.header }}
     {% else %}
@@ -17,7 +17,7 @@
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <h2 class="uk-modal-title">{% trans %}Выберите город{% endtrans %}</h2>
         <div>
-            {% trans %}или начните вводить наименование города{% endtrans %}: <input name="input_city" class="uk-input uk-width-1-5">
+            {% trans %}или начните вводить наименование города{% endtrans %}: <input name="input_city" class="uk-input {{ is_mobile() ? 'uk-width-1-1' : 'uk-width-1-5' }}">
         </div>
         <hr>
         <div class="uk-column-1-1 uk-column-1-5@s">

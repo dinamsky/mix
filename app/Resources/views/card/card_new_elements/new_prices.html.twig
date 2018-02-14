@@ -1,12 +1,12 @@
 <div uk-grid>
-    <div class="uk-width-1-5">
+    <div class="uk-width-1-5@s">
         {% trans %}Цены{% endtrans %} <span class="red_star">*</span>
         <div class="help_text">{% trans %}Укажите свои расценки по периодам{% endtrans %}</div>
     </div>
-    <div class="uk-width-3-5">
+    <div class="uk-width-3-5@s">
 
         <div class="uk-margin-bottom">
-            <select name="currency" class="uk-width-1-5 uk-select">
+            <select name="currency" class="uk-width-1-5@s uk-select">
                 <option value="EUR">EUR</option>
                 <option value="USD" {{ city.country == 'USA' or city.country == 'CAN' ? 'selected' }}>USD</option>
                 <option value="RUB" {{ city.country == 'RUS' or city.country == 'RUS' ? 'selected' }}>RUB</option>
@@ -15,7 +15,7 @@
 
         <div class="non_plane">
             <div uk-grid>
-                <div class="uk-width-1-2">
+                <div class="uk-width-1-2@s">
                     <div class="">
                         <div class="">
                             {% for price in prices if price.id < 3 %}
@@ -27,7 +27,7 @@
                         <div class="uk-text-small"><span class="red_star">*</span> {% trans %}Одна из расценок: в час/в день обязательна!{% endtrans %}</div>
                     </div>
                 </div>
-                <div class="uk-width-1-2">
+                <div class="uk-width-1-2@s">
                     <div id="counted_prices"></div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
 
 
     </div>
-    <div class="uk-width-1-5">
+    <div class="uk-width-1-5 uk-visible@s">
 
     </div>
 

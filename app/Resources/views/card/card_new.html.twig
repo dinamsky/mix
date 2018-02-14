@@ -150,13 +150,13 @@
 
                 {% if not admin and not user %}
                     <div class="uk-hidden uk-margin-medium-top" id="new_password" uk-grid>
-                        <div class="uk-width-1-5">{% trans %}Регистрация{% endtrans %} <span class="red_star">*</span></div>
-                        <div class="uk-width-4-5">
+                        <div class="uk-width-1-5@s">{% trans %}Регистрация{% endtrans %} <span class="red_star">*</span></div>
+                        <div class="uk-width-4-5@s">
 
-                            <div class=""><input type="text" form="new_card_form"  name="r_email" class="uk-input uk-width-1-2" placeholder="Email" ><span class="uk-text-small c_grey"> - {% trans %}ваш email не будет показан на сайте{% endtrans %}</span></div>
-                            <div class="uk-margin-top"><input  type="text" form="new_card_form"  name="r_header" class="uk-input uk-width-1-2" placeholder="{% trans %}Введите название компании или ваше имя{% endtrans %}" ><span class="uk-text-small c_grey"> - {% trans %}необходимо, чтобы клиенты могли обращаться к вам{% endtrans %}</span></div>
-                            <div class="uk-margin-top"><input  type="text" form="new_card_form"  name="r_phone" class="uk-input uk-width-1-2 phone_validate" placeholder="{% trans %}Телефон{% endtrans %}" ><span class="uk-text-small c_grey"> - {% trans %}необходим для связи с вами{% endtrans %}</span></div>
-                            <input type="password" form="new_card_form"  name="r_password" placeholder="{% trans %}Пароль{% endtrans %}" class="uk-input uk-width-1-3 uk-margin-top">
+                            <div class=""><input type="text" form="new_card_form"  name="r_email" class="uk-input uk-width-1-2@s" placeholder="Email" ><span class="uk-text-small c_grey"> - {% trans %}ваш email не будет показан на сайте{% endtrans %}</span></div>
+                            <div class="uk-margin-top"><input  type="text" form="new_card_form"  name="r_header" class="uk-input uk-width-1-2@s" placeholder="{% trans %}Введите название компании или ваше имя{% endtrans %}" ><span class="uk-text-small c_grey"> - {% trans %}необходимо, чтобы клиенты могли обращаться к вам{% endtrans %}</span></div>
+                            <div class="uk-margin-top"><input  type="text" form="new_card_form"  name="r_phone" class="uk-input uk-width-1-2@s phone_validate" placeholder="{% trans %}Телефон{% endtrans %}" ><span class="uk-text-small c_grey"> - {% trans %}необходим для связи с вами{% endtrans %}</span></div>
+                            <input type="password" form="new_card_form"  name="r_password" placeholder="{% trans %}Пароль{% endtrans %}" class="uk-input uk-width-1-3@s uk-margin-top">
                         </div>
                         <div class="uk-text-center uk-margin uk-width-1-1">
                             <button type="button" class="uk-button uk-button-primary uk-button-small newcard_continue" data-id="new_tariffs">{% trans %}Продолжить{% endtrans %}</button>
