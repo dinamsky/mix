@@ -22,7 +22,7 @@
             <div id="left_more_gt" hidden class="uk-margin-top">
                 {% for gt in t3_new.getGt if gt.carTypeIds %}
                     <div class="left_gtypes">
-                        <a href="/rent/{{ city.url }}/all/{{ gt.url }}" class=""><i class="fa fa-{{ gt.icon }} left_gt_icon"></i> <span class="uk-text-truncate uk-display-inline-block" style="width: 200px">{{ gt.header }}</span></a>
+                        <a href="/rent/{{ city.url }}/all/{{ gt.url }}" class=""><i class="fa fa-{{ gt.icon }} left_gt_icon"></i> <span class="uk-text-truncate uk-display-inline-block" style="width: 200px">{{ lang=='ru' ? gt.header: gt.url|capitalize }}</span></a>
                     </div>
                 {% endfor %}
             </div>
