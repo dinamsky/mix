@@ -1,12 +1,16 @@
 <div class="">
-    <a class="c_blue" href="/profile">{% trans %}Мой профиль{% endtrans %}</a><br>
-    <a class="c_blue" href="/user/cards">{% trans %}Мои объявления{% endtrans %}</a><br>
-    <a class="c_blue" href="/user/messages">{% trans %}Мои сообщения{% endtrans %}</a>
 
-    {% if t3_new.getUnread>0 %}<span class="uk-badge">{{ t3_new.getUnread }}</span>{% endif %}
-    <br>
-    <a class="c_blue" href="/userLogout"><span><i uk-icon="icon:sign-out"></i> {% trans %}Выход{% endtrans %}</span></a>
-    <hr>
+    <div class="uk-visible@s">
+        <a class="c_blue" href="/profile">{% trans %}Мой профиль{% endtrans %}</a><br>
+        <a class="c_blue" href="/user/cards">{% trans %}Мои объявления{% endtrans %}</a><br>
+        <a class="c_blue" href="/user/messages">{% trans %}Мои сообщения{% endtrans %}</a>
+
+        {% if t3_new.getUnread>0 %}<span class="uk-badge">{{ t3_new.getUnread }}</span>{% endif %}
+        <br>
+        <a class="c_blue" href="/userLogout"><span><i uk-icon="icon:sign-out"></i> {% trans %}Выход{% endtrans %}</span></a>
+        <hr>
+
+    </div>
     <div>
     {% if app.session.get('logged_user').accountTypeId == 0 %}
         {% trans %}Ваш аккаунт{% endtrans %}: <b>{% trans %}стандартный{% endtrans %}</b>

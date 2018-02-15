@@ -28,7 +28,7 @@
                 {% endfor %}
             {% endfor %}
             <div uk-grid>
-                <div class=" uk-width-1-5@s">{% block left_block %}{{ include('user/user_left.html.twig') }}{% endblock %}</div>
+                <div class=" uk-width-1-5@s {{ is_mobile() ? 'uk-flex-last' }}">{% block left_block %}{{ include('user/user_left.html.twig') }}{% endblock %}</div>
                 <div class=" uk-width-4-5@s">{% block content %}{% endblock %}</div>
             </div>
         </div>
