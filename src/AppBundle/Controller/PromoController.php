@@ -55,7 +55,8 @@ class PromoController extends Controller
         $dql = "SELECT p FROM AppBundle:Promo p WHERE p.pId=1 AND p.pKey != 'opinion'";
         $query = $em->createQuery($dql);
         foreach($query->getResult() as $row){
-            $promo[$row->getPKey()] = str_replace("{{ city.gde }}", $city->getGde(),$row->getPValue());
+            if ($_SERVER['LANG'] == 'ru') $promo[$row->getPKey()] = str_replace("{{ city.gde }}", $city->getGde(),$row->getPValue());
+            if ($_SERVER['LANG'] == 'en') $promo[$row->getPKey()] = str_replace("{{ city.gde }}", $city->getGde(),$row->getPValueEn());
         }
 
         $dql = "SELECT p FROM AppBundle:Promo p WHERE p.pId=1 AND p.pKey = 'opinion'";

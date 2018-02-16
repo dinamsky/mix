@@ -42,6 +42,12 @@ class Promo
      */
     private $pValue;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="p_value_en", type="text")
+     */
+    private $pValueEn;
 
     /**
      * Get id
@@ -124,5 +130,28 @@ class Promo
     {
         return $this->pValue;
     }
-}
 
+    /**
+     * Set pValueEn
+     *
+     * @param string $pValueEn
+     *
+     * @return Promo
+     */
+    public function setPValueEn($pValueEn)
+    {
+        $this->pValueEn = $pValueEn;
+
+        return $this;
+    }
+
+    /**
+     * Get pValueEn
+     *
+     * @return string
+     */
+    public function getPValueEn()
+    {
+        return $this->pValueEn;
+    }
+}

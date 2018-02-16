@@ -224,27 +224,32 @@
     </div>
 </div>
 
-<div class="promo_block block_6 bg_white">
-    <div class="standard_wide">
-        <h2 class="tx_30 uk-text-bold uk-text-center">{{ promo.b6_h2 }}</h2>
-        <div uk-grid class="block_padding">
 
-            {% for op in opinions %}
-                <div class="uk-width-1-2@s">
-                    <div uk-grid>
-                        <div class="uk-width-1-5@s uk-text-center">
-                            <img src="{{ asset('assets/images/interface/promo/op_'~op.id~'.jpg') }}" alt="">
-                        </div>
-                        <div class="uk-width-4-5@s">
-                            <h4 class="c_black uk-margin-remove uk-text-bold">{{ op.name|raw }}</h4>
-                            <div>{{ op.desc|raw }}</div>
+{% if lang=='ru' %}
+    <div class="promo_block block_6 bg_white">
+        <div class="standard_wide">
+            <h2 class="tx_30 uk-text-bold uk-text-center">{{ promo.b6_h2 }}</h2>
+            <div uk-grid class="block_padding">
+
+                {% for op in opinions %}
+                    <div class="uk-width-1-2@s">
+                        <div uk-grid>
+                            <div class="uk-width-1-5@s uk-text-center">
+                                <img src="{{ asset('assets/images/interface/promo/op_'~op.id~'.jpg') }}" alt="">
+                            </div>
+                            <div class="uk-width-4-5@s">
+                                <h4 class="c_black uk-margin-remove uk-text-bold">{{ op.name|raw }}</h4>
+                                <div>{{ op.desc|raw }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
+{% endif %}
+
+
 
 <div class="promo_block block_7 block_padding">
     <div class="promo_wide">
