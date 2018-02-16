@@ -18,9 +18,9 @@ $( document ).ready(function() {
             success: function (json) {
                 if(! json.error) {
                     $('.promo_result_car').html(mark + ' ' + model);
-                    $('#promo_result_day').html(json.price);
+                    $('#promo_result_day').html(Math.round(json.price/60));
                     $('#promo_result_dayz').html(days);
-                    $('#promo_result_total').html(json.price * days);
+                    $('#promo_result_total').html(Math.round(json.price * days/60));
                     $('#promo_result_slider').html(json.slider);
                     $('#nothing').addClass('uk-hidden');
                     $('#counted').addClass('uk-hidden');

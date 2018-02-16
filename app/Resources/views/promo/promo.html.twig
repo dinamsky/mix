@@ -85,43 +85,41 @@
 
         <div uk-grid class="block_padding">
             <div class="uk-width-1-3@s">
-                <div>Укажите марку автомобиля</div>
+                <div>{{ promo.b8_t2|raw }}</div>
                 <select name="mark" id="markId" class="uk-select sel_combo">
                     {{ include( 'common/ajax_edit_options.html.twig', { 'options': marks, 'id': 0 }) }}
                 </select>
 
-                <div class="uk-margin-top">Выберите модель авто</div>
+                <div class="uk-margin-top">{{ promo.b8_t3|raw }}</div>
                 <select name="modelId" id="markModelId" class="uk-select sel_combo"></select>
 
-                <div class="uk-margin-top">Планируемый срок аренды, суток</div>
+                <div class="uk-margin-top">{{ promo.b8_t10|raw }}</div>
                 <input id="dayz" type="text" class="uk-input" value="20">
 
-                <button id="promo_count" type="button" class="uk-button uk-button-success uk-width-1-1 uk-margin-top">Показать доход</button>
+                <button id="promo_count" type="button" class="uk-button uk-button-success uk-width-1-1 uk-margin-top">{{ promo.b8_t11|raw }}</button>
             </div>
 
             <div class="uk-width-2-3@s" id="example">
                 <img src="{{ asset('assets/images/interface/promo/camry2.jpg') }}" alt="">
-                <div class="uk-margin-top">Пример, автомобиль Toyota Camry: средний заработок от аренды - 60000 руб.</div>
+                <div class="uk-margin-top">{{ promo.b8_t12|raw }}</div>
             </div>
 
             <div class="uk-width-2-3 uk-animation-slide-right uk-hidden" id="counted">
                 <div>&nbsp;</div>
                 <div class="bg_blue c_white padding20">
-                    <div>Ваш автомобиль - <span class="promo_result_car"></span></div>
-                    <div>Рекомендуемая средняя стоимость 1 суток - <span id="promo_result_day"></span><i class="fa fa-ruble"></i></div>
-                    <div>Планируемый доход за <span id="promo_result_dayz"></span> суток - <span id="promo_result_total"></span><i class="fa fa-ruble"></i></div>
+                    <div>{{ promo.b8_t13|raw }} - <span class="promo_result_car"></span></div>
+                    <div>{{ promo.b8_t14|raw }} - <span id="promo_result_day"></span>$</div>
+                    <div>{{ promo.b8_t15|raw }} <span id="promo_result_dayz"></span> {{ promo.b8_t16|raw }} - <span id="promo_result_total"></span>$</div>
                 </div>
-                <div class="uk-margin-small">Примеры <span class="promo_result_car"></span> на multiprokat.com</div>
+                <div class="uk-margin-small">{{ promo.b8_t17|raw }} <span class="promo_result_car"></span> - Mix.Rent:</div>
                 <div id="promo_result_slider"></div>
             </div>
             <div class="uk-width-2-3 uk-animation-slide-right uk-hidden" id="nothing">
                 <div>&nbsp;</div>
                 <div>
-                   Этот автомобиль искали {{ random(['190', '200', '220']) }}
-                    раз, пока его нет в базе, <br>
-                    но вы можете его добавить и принимать заявки на аренду.<br><br>
-                    Рекомендуемая стоимость от {{ random(['1800', '1500', '2000']) }} руб.<br><br>
-                    <a href="/card/new" class="uk-button uk-button-success">Сдать</a>
+                   {{ promo.b8_t18|raw }} {{ random(['190', '200', '220']) }}
+                    {{ promo.b8_t19|raw }} {{ random(['1800', '1500', '2000']) }} {{ lang is defined and lang=='ru' ? 'руб.' : '$' }}<br><br>
+                    <a href="/card/new" class="uk-button uk-button-success">{{ promo.b1_a2|raw }}</a>
                 </div>
             </div>
         </div>
@@ -264,24 +262,22 @@
 <div class="promo_block block_8 block_padding bg_white">
     <div class="promo_wide">
         <div class="padding0-10">
-Если вы не хотите лично заниматься арендой вашего автомобиля, можете обратиться к нам, и мы сами будем искать клиентов на ваш автомобиль, заниматься его страховкой и проходить ТО. Автомобиль в данном случае мы заберем во временное использование по договору.<br>
-Ваша прибыль составит 60% от каждой аренды.<br>
-Интересно? Напишите нам какой у вас авто, и мы всё сделаем сами.<br>
+{{ promo.b8_t1|raw }}
         </div>
 
         <form class="uk-grid uk-margin-large-top uk-grid-small uk-flex uk-flex-center padding0-10" uk-grid action="/promo_request" method="POST" onsubmit="return promo_mark_model_names();">
             <div class="uk-width-1-2@s">
-                <div>Выберите марку автомобиля</div>
+                <div>{{ promo.b8_t2|raw }}</div>
                 <select name="promo_mark_sel" id="b8_mark" class="uk-select sel_combo">
                     {{ include( 'common/ajax_edit_options.html.twig', { 'options': marks, 'id': 0 }) }}
                 </select>
             </div>
             <div class="uk-width-1-2@s uk-hidden">
-                <div class="">Выберите модель авто</div>
+                <div class="">{{ promo.b8_t3|raw }}</div>
                 <select name="promo_model_sel" id="b8_model" class="uk-select sel_combo" required></select>
             </div>
             <div class="uk-width-1-2@s uk-hidden">
-                <div class="">Укажите год выпуска авто</div>
+                <div class="">{{ promo.b8_t4|raw }}</div>
                 <select name="prod_year" class="uk-select" required>
                     {% for year in 'now'|date('Y')..1950 %}
                         <option value="{{ year }}">{{ year }}</option>
@@ -289,19 +285,19 @@
                 </select>
             </div>
             <div class="uk-width-1-2@s uk-hidden">
-                <div class="">Укажите город нахождения авто</div>
+                <div class="">{{ promo.b8_t5|raw }}</div>
                 <input type="text" name="promo_city" class="uk-input" required>
             </div>
             <div class="uk-width-1-3@s uk-hidden">
-                <div class="">Укажите ваш email</div>
+                <div class="">{{ promo.b8_t6|raw }}</div>
                 <input type="text" name="promo_email" class="uk-input" required>
             </div>
             <div class="uk-width-1-3@s uk-hidden">
-                <div class="">Укажите ваш телефон</div>
+                <div class="">{{ promo.b8_t7|raw }}</div>
                 <input type="text" name="promo_phone" class="uk-input" required>
             </div>
             <div class="uk-width-1-3@s uk-hidden">
-                <div class="">Укажите ваше имя</div>
+                <div class="">{{ promo.b8_t8|raw }}</div>
                 <input type="text" name="promo_name" class="uk-input" required>
             </div>
             <div class="uk-width-1-2@s uk-hidden">
@@ -310,7 +306,7 @@
             </div>
             <div class="uk-width-1-2@s uk-hidden">
                 <div>&nbsp;</div>
-                <button class="uk-button uk-button-success uk-width-1-1">Отправить заявку</button>
+                <button class="uk-button uk-button-success uk-width-1-1">{{ promo.b8_t9|raw }}</button>
             </div>
 
 

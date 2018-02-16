@@ -130,13 +130,14 @@ class PromoController extends Controller
             $slider = '';
             $error = true;
         } else {
-            $slider = $this->renderView('promo/promo_slider.html.twig',['slider'=>$for_slider]);
+            $slider = $this->renderView('promo/promo_slider.html.twig',['slider'=>$for_slider,'lang' => $_SERVER['LANG']]);
         }
 
         $res = array(
             'price' => round($p/count($result),0),
             'slider' => $slider,
-            'error' => $error
+            'error' => $error,
+
         );
 
         $model = $em->getRepository(CarModel::class)
