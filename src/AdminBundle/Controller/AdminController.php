@@ -4,6 +4,7 @@ namespace AdminBundle\Controller;
 
 use AppBundle\Entity\Card;
 use AppBundle\Entity\Comment;
+use AppBundle\Foto\FotoUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -366,5 +367,65 @@ class AdminController extends Controller
                 'city' => $city,
             ]);
         }
+    }
+
+    /**
+ * @Route("/adminMainSlider", name="adminMainSlider")
+ */
+    public function mainSliderAction()
+    {
+        if ($this->get('session')->get('admin') === null) return $this->render('AdminBundle::admin_enter_form.html.twig');
+        else {
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery("SELECT s FROM AppBundle:Settings s WHERE s.sKey = 'slider'");
+            $slider = $query->getResult();
+
+            $slider = json_decode($slider[0]->getSValue(), true);
+
+
+
+            $city = $this->get('session')->get('city');
+
+            return $this->render('AdminBundle::admin_slider.html.twig', [
+                'slider' => $slider,
+                'city' => $city,
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/adminUpdateSlider", name="adminUpdateSlider")
+     */
+    public function updateSliderAction(Request $request,FotoUtils $fu)
+    {
+        if ($this->get('session')->get('admin') === null) return $this->render('AdminBundle::admin_enter_form.html.twig');
+        else {
+            $em = $this->getDoctrine()->getManager();
+
+
+            $post = $request->request;
+
+
+
+            foreach($post->get('pos') as $key=>$pos){
+                if(isset($post->get('oldimg')[$key]) and $_FILES['img']['name'][$key] == ''){
+                    $img = $post->get('oldimg')[$key];
+                } else {
+                    $img = $fu->uploadImageKey('img', $key, 'md5',$_SERVER['DOCUMENT_ROOT'].'/assets/images/interface' , '');
+                    $img = '/assets/images/interface/'.$img.'.jpg';
+                }
+                $arr[] = [
+                    'pos' => $pos,
+                    'header' => $post->get('header')[$key],
+                    'content' => $post->get('content')[$key],
+                    'link' => $post->get('link')[$key],
+                    'img' => $img
+                ];
+            }
+
+            $query = $em->createQuery("UPDATE AppBundle:Settings s SET s.sValue = '".json_encode($arr)."'WHERE s.sKey = 'slider'");
+            $query->execute();
+        }
+        return $this->redirectToRoute('adminMainSlider');
     }
 }

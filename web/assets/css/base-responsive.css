@@ -291,9 +291,10 @@
 
     .b_content_block{
         left: 0;
-    width: 100%;
-    text-align: center;
-    top: 20px;
+        width: 100%;
+        text-align: center;
+        top: 20px;
+        box-sizing: border-box;
     }
 
     .cat_main_header{

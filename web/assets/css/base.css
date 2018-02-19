@@ -1578,11 +1578,17 @@ top: 80%;
 
 .b_content_block{
     position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 50%;
-    height: 30%;
+    left: 50%;
+    bottom: 20%;
+    width: auto;
+    height: auto;
     color: white;
+    padding: 10px;
+    background: #0000007d;
+}
+
+.b_content_block p{
+    margin-bottom: 0 !important;
 }
 
 .main_top_form{
@@ -1696,4 +1702,9 @@ top: 80%;
 .uk-offcanvas-bar{
     background: #2D9CDB;
     color: white;
+}
+
+.b_content_block:hover{
+    text-decoration: none;
+    color:white;
 }

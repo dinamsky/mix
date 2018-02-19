@@ -89,6 +89,10 @@ class MainPageController extends Controller
         $stat->setStat($stat_arr);
 
 
+        $query = $em->createQuery("SELECT s FROM AppBundle:Settings s WHERE s.sKey = 'slider'");
+        $cover_slider = $query->getResult();
+        $cover_slider = json_decode($cover_slider[0]->getSValue(), true);
+
 //        $translator = new Translator('ru', new MessageSelector());
 //
 //        $translator->addLoader('pofile', new PoFileLoader());
@@ -123,7 +127,8 @@ class MainPageController extends Controller
             'mark_arr_sorted' => $mark_arr_sorted,
             'models_in_mark' => $models_in_mark,
             'in_city' => $in_city,
-            'lang' => $_SERVER['LANG']
+            'lang' => $_SERVER['LANG'],
+            'cover_slider' => $cover_slider,
 
         ]);
     }

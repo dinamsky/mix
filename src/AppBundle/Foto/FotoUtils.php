@@ -208,6 +208,68 @@ class FotoUtils extends Controller
         }
     }
 
+    public function uploadImageKey($foto_var, $foto_key, $new_name, $target_folder = '', $thumb_folder = '')
+    {
+        $main_dir = $target_folder;
+        $thumbs = $thumb_folder;
+        if ($target_folder != '') @mkdir($main_dir,'0755', true);
+        if ($thumb_folder != '') @mkdir($thumbs,'0755', true);
+
+        $ff = $foto_var;
+
+        if ($new_name == 'translit') $new_name = basename($this->translit($_FILES[$ff]['name'][$foto_key]));
+        if ($new_name == 'md5') $new_name = basename(md5($_FILES[$ff]['name'][$foto_key]));
+
+        if ($_FILES[$ff]['tmp_name'][$foto_key]!='') {
+
+            $file = file_get_contents($_FILES[$ff]['tmp_name'][$foto_key]);
+
+            $im1 = imagecreatefromstring($file);
+            if ($im1 !== false) {
+                if ($target_folder != '') {
+                    $width = 1280;
+                    $height = 900;
+
+                    $w_src1 = imagesx($im1);
+                    $h_src1 = imagesy($im1);
+                    $ratio = $w_src1 / $h_src1;
+                    if ($width / $height > $ratio) {
+                        $width = $height * $ratio;
+                    } else {
+                        $height = $width / $ratio;
+                    }
+                    $image_p = imagecreatetruecolor($width, $height);
+                    $bgColor = imagecolorallocate($image_p, 255, 255, 255);
+                    imagefill($image_p, 0, 0, $bgColor);
+                    imagecopyresampled($image_p, $im1, 0, 0, 0, 0, $width, $height, $w_src1, $h_src1);
+
+                    imagejpeg($image_p, $main_dir . '/' . $new_name . '.jpg');
+
+                }
+                if ($thumb_folder != '') {
+                    $width = 400;
+                    $height = 300;
+
+                    $w_src1 = imagesx($im1);
+                    $h_src1 = imagesy($im1);
+                    $ratio = $w_src1 / $h_src1;
+                    if ($width / $height > $ratio) {
+                        $width = $height * $ratio;
+                    } else {
+                        $height = $width / $ratio;
+                    }
+                    $image_p = imagecreatetruecolor($width, $height);
+                    $bgColor = imagecolorallocate($image_p, 255, 255, 255);
+                    imagefill($image_p, 0, 0, $bgColor);
+                    imagecopyresampled($image_p, $im1, 0, 0, 0, 0, $width, $height, $w_src1, $h_src1);
+                    imagejpeg($image_p, $thumbs . '/' . $new_name . '.jpg');
+                }
+                unlink($_FILES[$ff]['tmp_name'][$foto_key]);
+            }
+
+            return $new_name;
+        }
+    }
 
     /**
      * @Route("/ajax/deleteFoto")

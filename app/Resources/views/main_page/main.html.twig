@@ -40,22 +40,34 @@
 
     <div style="height: {{ is_mobile() ? '200px' : '600px' }};">
         <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="1" data-full="1">
-            <div style="background:url(/assets/images/interface/bigsl1.png) center center;background-size: cover;
-                    height: {{ is_mobile() ? '200px' : '600px' }};position:relative;">
-                <div class="b_content_block">
-                    <h2>Wide transport offer<br>
-                    to select</h2>
-                    <p>Help text for header of slider</p>
+
+
+            {% for s in cover_slider %}
+                <div  style="background:url({{ s.img }}) center center;background-size: cover;
+                        height: {{ is_mobile() ? '200px' : '600px' }};position:relative;display: block;">
+                    <a href="{{ s.link }}" class="b_content_block">
+                        <h2>{{ s.header|raw }}</h2>
+                        <p>{{ s.content|raw }}</p>
+                    </a>
                 </div>
-            </div>
-            <div style="background:url(/assets/images/interface/bigsl2.png) center center;background-size: cover;
-                    height: {{ is_mobile() ? '200px' : '600px' }};position:relative;">
-                <div class="b_content_block">
-                    <h2>Second<br>
-                    fraze</h2>
-                    <p>Another help text for header of slider</p>
-                </div>
-            </div>
+            {% endfor %}
+
+            {#<div style="background:url(/assets/images/interface/bigsl1.png) center center;background-size: cover;#}
+                    {#height: {{ is_mobile() ? '200px' : '600px' }};position:relative;">#}
+                {#<div class="b_content_block">#}
+                    {#<h2>Wide transport offer<br>#}
+                    {#to select</h2>#}
+                    {#<p>Help text for header of slider</p>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div style="background:url(/assets/images/interface/bigsl2.png) center center;background-size: cover;#}
+                    {#height: {{ is_mobile() ? '200px' : '600px' }};position:relative;">#}
+                {#<div class="b_content_block">#}
+                    {#<h2>Second<br>#}
+                    {#fraze</h2>#}
+                    {#<p>Another help text for header of slider</p>#}
+                {#</div>#}
+            {#</div>#}
         </div>
     </div>
 
