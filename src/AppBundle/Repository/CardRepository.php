@@ -28,10 +28,11 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
         $em = $this->getEntityManager();
         foreach ($gts as $gt) {
             $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.generalTypeId = ' . $gt . ' AND c.cityId= ?1 ORDER BY t.weight DESC, c.dateTariffStart DESC, c.dateUpdate DESC');
-            $query->setParameter(1, $cityId);
+            if ($cityId>1251) $query->setParameter(1, $cityId);
+            else $query->setParameter(1, 2407); // los angeles
             $query->setMaxResults(7);
             if(count($query->getScalarResult())<2) {
-                $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.generalTypeId = ' . $gt . ' ORDER BY t.weight DESC, c.dateTariffStart DESC, c.dateUpdate DESC');
+                $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.generalTypeId = ' . $gt . ' AND c.cityId > 1251 ORDER BY t.weight DESC, c.dateTariffStart DESC, c.dateUpdate DESC');
                 $query->setMaxResults(7);
             }
 
