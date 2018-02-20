@@ -1,4 +1,4 @@
-<header>
+<header id="header">
 
         <div uk-grid class="uk-grid-collapse mobile_header  " uk-sticky>
 
@@ -14,6 +14,24 @@
 
                 <div class="uk-width-expand uk-flex uk-flex-middle">
                     &nbsp;
+                </div>
+
+                <div class="uk-width-auto uk-flex uk-flex-middle">
+                    {% if not app.session.has('logged_user') and not app.session.has('admin')%}
+                        <a uk-toggle="target: #sign_in" class="c_grey" style="padding-right:20px;">
+                            <i uk-icon="icon: user"></i>
+                        </a>
+                    {% else %}
+                        <a href="/profile" class="c_grey" style="padding-right:20px;">
+                            <i uk-icon="icon: user"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="uk-width-auto uk-flex uk-flex-middle">
+                    <a href="/card/new" class="c_grey" style="padding-right:10px;">
+                        <i uk-icon="icon: plus-circle"></i>
+                    </a>
                 </div>
 
                 <div class="uk-width-auto uk-flex uk-flex-middle">

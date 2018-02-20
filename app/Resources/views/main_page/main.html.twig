@@ -38,18 +38,20 @@
 
 <div class="big_slider uk-position-relative" >
 
-    <div style="height: {{ is_mobile() ? '200px' : '600px' }};">
+    <div id="pre_cov_sl" style="height: {{ is_mobile() ? '200px' : '600px' }};">
         <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="1" data-full="1">
 
 
             {% for s in cover_slider %}
-                <div  style="background:url({{ s.img }}) center center;background-size: cover;
+                <div class="cov_sl" style="background:url({{ s.img }}) center center;background-size: cover;
                         height: {{ is_mobile() ? '200px' : '600px' }};position:relative;display: block;">
                     <a href="{{ s.link }}" class="b_content_block">
                         <h2>{{ s.header|raw }}</h2>
                         <p>{{ s.content|raw }}</p>
                     </a>
+
                 </div>
+
             {% endfor %}
 
             {#<div style="background:url(/assets/images/interface/bigsl1.png) center center;background-size: cover;#}
@@ -70,6 +72,25 @@
             {#</div>#}
         </div>
     </div>
+
+    <script>
+        console.log(window.innerHeight);
+        console.log(document.getElementById("header").offsetHeight);
+
+        {% if is_mobile() %}
+            var h = document.body.clientWidth*0.5626;
+        {% else %}
+            var h = window.innerHeight - document.getElementById("header").offsetHeight ;
+        {% endif %}
+
+        document.getElementById("pre_cov_sl").style.height = h + 'px' ;
+
+        var elems = document.getElementsByClassName('cov_sl');
+        var size = elems.length;
+        for (var i = 0; i < size; i++) {
+            elems[i].style.height = h + 'px' ;
+        }
+    </script>
 
     <div class="main_top_form">
         <div class="mtf_content">
@@ -96,6 +117,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <a class="mtf_button" href="/rent/{{ city.url }}/all/cars">{% trans %}Найти{% endtrans %}</a>
     </div>
@@ -117,16 +139,16 @@
                     {% for card in topcats[2] %}
                         {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
                     {% endfor %}
-                    {#{{ include('search/all_more.html.twig', {'title':'Все легковые автомобили', 'url':'/rent/'~in_city~'/all/cars'}) }}#}
                 </div>
             </div>
             <div class="uk-width-1-3@s">
                 <a href="/rent/{{ in_city }}/all/trucks" class="cat_main_header c_white uk-display-block">{% trans %}Грузовые автомобили{% endtrans %}</a>
                 <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[3] is defined %}
                     {% for card in topcats[3] %}
                         {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
                     {% endfor %}
-                    {#{{ include('search/all_more.html.twig', {'title':'Все свадебные авто', 'url':'/rent/'~in_city~'/all/bikes'}) }}#}
+                    {% endif %}
                 </div>
             </div>
             <div class="uk-width-1-3@s">
@@ -137,34 +159,36 @@
                         {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
                     {% endfor %}
                     {% endif %}
-                    {#{{ include('search/all_more.html.twig', {'title':'Все вертолеты', 'url':'/rent/'~in_city~'/all/trucks'}) }}#}
                 </div>
             </div>
             <div class="uk-width-1-3@s">
                 <a href="/rent/{{ in_city }}/all/helicopters" class="cat_main_header c_grey uk-display-block">{% trans %}Вертолеты{% endtrans %}</a>
                 <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[17] is defined %}
                     {% for card in topcats[17] %}
                         {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
                     {% endfor %}
-                    {#{{ include('search/all_more.html.twig', {'title':'Все снегоходы', 'url':'/rent/'~in_city~'/all/bikes'}) }}#}
+                    {% endif %}
                 </div>
             </div>
             <div class="uk-width-1-3@s">
                 <a href="/rent/{{ in_city }}/all/boats" class="cat_main_header c_grey uk-display-block">{% trans %}Катера{% endtrans %}</a>
                 <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[12] is defined %}
                     {% for card in topcats[12] %}
                         {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
                     {% endfor %}
-                    {#{{ include('search/all_more.html.twig', {'title':'Все снегоходы', 'url':'/rent/'~in_city~'/all/bikes'}) }}#}
+                    {% endif %}
                 </div>
             </div>
             <div class="uk-width-1-3@s">
                 <a href="/rent/{{ in_city }}/all/yachts" class="cat_main_header c_grey uk-display-block">{% trans %}Яхты{% endtrans %}</a>
                 <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[13] is defined %}
                     {% for card in topcats[13] %}
                         {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
                     {% endfor %}
-                    {#{{ include('search/all_more.html.twig', {'title':'Все снегоходы', 'url':'/rent/'~in_city~'/all/bikes'}) }}#}
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -106,7 +106,7 @@
                         height: {% if is_mobile() %}200px{% else %}600px{% endif %};
                         "
                 {% if k == 0 %}
-                title="{{ card.serviceTypeId == 1 ? 'Прокат' : 'Аренда' }} {% if card.generalType.chegoSingular is defined %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} в {{ lang=='ru' ? card.city.gde : card.city.url|replace({'_':', '}) }}"
+                title="{{ card.serviceTypeId == 1 ? 'Прокат'|trans : 'Аренда'|trans }} {% if card.generalType.chegoSingular is defined and lang=='ru'  %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} {% trans %}в{% endtrans %} {{ lang=='ru' ? card.city.gde : card.city.url|replace({'_':', '}) }}"
                 {% endif %}
                 >
                     {% if k == 0 %}
@@ -166,7 +166,7 @@
                                     {% for feature in card.getCardFeatures %}
                                         <div class="">
                                             <span class="check_icon"
-                                                  uk-icon="icon:check; ratio: 1"></span>{{ feature.getFeature.header }}
+                                                  uk-icon="icon:check; ratio: 1"></span>{{ lang=='ru' ? feature.getFeature.header : feature.getFeature.headerEn }}
                                         </div>
                                     {% endfor %}
 
