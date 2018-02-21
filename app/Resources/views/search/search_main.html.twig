@@ -15,6 +15,7 @@
     <script src="{{ asset('assets/js/search_page.js') }}"></script>
     <script src="{{ asset('assets/js/auto-complete.min.js') }}"></script>
     <script src="{{ asset('assets/js/mark_autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/price_search.js') }}"></script>
 {% endblock %}
 
 {% block metaTags %}
@@ -80,23 +81,32 @@
                     </div>
                 {% endif %}
 
+                {% if is_mobile() %}
+                    <button type="button" class="uk-button uk-button-default uk-width-1-1 uk-margin-top" uk-toggle="target: #all_filters">{% trans %}Уточнить поиск{% endtrans %}</button>
+                    <div id="all_filters" hidden>
+                {% endif %}
+
+
+
+
                 {% if total_cards > 0 %}
-                    <input type="hidden" id="order" name="order" value="{{ app.request.get('order') is defined ? app.request.get('order') : 0 }}">
+                    <input type="hidden" id="order" name="order" value="{{ app.request.get('order')  is not null ? app.request.get('order') : 0 }}">
                     <div class="uk-grid uk-grid-collapse uk-margin-top" uk-grid>
                         <div class="uk-width-1-3 uk-text-center">
                             {% trans %}Цена{% endtrans %}:
                         </div>
                         <div class="uk-width-1-3">
-                            <button class="uk-width-1-1 sort_button price_sort {{ app.request.get('order') is defined and app.request.get('order') == 'price_asc' ? 'active' }}" value="price_asc">{% trans %}дешевле{% endtrans %}</button>
+                            <button class="uk-width-1-1 sort_button price_sort {{ app.request.get('order')  is not null and app.request.get('order') == 'price_asc' ? 'active' }}" value="price_asc">{% trans %}дешевле{% endtrans %}</button>
                         </div>
                         <div class="uk-width-1-3">
-                            <button class="uk-width-1-1 sort_button price_sort {{ app.request.get('order') is defined and app.request.get('order') == 'price_desc' ? 'active' }}" value="price_desc">{% trans %}дороже{% endtrans %}</button>
+                            <button class="uk-width-1-1 sort_button price_sort {{ app.request.get('order')  is not null and app.request.get('order') == 'price_desc' ? 'active' }}" value="price_desc">{% trans %}дороже{% endtrans %}</button>
                         </div>
                     </div>
                 {% endif %}
 
+                {{ include('search/price_ranger.html.twig',{'app':app}) }}
 
-                <div class="uk-margin-top uk-visible@s">{{ include('search/search_form.html.twig') }}</div>
+                <div class="uk-margin-top uk-visible@s">{{ include('search/search_form.html.twig',{'app':app}) }}</div>
 
 
                 <div class="uk-margin-top">
@@ -117,9 +127,14 @@
 
                 <div class="uk-margin-bottom">
                     {% if filter or features %}
-                        {{ include('search/right_filter.html.twig') }}
+                        {{ include('search/right_filter.html.twig',{'app':app}) }}
                     {% endif %}
                 </div>
+
+                {% if is_mobile() %}
+                        <button type="button" class="uk-button uk-button-default uk-margin-top uk-width-1-1" uk-toggle="target: #all_filters">{% trans %}Свернуть{% endtrans %}</button>
+                    </div>
+                {% endif %}
 
             </div>
 

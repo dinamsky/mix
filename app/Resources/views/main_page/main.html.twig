@@ -4,7 +4,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('assets/css/main_page/top_slider.css') }}" rel="stylesheet"/>
-
+    <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
 {% endblock %}
 
@@ -18,6 +18,8 @@
     {#<script src="{{ asset('assets/html5_banner/body.js') }}"></script>#}
     {#<script src="{{ asset('assets/html5_banner/init.js') }}"></script>#}
     <script src="{{ asset('assets/js/mark_autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/nouislider.min.js') }}"></script>
+    <script src="{{ asset('assets/js/top_price_ranger.js') }}"></script>
 
 
 {% endblock %}
@@ -74,8 +76,8 @@
     </div>
 
     <script>
-        console.log(window.innerHeight);
-        console.log(document.getElementById("header").offsetHeight);
+        // console.log(window.innerHeight);
+        // console.log(document.getElementById("header").offsetHeight);
 
         {% if is_mobile() %}
             var h = document.body.clientWidth*0.5626;
@@ -92,7 +94,7 @@
         }
     </script>
 
-    <div class="main_top_form">
+    <div class="main_top_form" id="mtf_id">
         <div class="mtf_content">
             <div class="uk-margin-bottom">
                 <span class="uk-text-small">{% trans %}Город{% endtrans %}</span>
@@ -118,9 +120,34 @@
                 </div>
             </div>
 
+            <div>
+
+                <div class="uk-margin-large-top uk-margin-bottom">
+                    <input id="r_from_top_price" type="hidden" name="price_from" value="{{ app.request.get('price_from') is defined ? app.request.get('price_from') : 0 }}" class="uk-input uk-width-1-3">
+                    <input id="r_to_top_price" type="hidden" name="price_to" value="{{ app.request.get('price_to') is defined ? app.request.get('price_to') : 20000 }}" class="uk-input uk-width-1-3">
+
+                    <div id="ranger_top_price"
+                         class="ranger uk-margin-top"
+                         data-from="0"
+                         data-to="20000"
+                         data-id="top_price"
+                         data-start="0"
+                         data-finish="20000"></div>
+                </div>
+                <span class="uk-text-small">{% trans %}Цена{% endtrans %}</span>
+            </div>
+
         </div>
         <a class="mtf_button" href="/rent/{{ city.url }}/all/cars">{% trans %}Найти{% endtrans %}</a>
     </div>
+
+
+    {% if is_mobile() %}
+        <script>
+            document.getElementById("mtf_id").style.height = window.innerHeight - document.getElementById("header").offsetHeight - document.getElementById("pre_cov_sl").offsetHeight + 'px' ;
+        </script>
+    {% endif %}
+
 </div>
 
 

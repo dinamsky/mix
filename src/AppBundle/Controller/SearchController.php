@@ -436,11 +436,30 @@ class SearchController extends Controller
             }
         }
 
+        $price_condition = '';
+        if (isset($get['price_from'])) $price_condition = ' AND p.priceId = 2 AND p.value >= '.$get['price_from'].' AND p.value <= '.$get['price_to'];
+
         $query = $em->createQuery('SELECT g FROM AppBundle:GeneralType g ORDER BY g.total DESC');
         $generalTypes = $query->getResult();
 
-        $dql = 'SELECT c.id FROM AppBundle:Card c JOIN c.tariff t LEFT JOIN c.cardPrices p WITH p.priceId = 2 WHERE c.isActive = 1 '.$city_condition.$service_condition.$general_condition.$mark_condition.$body_condition.$filter_cond.$order;
+        $dql = 'SELECT c.id FROM AppBundle:Card c JOIN c.tariff t LEFT JOIN c.cardPrices p WITH p.priceId = 2 WHERE c.isActive = 1 '.$price_condition.$city_condition.$service_condition.$general_condition.$mark_condition.$body_condition.$filter_cond.$order;
         $query = $em->createQuery($dql);
+
+
+        // ------ new pager --------
+
+        $total_cards = count($query->getResult());
+
+        $total_pages = ceil($total_cards/$cards_per_page);
+        $start = ($page-1)*$cards_per_page;
+
+        if ($total_pages>($pages_in_center+1)) {
+            if(($total_pages-$page) > $pages_in_center) $pager_center_start = $page;
+            else $pager_center_start = $total_pages - $pages_in_center;
+            if ($pager_center_start == 1) $pager_center_start = 2;
+        }
+
+        // ---------------------------
 
         $query->setMaxResults($cards_per_page);
         $query->setFirstResult($start);

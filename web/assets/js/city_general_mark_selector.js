@@ -247,7 +247,9 @@ function getQueryVars() {
     var page = $('#main_search_button').data('page'); page ? page = '&page='+page : page = '';
     var onpage = $('#main_search_button').data('onpage'); onpage ? onpage = '&onpage='+onpage : onpage = '';
     var order = $('#order').val(); order ? order = '&order='+ order : order = '';
-    if (view+page+onpage+order) return '?'+view+page+onpage+order;
+    var price_from = $('#r_from_price_range').val(); price_from ? price_from = '&price_from='+ price_from : price_from = '';
+    var price_to = $('#r_to_price_range').val(); price_to ? price_to = '&price_to='+ price_to : price_to = '';
+    if (view+page+onpage+order+price_from+price_to) return '?'+view+page+onpage+order+price_from+price_to;
     else return '';
 }
 

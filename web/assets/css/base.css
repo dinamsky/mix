@@ -1334,6 +1334,27 @@ top: 80%;
     background: #2d9cdb;
 }
 
+#price_form  .ranger .noUi-connect {
+    background: #2d9cdb;
+}
+
+.main_top_form  .ranger .noUi-connect {
+    background: #2d9cdb;
+}
+
+.main_top_form .noUi-tooltip {
+    display: block;
+    position: absolute;
+    border: 0;
+    border-radius: 0;
+    background: #2d9cdb;
+    color: #fff;
+    padding: 2px 2px 0 2px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 11px;
+}
+
 .noUi-horizontal {
     height: 8px !important;
 }
@@ -1597,7 +1618,7 @@ top: 80%;
     top: 50%;
     z-index: 10;
     width: 300px;
-    margin-top: -127px;
+    margin-top: -187px;
 }
 
 .mtf_content{

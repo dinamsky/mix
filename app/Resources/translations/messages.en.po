@@ -906,8 +906,14 @@ msgstr "Yachts"
 msgid "Бронь до"
 msgstr "Reserved till"
 
-msgid ""
-msgstr ""
+msgid "Отфильтровать по цене"
+msgstr "Filter by price"
+
+msgid "Уточнить поиск"
+msgstr "Expand details"
+
+msgid "Свернуть"
+msgstr "Close up details"
 
 msgid ""
 msgstr ""
