@@ -35,24 +35,17 @@
 <div class="standard_wide uk-margin-top">
     <h1>Test payment</h1>
 
-    <form action="https://www.sandbox.paypal.com/cgi-bin/websc" method="post">
-        <input type="hidden" name="cmd" value="_xclick">
-        <input type="hidden" name="business" value="wqs-info@mail.ru">
-        <input id="paypalItemName" type="hidden" name="item_name" value="Base tariff">
-        <input id="paypalQuantity" type="hidden" name="quantity" value="1">
-        <input id="paypalAmmount" type="hidden" name="amount" value="7.0">
-        <input type="hidden" name="no_shipping" value="1">
-        <input type="hidden" name="return" value="https://mix.rent/paypalSuccess">
-
-        <input type="hidden" name="custom" value="{{ customData }}">
-
-        <input type="hidden" name="currency_code" value="USD">
-        <input type="hidden" name="lc" value="US">
-        <input type="hidden" name="bn" value="PP-BuyNowBF">
-
-        <button type="submit">
-            Pay Now
-        </button>
+    <form class="paypal" action="/{{ path('paypalPayment') }}" method="post" id="paypal_form" target="_blank">
+        <input type="hidden" name="cmd" value="_xclick" />
+        <input type="hidden" name="no_note" value="1" >
+        <input type="hidden" name="lc" value="RU">
+        <input type="hidden" name="currency_code" value="RUB" >
+        <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest" >
+        <input type="hidden" name="first_name" value="Timur" >
+        <input type="hidden" name="last_name" value="Malyshev" >
+        <input type="hidden" name="payer_email" value="multiprokat.msk-buyer@gmail.com" >
+        <input type="hidden" name="item_number" value="123456">
+        <input type="submit" name="submit" value="Submit Payment">
     </form>
 </div>
 
