@@ -214,7 +214,7 @@ class ShowCardController extends Controller
         if ($card->getServiceTypeId() == 3) $seo['service'] = $_t->trans('Аренда с правом выкупа');
 //        $seo['type']['singular'] = $general->getChegoSingular();
 //        $seo['type']['plural'] = $general->getChegoPlural();
-        if ($_SERVER['LANG'] == 'ru') $seo['type']['singular'] = $general->getChegoSingular(); else $seo['type']['singular'] = $general->getUrl();
+        if ($_SERVER['LANG'] == 'ru') $seo['type']['singular'] = $general->getChegoSingular(); else $seo['type']['singular'] = $general->getSingularEn();
         if ($_SERVER['LANG'] == 'ru') $seo['type']['plural'] = $general->getChegoPlural(); else $seo['type']['plural'] = $general->getUrl();
         $seo['mark'] = $mark->getHeader();
         $seo['model'] = $model->getHeader();
