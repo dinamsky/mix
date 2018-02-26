@@ -53,6 +53,13 @@ class GeneralType
     /**
      * @var string
      *
+     * @ORM\Column(name="singular_en", type="string", length=255)
+     */
+    private $singularEn;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="car_type_ids", type="string", length=255)
      */
     private $carTypeIds;
@@ -455,5 +462,29 @@ class GeneralType
     public function getWeight()
     {
         return $this->weight;
+    }
+
+    /**
+     * Set singularEn
+     *
+     * @param string $singularEn
+     *
+     * @return GeneralType
+     */
+    public function setSingularEn($singularEn)
+    {
+        $this->singularEn = $singularEn;
+
+        return $this;
+    }
+
+    /**
+     * Get singularEn
+     *
+     * @return string
+     */
+    public function getSingularEn()
+    {
+        return $this->singularEn;
     }
 }

@@ -53,11 +53,12 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.cityId=?1 ORDER BY t.weight DESC, c.dateTariffStart DESC, c.dateUpdate DESC');
-        $query->setParameter(1, $cityId);
+        if ($cityId>1251) $query->setParameter(1, $cityId);
+        else $query->setParameter(1, 2407); // los angeles
         $query->setMaxResults(20);
 
         if(count($query->getScalarResult())<6) {
-            $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t ORDER BY t.weight DESC, c.dateTariffStart DESC, c.dateUpdate DESC');
+            $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.cityId > 1251 ORDER BY t.weight DESC, c.dateTariffStart DESC, c.dateUpdate DESC');
             $query->setMaxResults(20);
         }
 
