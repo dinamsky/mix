@@ -57,10 +57,8 @@ class PayPalController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $post = $request->request;
+        file_put_contents('test.txt',json_encode($request->request->all()));
 
-        if (!$post->has("txn_id") && !$post->has("txn_type")){
-            exit();
-        } else {
            // Response from PayPal
             $req = 'cmd=_notify-validate';
             foreach ($request->request->all() as $key => $value) {
@@ -143,7 +141,7 @@ class PayPalController extends Controller
             fclose ($fp);
             }
             
-        }
+
 
         return new Response();
     }
