@@ -682,7 +682,11 @@ class NewCardController extends Controller
 
             if ($this->get('session')->has('admin')){
                 $response = $this->redirectToRoute('admin_main');
-            } else {
+            } elseif($user->getAccountTypeId() == 1){
+                $response = $this->redirect('/user/cards');
+            }
+
+            else {
 
                 // PayPal settings
                 $paypal_email = 'wsq-info2@mail.ru';
@@ -690,8 +694,18 @@ class NewCardController extends Controller
                 $cancel_url = 'https://mix.rent/paypalCancel';
                 $notify_url = 'https://mix.rent/paypalPayment';
 
-                $item_id = 1;
-                $item_amount = 7.00;
+                $custom = 'card';
+                if($post->has('one_card')){
+                    $item_id = $card->getId();
+                    $item_amount = 7.00;
+                    $custom = 'card';
+                }
+                if($post->has('pay_pro')){
+                    $item_id = $user->getId();
+                    $item_amount = 99.99;
+                    $custom = 'pro';
+                }
+
                 $querystring = '';
 
                 $querystring .= "?business=".urlencode($paypal_email)."&";
@@ -712,6 +726,7 @@ class NewCardController extends Controller
                 $querystring .= "return=".urlencode(stripslashes($return_url))."&";
                 $querystring .= "cancel_return=".urlencode(stripslashes($cancel_url))."&";
                 $querystring .= "notify_url=".urlencode($notify_url);
+                $querystring .= "custom=".$custom;
 
                 $url ='https://www.sandbox.paypal.com/cgi-bin/webscr'.$querystring;
 

@@ -7,9 +7,11 @@ use AppBundle\Entity\Seo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Card;
+use UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 class PayPalController extends Controller
@@ -50,6 +52,46 @@ class PayPalController extends Controller
         ]);
     }
 
+
+    /**
+     * @Route("/paypalPayPro", name="paypalPayPro")
+     */
+    public function paypalPayProAction(Request $request, EntityManagerInterface $em )
+    {
+        // PayPal settings
+        $paypal_email = 'wsq-info2@mail.ru';
+        $return_url = 'https://mix.rent/paypalSuccess';
+        $cancel_url = 'https://mix.rent/paypalCancel';
+        $notify_url = 'https://mix.rent/paypalPayment';
+
+        $item_id = $this->get('session')->get('logged_user')->getId();
+        $item_amount = 99.99;
+        $custom = 'pro';
+
+        $querystring = '';
+
+        $querystring .= "?business=".urlencode($paypal_email)."&";
+
+        $querystring .= "item_number=".urlencode($item_id)."&";
+        $querystring .= "amount=".urlencode($item_amount)."&";
+
+        $querystring .= "cmd=_xclick&";
+        $querystring .= "no_note=1&";
+        $querystring .= "lc=US&";
+        $querystring .= "currency_code=USD&";
+        $querystring .= "bn=PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest&";
+        $querystring .= "item_number=1&";
+
+        $querystring .= "return=".urlencode(stripslashes($return_url))."&";
+        $querystring .= "cancel_return=".urlencode(stripslashes($cancel_url))."&";
+        $querystring .= "notify_url=".urlencode($notify_url);
+        $querystring .= "custom=".$custom;
+
+        $url ='https://www.sandbox.paypal.com/cgi-bin/webscr'.$querystring;
+
+        return new RedirectResponse($url);
+    }
+
     /**
      * @Route("/paypalPayment", name="paypalPayment")
      */
@@ -57,7 +99,7 @@ class PayPalController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $post = $request->request;
-        file_put_contents('test.txt',json_encode($request->request->all()));
+        //file_put_contents('test.txt',json_encode($request->request->all()));
 
            // Response from PayPal
             $req = 'cmd=_notify-validate';
@@ -183,6 +225,26 @@ class PayPalController extends Controller
     }
 
     function updatePayments($data){
+        $em = $this->getDoctrine()->getManager();
+
+        if($data['custom'] == 'card') {
+            $card = $this->getDoctrine()
+                ->getRepository(Card::class)
+                ->find($data['item_number']);
+            $card->setIsActive(true);
+            $em->persist($card);
+            $em->flush();
+        }
+
+        if($data['custom'] == 'pro') {
+            $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($data['item_number']);
+            $user->setAccountTypeId(1);
+            $em->persist($user);
+            $em->flush();
+        }
+
         return true;
         //
         //global $link;
