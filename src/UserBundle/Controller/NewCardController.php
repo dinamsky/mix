@@ -707,7 +707,7 @@ class NewCardController extends Controller
 //                $querystring .= "first_name=Timur&";
 //                $querystring .= "last_name=Malyshev&";
 //                $querystring .= "payer_email=multiprokat.msk-buyer@gmail.com&";
-                $querystring .= "item_number=1";
+                $querystring .= "item_number=1&";
 
                 $querystring .= "return=".urlencode(stripslashes($return_url))."&";
                 $querystring .= "cancel_return=".urlencode(stripslashes($cancel_url))."&";
