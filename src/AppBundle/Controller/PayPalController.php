@@ -80,12 +80,12 @@ class PayPalController extends Controller
         $querystring .= "lc=US&";
         $querystring .= "currency_code=USD&";
         $querystring .= "bn=PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest&";
-        $querystring .= "item_number=1&";
+
 
         $querystring .= "return=".urlencode(stripslashes($return_url))."&";
         $querystring .= "cancel_return=".urlencode(stripslashes($cancel_url))."&";
         $querystring .= "notify_url=".urlencode($notify_url);
-        $querystring .= "custom=".$custom;
+        $querystring .= "&custom=".$custom;
 
         $url ='https://www.sandbox.paypal.com/cgi-bin/webscr'.$querystring;
 
