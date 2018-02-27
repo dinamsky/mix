@@ -15,28 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 class PayPalController extends Controller
 {
     /**
-     * @Route("/paypalIPN", name="paypalIPN")
-     */
-    public function indexAction(Request $request)
-    {
-
-        file_put_contents('IPN', json_encode($request));
-
-        return new Response();
-    }
-
-    /**
      * @Route("/paypalSuccess", name="paypalSuccess")
      */
     public function paypalSuccessAction(Request $request, EntityManagerInterface $em)
     {
-
-
         $query = $em->createQuery('SELECT g FROM AppBundle:GeneralType g WHERE g.total !=0 ORDER BY g.weight, g.total DESC');
         $generalTypes = $query->getResult();
-
         $city = $this->get('session')->get('city');
-
         $in_city = $city->getUrl();
        return $this->render('paypal/success.html.twig', [
             'city' => $city,
@@ -52,13 +37,9 @@ class PayPalController extends Controller
      */
     public function paypalCancelAction(Request $request, EntityManagerInterface $em)
     {
-
-
         $query = $em->createQuery('SELECT g FROM AppBundle:GeneralType g WHERE g.total !=0 ORDER BY g.weight, g.total DESC');
         $generalTypes = $query->getResult();
-
         $city = $this->get('session')->get('city');
-
         $in_city = $city->getUrl();
        return $this->render('paypal/success.html.twig', [
             'city' => $city,
@@ -70,84 +51,19 @@ class PayPalController extends Controller
     }
 
     /**
-     * @Route("/paypalTestPage", name="paypalTestPage")
-     */
-    public function paypalTestPageAction(Request $request, EntityManagerInterface $em)
-    {
-
-
-        $query = $em->createQuery('SELECT g FROM AppBundle:GeneralType g WHERE g.total !=0 ORDER BY g.weight, g.total DESC');
-        $generalTypes = $query->getResult();
-
-        $city = $this->get('session')->get('city');
-
-        $in_city = $city->getUrl();
-
-        $customData = ['user_id' => 1, 'product_id' => 5];
-
-       return $this->render('paypal/test_page.html.twig', [
-            'city' => $city,
-            'cityId' => $city->getId(),
-            'generalTypes' => $generalTypes,
-            'in_city' => $in_city,
-            'lang' => $_SERVER['LANG'],
-           'customData' => json_encode($customData)
-        ]);
-    }
-
-    /**
      * @Route("/paypalPayment", name="paypalPayment")
      */
-    public function paypalPaymentAction(Request $request, EntityManagerInterface $em)
+    public function paypalPaymentAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $post = $request->request;
 
-        // PayPal settings
-        $paypal_email = 'wsq-info2@mail.ru';
-        $return_url = 'https://mix.rent/paypalSuccess';
-        $cancel_url = 'https://mix.rent/paypalCancel';
-        $notify_url = 'https://mix.rent/paypalPayment';
-
-        $item_id = 1;
-        $item_amount = 7.00;
-
-        if (!isset($_POST["txn_id"]) && !isset($_POST["txn_type"])){
-            $querystring = '';
-
-            // Firstly Append paypal account to querystring
-            $querystring .= "?business=".urlencode($paypal_email)."&";
-
-            // Append amount& currency (£) to quersytring so it cannot be edited in html
-
-            //The item name and amount can be brought in dynamically by querying the $_POST['item_number'] variable.
-            $querystring .= "item_number=".urlencode($item_id)."&";
-            $querystring .= "amount=".urlencode($item_amount)."&";
-
-
-            $querystring .= "cmd=_xclick&";
-            $querystring .= "no_note=1&";
-            $querystring .= "lc=US&";
-            $querystring .= "currency_code=USD&";
-            $querystring .= "bn=PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest&";
-            $querystring .= "first_name=Timur&";
-            $querystring .= "last_name=Malyshev&";
-            $querystring .= "payer_email=multiprokat.msk-buyer@gmail.com&";
-            $querystring .= "item_number=1";
-
-            // Append paypal return addresses
-            $querystring .= "return=".urlencode(stripslashes($return_url))."&";
-            $querystring .= "cancel_return=".urlencode(stripslashes($cancel_url))."&";
-            $querystring .= "notify_url=".urlencode($notify_url);
-
-            // Append querystring with custom field
-            //$querystring .= "&custom=".USERID;
-
-            // Redirect to paypal IPN
-            header('location:https://www.sandbox.paypal.com/cgi-bin/webscr'.$querystring);
+        if (!$post->has("txn_id") && !$post->has("txn_type")){
             exit();
         } else {
            // Response from PayPal
             $req = 'cmd=_notify-validate';
-            foreach ($_POST as $key => $value) {
+            foreach ($request->request->all() as $key => $value) {
                 $value = urlencode(stripslashes($value));
                 $value = preg_replace('/(.*[^%^0^D])(%0A)(.*)/i','${1}%0D%0A${3}',$value);// IPN fix
                 $req .= "&$key=$value";
@@ -155,14 +71,14 @@ class PayPalController extends Controller
 
             // assign posted variables to local variables
             //$data['item_name']          = $_POST['item_name'];
-            $data['item_number']        = $_POST['item_number'];
-            $data['payment_status']     = $_POST['payment_status'];
-            $data['payment_amount']     = $_POST['mc_gross'];
-            $data['payment_currency']   = $_POST['mc_currency'];
-            $data['txn_id']             = $_POST['txn_id'];
-            $data['receiver_email']     = $_POST['receiver_email'];
-            $data['payer_email']        = $_POST['payer_email'];
-            $data['custom']             = $_POST['custom'];
+            $data['item_number']        = $post->get('item_number');
+            $data['payment_status']     = $post->get('payment_status');
+            $data['payment_amount']     = $post->get('mc_gross');
+            $data['payment_currency']   = $post->get('mc_currency');
+            $data['txn_id']             = $post->get('txn_id');
+            $data['receiver_email']     = $post->get('receiver_email');
+            $data['payer_email']        = $post->get('payer_email');
+            $data['custom']             = $post->get('custom');
 
             $paypal = new PaypalPayments();
             $paypal->setAmount($data['payment_amount']);
@@ -246,7 +162,7 @@ class PayPalController extends Controller
         $check = $this->getDoctrine()
                     ->getRepository(PaypalPayments::class)
                     ->findOneBy(['txnid'=>$txnid]);
-        return $check;
+        return $check->getTxnid();
     }
 
     function check_price($price, $id){
