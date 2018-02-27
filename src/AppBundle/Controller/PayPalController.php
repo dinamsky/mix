@@ -102,12 +102,12 @@ class PayPalController extends Controller
         //file_put_contents('test.txt',json_encode($request->request->all()));
 
            // Response from PayPal
-            $req = 'cmd=_notify-validate';
-            foreach ($request->request->all() as $key => $value) {
-                $value = urlencode(stripslashes($value));
-                $value = preg_replace('/(.*[^%^0^D])(%0A)(.*)/i','${1}%0D%0A${3}',$value);// IPN fix
-                $req .= "&$key=$value";
-            }
+//            $req = 'cmd=_notify-validate';
+//            foreach ($request->request->all() as $key => $value) {
+//                $value = urlencode(stripslashes($value));
+//                $value = preg_replace('/(.*[^%^0^D])(%0A)(.*)/i','${1}%0D%0A${3}',$value);// IPN fix
+//                $req .= "&$key=$value";
+//            }
 
             // assign posted variables to local variables
             //$data['item_name']          = $_POST['item_name'];
@@ -131,61 +131,54 @@ class PayPalController extends Controller
 
 
 
-            // post back to PayPal system to validate
-            $header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
-            $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-            $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-
-            $fp = fsockopen ('ssl://www.sandbox.paypal.com', 443, $errno, $errstr, 30);
-
-            if (!$fp) {
-                // HTTP ERROR
-
-            } else {
-                fputs($fp, $header . $req);
-                while (!feof($fp)) {
-                    $res = fgets ($fp, 1024);
-                    if (strcmp($res, "VERIFIED") == 0) {
-
-                        // Used for debugging
-                        // mail('user@domain.com', 'PAYPAL POST - VERIFIED RESPONSE', print_r($post, true));
-
-                        // Validate payment (Check unique txnid & correct price)
-                        $valid_txnid = $this->check_txnid($data['txn_id']);
-                        $valid_price = $this->check_price($data['payment_amount'], $data['item_number']);
-
-                        file_put_contents('ppc.txt',$res.json_encode($valid_txnid));
-                        // PAYMENT VALIDATED & VERIFIED!
-                        if ($valid_txnid && $valid_price) {
-
-                            $orderid = $this->updatePayments($data);
-
-                            if ($orderid) {
-                                // Payment has been made & successfully inserted into the Database
-                            } else {
-                                // Error inserting into DB
-                                // E-mail admin or alert user
-                                // mail('user@domain.com', 'PAYPAL POST - INSERT INTO DB WENT WRONG', print_r($data, true));
-                            }
-                        } else {
-                            // Payment made but data has been changed
-                            // E-mail admin or alert user
-                        }
-
-                    } else if (strcmp ($res, "INVALID") == 0) {
-
-                        // PAYMENT INVALID & INVESTIGATE MANUALY!
-                        // E-mail admin or alert user
-
-                        // Used for debugging
-                        //@mail("user@domain.com", "PAYPAL DEBUGGING", "Invalid Response
-
-                    }
-                }
-            fclose ($fp);
+            $raw_post_data = file_get_contents('php://input');
+            $raw_post_array = explode('&', $raw_post_data);
+            $myPost = array();
+            foreach ($raw_post_array as $keyval) {
+              $keyval = explode ('=', $keyval);
+              if (count($keyval) == 2)
+                $myPost[$keyval[0]] = urldecode($keyval[1]);
             }
-            
+            // read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
+            $req = 'cmd=_notify-validate';
+            $get_magic_quotes_exists = false;
+            if (function_exists('get_magic_quotes_gpc')) {
+              $get_magic_quotes_exists = true;
+            }
+            foreach ($myPost as $key => $value) {
+              if ($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) {
+                $value = urlencode(stripslashes($value));
+              } else {
+                $value = urlencode($value);
+              }
+              $req .= "&$key=$value";
+            }
 
+            $ch = curl_init('https://ipnpb.paypal.com/cgi-bin/webscr');
+            curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
+
+            $res = curl_exec($ch);
+            curl_close($ch);
+            if ( !($res) ) {
+              // error
+              exit;
+            } else {
+                if (strcmp ($res, "VERIFIED") == 0) {
+                  // The IPN is verified, process it
+                  $valid_txnid = $this->check_txnid($data['txn_id']);
+                  if ($valid_txnid) $this->updatePayments($data);
+
+                } else if (strcmp ($res, "INVALID") == 0) {
+                  // IPN invalid, log for manual investigation
+                }
+            }
 
         return new Response();
     }
