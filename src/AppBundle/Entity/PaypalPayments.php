@@ -25,7 +25,7 @@ class PaypalPayments
     /**
      * @var int
      *
-     * @ORM\Column(name="txnid", type="integer")
+     * @ORM\Column(name="txnid", type="string", length=255)
      */
     private $txnid;
 

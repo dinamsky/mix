@@ -198,6 +198,22 @@ class PayPalController extends Controller
 //            return mysql_insert_id($link);
 //        }
     }
+    /**
+     * @Route("/testPI", name="testPI")
+     */
+    public function testInsert()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $paypal = new PaypalPayments();
+            $paypal->setAmount('7.00');
+            $paypal->setItemId(1);
+            $paypal->setPaymentType('tariff');
+            $paypal->setStatus('new');
+            $paypal->setTxnid('4567asdfuyrt4567');
+            $em->persist($paypal);
+            $em->flush();
+            return new Response();
+    }
 }
 
 //multiprokat.msk.merchant@gmail.com
