@@ -153,6 +153,8 @@ class PayPalController extends Controller
                         // Validate payment (Check unique txnid & correct price)
                         $valid_txnid = $this->check_txnid($data['txn_id']);
                         $valid_price = $this->check_price($data['payment_amount'], $data['item_number']);
+
+                        file_put_contents('ppc.txt',$res.json_encode($valid_txnid));
                         // PAYMENT VALIDATED & VERIFIED!
                         if ($valid_txnid && $valid_price) {
 
@@ -202,7 +204,7 @@ class PayPalController extends Controller
         $check = $this->getDoctrine()
                     ->getRepository(PaypalPayments::class)
                     ->findOneBy(['txnid'=>$txnid]);
-        return $check->getTxnid();
+        return $check;
     }
 
     function check_price($price, $id){
