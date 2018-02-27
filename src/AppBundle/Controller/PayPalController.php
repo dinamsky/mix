@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\PaypalPayments;
 use AppBundle\Entity\Seo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -97,7 +98,7 @@ class PayPalController extends Controller
     /**
      * @Route("/paypalPayment", name="paypalPayment")
      */
-    public function paypalPaymentAction(Request $request)
+    public function paypalPaymentAction(Request $request, EntityManagerInterface $em)
     {
 
         // PayPal settings
@@ -106,7 +107,7 @@ class PayPalController extends Controller
         $cancel_url = 'https://mix.rent/paypalCancel';
         $notify_url = 'https://mix.rent/paypalPayment';
 
-        $item_name = 'Test Item';
+        $item_id = 1;
         $item_amount = 7.00;
 
         if (!isset($_POST["txn_id"]) && !isset($_POST["txn_type"])){
@@ -118,14 +119,19 @@ class PayPalController extends Controller
             // Append amount& currency (£) to quersytring so it cannot be edited in html
 
             //The item name and amount can be brought in dynamically by querying the $_POST['item_number'] variable.
-            $querystring .= "item_name=".urlencode($item_name)."&";
+            $querystring .= "item_number=".urlencode($item_id)."&";
             $querystring .= "amount=".urlencode($item_amount)."&";
 
-            //loop for posted values and append to querystring
-            foreach($_POST as $key => $value) {
-                $value = urlencode(stripslashes($value));
-                $querystring .= "$key=$value&";
-            }
+
+            $querystring .= "cmd=_xclick&";
+            $querystring .= "no_note=1&";
+            $querystring .= "lc=US&";
+            $querystring .= "currency_code=USD&";
+            $querystring .= "bn=PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest&";
+            $querystring .= "first_name=Timur&";
+            $querystring .= "last_name=Malyshev&";
+            $querystring .= "payer_email=multiprokat.msk-buyer@gmail.com&";
+            $querystring .= "item_number=1";
 
             // Append paypal return addresses
             $querystring .= "return=".urlencode(stripslashes($return_url))."&";
@@ -148,7 +154,7 @@ class PayPalController extends Controller
             }
 
             // assign posted variables to local variables
-            $data['item_name']          = $_POST['item_name'];
+            //$data['item_name']          = $_POST['item_name'];
             $data['item_number']        = $_POST['item_number'];
             $data['payment_status']     = $_POST['payment_status'];
             $data['payment_amount']     = $_POST['mc_gross'];
@@ -157,6 +163,17 @@ class PayPalController extends Controller
             $data['receiver_email']     = $_POST['receiver_email'];
             $data['payer_email']        = $_POST['payer_email'];
             $data['custom']             = $_POST['custom'];
+
+            $paypal = new PaypalPayments();
+            $paypal->setAmount($data['payment_amount']);
+            $paypal->setItemId($data['item_number']);
+            $paypal->setPaymentType('tariff');
+            $paypal->setStatus('new');
+            $paypal->setTxnid($data['txn_id']);
+            $em->persist($paypal);
+            $em->flush();
+
+
 
             // post back to PayPal system to validate
             $header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
@@ -215,9 +232,9 @@ class PayPalController extends Controller
         return new Response();
     }
 
-    function check_txnid($tnxid){
-        global $link;
-        return true;
+    function check_txnid($txnid){
+        //global $link;
+        //return true;
 //        $valid_txnid = true;
 //        //get result set
 //        $sql = mysql_query("SELECT * FROM `payments` WHERE txnid = '$tnxid'", $link);
@@ -225,6 +242,11 @@ class PayPalController extends Controller
 //            $valid_txnid = false;
 //        }
 //        return $valid_txnid;
+
+        $check = $this->getDoctrine()
+                    ->getRepository(PaypalPayments::class)
+                    ->findOneBy(['txnid'=>$txnid]);
+        return $check;
     }
 
     function check_price($price, $id){

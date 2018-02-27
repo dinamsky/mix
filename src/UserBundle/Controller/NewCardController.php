@@ -679,43 +679,41 @@ class NewCardController extends Controller
 
             $markmenu->updateModelTotal($card->getModelId());
 
-            if ($post->get('tariffId') == 1) {
-                if ($this->get('session')->has('admin')){
-                    $response = $this->redirectToRoute('admin_main');
-                } else {
 
-                    if(isset($new_card)){
-                        $response = $this->redirect('/card/'.$card->getId()); // new and first
-                        $this->get('session')->set('first_card', true);
-                    } else $response = $this->redirectToRoute('user_cards');
-                }
-            }
-            else {
+            if ($this->get('session')->has('admin')){
+                $response = $this->redirectToRoute('admin_main');
+            } else {
 
-                $tariff = $this->getDoctrine()
-                    ->getRepository(Tariff::class)
-                    ->find($post->get('tariffId'));
+                // PayPal settings
+                $paypal_email = 'wsq-info2@mail.ru';
+                $return_url = 'https://mix.rent/paypalSuccess';
+                $cancel_url = 'https://mix.rent/paypalCancel';
+                $notify_url = 'https://mix.rent/paypalPayment';
 
-                $order = new UserOrder();
-                $order->setUser($user);
-                $order->setCard($card);
-                $order->setTariff($tariff);
-                $order->setPrice(ceil($tariff->getPrice()*100/110));
-                $order->setOrderType('tariff_'.$tariff->getId());
-                $order->setStatus('new');
-                $em->persist($order);
-                $em->flush();
+                $item_id = 1;
+                $item_amount = 7.00;
+                $querystring = '';
 
-                $mrh_login = "multiprokat";
-                $mrh_pass1 = "Wf1bYXSd5V8pKS3ULwb3";
-                $inv_id    = $order->getId();
-                $inv_desc  = "set_tariff";
-                $out_summ  = ceil($tariff->getPrice()*100/110);
+                $querystring .= "?business=".urlencode($paypal_email)."&";
 
-                $crc  = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1");
+                $querystring .= "item_number=".urlencode($item_id)."&";
+                $querystring .= "amount=".urlencode($item_amount)."&";
 
-                $url = "https://auth.robokassa.ru/Merchant/Index.aspx?MrchLogin=$mrh_login&".
-                    "OutSum=$out_summ&InvId=$inv_id&Desc=$inv_desc&SignatureValue=$crc";
+                $querystring .= "cmd=_xclick&";
+                $querystring .= "no_note=1&";
+                $querystring .= "lc=US&";
+                $querystring .= "currency_code=USD&";
+                $querystring .= "bn=PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest&";
+//                $querystring .= "first_name=Timur&";
+//                $querystring .= "last_name=Malyshev&";
+//                $querystring .= "payer_email=multiprokat.msk-buyer@gmail.com&";
+                $querystring .= "item_number=1";
+
+                $querystring .= "return=".urlencode(stripslashes($return_url))."&";
+                $querystring .= "cancel_return=".urlencode(stripslashes($cancel_url))."&";
+                $querystring .= "notify_url=".urlencode($notify_url);
+
+                $url ='https://www.sandbox.paypal.com/cgi-bin/webscr'.$querystring;
 
                 $response = new RedirectResponse($url);
             }
