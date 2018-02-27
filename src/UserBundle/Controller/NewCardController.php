@@ -496,6 +496,8 @@ class NewCardController extends Controller
                 $card->setAdmin($admin);
             }
 
+            $card->setIsActive(false);
+
             $em->persist($card);
 
             $em->flush();
@@ -681,8 +683,15 @@ class NewCardController extends Controller
 
 
             if ($this->get('session')->has('admin')){
+                $card->setIsActive(true);
+                $em->persist($card);
+                $em->flush();
                 $response = $this->redirectToRoute('admin_main');
+
             } elseif($user->getAccountTypeId() == 1){
+                $card->setIsActive(true);
+                $em->persist($card);
+                $em->flush();
                 $response = $this->redirect('/user/cards');
             }
 
@@ -703,7 +712,7 @@ class NewCardController extends Controller
                 if($post->has('pay_pro')){
                     $item_id = $user->getId();
                     $item_amount = 99.99;
-                    $custom = 'pro';
+                    $custom = 'pro_'.$card->getId();
                 }
 
                 $querystring = '';
@@ -718,9 +727,7 @@ class NewCardController extends Controller
                 $querystring .= "lc=US&";
                 $querystring .= "currency_code=USD&";
                 $querystring .= "bn=PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest&";
-//                $querystring .= "first_name=Timur&";
-//                $querystring .= "last_name=Malyshev&";
-//                $querystring .= "payer_email=multiprokat.msk-buyer@gmail.com&";
+
                 $querystring .= "item_number=1&";
 
                 $querystring .= "return=".urlencode(stripslashes($return_url))."&";

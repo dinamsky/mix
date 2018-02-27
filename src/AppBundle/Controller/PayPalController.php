@@ -227,6 +227,8 @@ class PayPalController extends Controller
     function updatePayments($data){
         $em = $this->getDoctrine()->getManager();
 
+        $xc = explode("_",$data['custom']);
+
         if($data['custom'] == 'card') {
             $card = $this->getDoctrine()
                 ->getRepository(Card::class)
@@ -236,7 +238,17 @@ class PayPalController extends Controller
             $em->flush();
         }
 
-        if($data['custom'] == 'pro') {
+        if($xc[0] == 'pro') {
+
+            if(isset($xc[1]) and $xc[1]!='') { // if new card and not only PRO
+                $card = $this->getDoctrine()
+                    ->getRepository(Card::class)
+                    ->find($xc[1]);
+                $card->setIsActive(true);
+                $em->persist($card);
+                $em->flush();
+            }
+
             $user = $this->getDoctrine()
             ->getRepository(User::class)
             ->find($data['item_number']);
