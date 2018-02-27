@@ -166,6 +166,9 @@ class PayPalController extends Controller
 
             $res = curl_exec($ch);
             curl_close($ch);
+
+            file_put_contents('curl.txt',$res);
+
             if ( !($res) ) {
               // error
               exit;
@@ -173,10 +176,14 @@ class PayPalController extends Controller
                 if (strcmp ($res, "VERIFIED") == 0) {
                   // The IPN is verified, process it
                   $valid_txnid = $this->check_txnid($data['txn_id']);
+
+                  file_put_contents('tx.txt',json_encode($valid_txnid));
+
                   if ($valid_txnid) $this->updatePayments($data);
 
                 } else if (strcmp ($res, "INVALID") == 0) {
                   // IPN invalid, log for manual investigation
+
                 }
             }
 
