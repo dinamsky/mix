@@ -132,6 +132,9 @@ class PayPalController extends Controller
 
 
             $raw_post_data = file_get_contents('php://input');
+
+            file_put_contents('raw_post.txt',$raw_post_data);
+
             $raw_post_array = explode('&', $raw_post_data);
             $myPost = array();
             foreach ($raw_post_array as $keyval) {
