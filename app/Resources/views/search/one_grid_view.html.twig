@@ -41,7 +41,7 @@
     <div class="padding10 bg_white uk-position-relative">
         <div class="uk-grid uk-grid-small" uk-grid>
             <div class="uk-width-expand">
-                <a target="_blanc" class="uk-text-truncate uk-text-small uk-display-block uk-position-relative c_grey {{ micro is defined ? 'micro' : '' }}" href="/card/{{ card.id }}" title="{{ serviceType }} {% if card.generalType.chegoSingular is defined %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} в {{ card.city.gde }}">
+                <a target="_blanc" class="uk-text-truncate uk-text-small uk-display-block uk-position-relative c_grey {{ micro is defined ? 'micro' : '' }}" href="/card/{{ card.id }}" title="{{ serviceType }} {% if card.generalType.chegoSingular is defined %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} {% trans %}в{% endtrans %} {{ card.city.gde }}">
                     {{ card.markModel.Mark.header }} {{ card.markModel.header }}
                 </a>
             </div>
@@ -80,7 +80,7 @@
             </div>
             <div class="uk-width-auto uk-text-right">
                 <div class="uk-text-small c_grey {{ micro is defined ? 'micro' : '' }}">
-                   {{ lang=='ru' ? card.city.header : card.city.url|replace({'_':', '}) }}
+                   {{ lang=='en' and card.city.id > 1251 ? card.city.header~' '~card.city.iso~' '~card.city.country : card.city.header }}
                 </div>
             </div>
         </div>
