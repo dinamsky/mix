@@ -505,6 +505,10 @@ class SearchController extends Controller
             $seo['city']['chto'] = $city->getHeader();
             $seo['city']['gde'] = $city->getGde();
             $seo['city']['url'] = $city->getUrl();
+            $seo['city']['iso'] = $city->getIso();
+            $seo['city']['country'] = $city->getCountry();
+            $seo['city']['id'] = $city->getId();
+            $seo['city']['header'] = $city->getHeader();
         } else {
             $seo['city']['chto'] = 'России';
             $seo['city']['gde'] = 'России';

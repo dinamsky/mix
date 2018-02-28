@@ -75,7 +75,7 @@
     <div class="standard_wide breadcrumbs uk-margin-top uk-margin-bottom uk-visible@s">
         <a class="c_blue" href="/">{% trans %}Главная{% endtrans %}</a>
         <i uk-icon="icon:chevron-right"></i>
-        <a class="c_blue" href="/rent/{{ card.city.url }}">{{ lang=='ru' ? card.city.header : card.city.url|replace({'_':', '}) }}</a>
+        <a class="c_blue" href="/rent/{{ card.city.url }}">{{ lang=='en' and card.city.id>1251 ? card.city.header~' '~card.city.iso~' '~card.city.country :card.city.gde }}</a>
         <i uk-icon="icon:chevron-right"></i>
         <a class="c_blue" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}">{{ lang == 'ru' ? card.generalType.header|capitalize : card.generalType.url|capitalize }}</a>
 
@@ -86,7 +86,7 @@
 
         {% if card.modelId != 20991 %}
             <i uk-icon="icon:chevron-right"></i>
-            <a class="c_blue" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}">{{ card.serviceTypeId == 1 ? 'Прокат'|trans : 'Аренда'|trans }} {{ card.markModel.mark.header }} {% trans %}в{% endtrans %} {{ lang=='ru' ? card.city.gde : card.city.url|replace({'_':', '}) }}</a>
+            <a class="c_blue" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}">{{ card.serviceTypeId == 1 ? 'Прокат'|trans : 'Аренда'|trans }} {{ card.markModel.mark.header }} {% trans %}в{% endtrans %} {{ lang=='en' and card.city.id>1251 ? card.city.header~' '~card.city.iso~' '~card.city.country :card.city.gde }}</a>
             <i uk-icon="icon:chevron-right"></i>
             <a class="c_blue" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}/{{ card.markModel.header }}">{{ card.markModel.mark.header }} {{ card.markModel.header }}</a>
         {% endif %}
@@ -106,7 +106,7 @@
                         height: {% if is_mobile() %}200px{% else %}600px{% endif %};
                         "
                 {% if k == 0 %}
-                title="{{ card.serviceTypeId == 1 ? 'Прокат'|trans : 'Аренда'|trans }} {% if card.generalType.chegoSingular is defined and lang=='ru'  %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} {% trans %}в{% endtrans %} {{ lang=='ru' ? card.city.gde : card.city.url|replace({'_':', '}) }}"
+                title="{{ card.serviceTypeId == 1 ? 'Прокат'|trans : 'Аренда'|trans }} {% if card.generalType.chegoSingular is defined and lang=='ru'  %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} {% trans %}в{% endtrans %} {{ lang=='en' and card.city.id>1251 ? card.city.header~' '~card.city.iso~' '~card.city.country :card.city.gde }}"
                 {% endif %}
                 >
                     {% if k == 0 %}

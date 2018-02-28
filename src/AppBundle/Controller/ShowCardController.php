@@ -221,6 +221,10 @@ class ShowCardController extends Controller
         $seo['city']['chto'] = $city->getHeader();
         $seo['city']['gde'] = $city->getGde();
         $seo['city']['url'] = $city->getUrl();
+        $seo['city']['iso'] = $city->getIso();
+        $seo['city']['country'] = $city->getCountry();
+        $seo['city']['id'] = $city->getId();
+        $seo['city']['header'] = $city->getHeader();
 
         $mark_arr = $mm->getExistMarks('',$mark->getCarTypeId());
         $mark_arr_sorted = $mark_arr['sorted_marks'];

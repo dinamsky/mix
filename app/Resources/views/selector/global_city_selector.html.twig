@@ -5,7 +5,7 @@
     {% if lang=='ru' %}
         {{ app.session.has('city')  ? app.session.get('city').header : city.header }}
     {% else %}
-        {{ app.session.has('city')  ? app.session.get('city').url|replace({'_':', '}) : city.url|replace({'_':', '}) }}
+        {{ app.session.has('city') and app.session.get('city').id > 1251  ? app.session.get('city').header~' '~app.session.get('city').iso~' '~app.session.get('city').country : city.header~' '~city.iso~' '~city.country }}
     {% endif %}
 
 

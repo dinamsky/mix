@@ -1,1 +1,1 @@
-{{ seo.service }} {{ seo.type.singular }} {{ seo.mark }} {{ seo.model }} {% trans %}в{% endtrans %} {{ lang=='en'?seo.city.url|replace({'_':', '}):seo.city.gde }} {{ card.id }}
+{{ seo.service }} {{ seo.type.singular }} {{ seo.mark }} {{ seo.model }} {% trans %}в{% endtrans %} {{ lang=='en' and seo.city.id>1251 ? seo.city.header~' '~seo.city.iso~' '~seo.city.country :seo.city.gde }}  {{ card.id }}
