@@ -406,7 +406,12 @@ class NewCardController extends Controller
                             ->findOneBy(array(
                                 'email' => $post->get('r_email')
                             ));
+                        $_t = $this->get('translator');
+
                         if(!$user){
+
+
+
                             $code = md5(rand(0,99999999));
                             $user = new User();
                             $user->setEmail($request->request->get('r_email'));
@@ -430,12 +435,12 @@ class NewCardController extends Controller
                             $em->persist($ui);
                             $em->flush();
 
-                            $message = (new \Swift_Message('Регистрация на сайте multiprokat.com'))
-                                ->setFrom('mail@multiprokat.com')
+                            $message = (new \Swift_Message('Mix.Rent registration notification'))
+                                ->setFrom('mail@mix.rent')
                                 ->setTo($user->getEmail())
                                 ->setBody(
                                     $this->renderView(
-                                        'email/registration.html.twig',
+                                        'email/registration_en.html.twig',
                                         array(
                                             'header' => $user->getHeader(),
                                             'code' => $code
@@ -447,12 +452,12 @@ class NewCardController extends Controller
 
                             $this->addFlash(
                                 'notice',
-                                'На вашу почту было отправлено письмо.<br>Перейдите по ссылке в письме для завершения регистрации!'
+                                $_t->trans('На вашу почту было отправлено письмо для активации аккаунта!')
                             );
                         } else {
                             $this->addFlash(
                                 'notice',
-                                'Данный email уже зарегистрирован!'
+                                $_t->trans('Пользователь уже зарегистрирован!')
                             );
                             return new RedirectResponse('/card/new');
                         }
@@ -703,16 +708,21 @@ class NewCardController extends Controller
                 $cancel_url = 'https://mix.rent/paypalCancel';
                 $notify_url = 'https://mix.rent/paypalPayment';
 
+
+
+
                 $custom = 'card';
                 if($post->has('one_card')){
                     $item_id = $card->getId();
                     $item_amount = 7.00;
                     $custom = 'card';
+                    $button = 'MixRentCard_BuyNow_WPS_RU';
                 }
                 if($post->has('pay_pro')){
                     $item_id = $user->getId();
                     $item_amount = 99.99;
                     $custom = 'pro_'.$card->getId();
+                    $button = 'MixRentPRO_BuyNow_WPS_RU';
                 }
 
                 $querystring = '';
@@ -724,9 +734,9 @@ class NewCardController extends Controller
 
                 $querystring .= "cmd=_xclick&";
                 $querystring .= "no_note=1&";
-                $querystring .= "lc=US&";
+
                 $querystring .= "currency_code=USD&";
-                $querystring .= "bn=PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest&";
+                $querystring .= "bn=".$button."&";
 
 
 
@@ -743,7 +753,7 @@ class NewCardController extends Controller
             if (!$this->get('session')->has('admin')) {
                 $this->addFlash(
                     'notice',
-                    'Не забудьте поделиться вашим объявлением в социальных сетях!'
+                    'Do not forget to share your listing!'
                 );
             }
 

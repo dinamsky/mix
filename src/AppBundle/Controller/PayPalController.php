@@ -77,9 +77,9 @@ class PayPalController extends Controller
 
         $querystring .= "cmd=_xclick&";
         $querystring .= "no_note=1&";
-        $querystring .= "lc=US&";
+
         $querystring .= "currency_code=USD&";
-        $querystring .= "bn=PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest&";
+        $querystring .= "bn=MixRentPRO_BuyNow_WPS_RU&";
 
 
         $querystring .= "return=".urlencode(stripslashes($return_url))."&";
