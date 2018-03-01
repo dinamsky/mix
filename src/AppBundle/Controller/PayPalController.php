@@ -59,7 +59,7 @@ class PayPalController extends Controller
     public function paypalPayProAction(Request $request, EntityManagerInterface $em )
     {
         // PayPal settings
-        $paypal_email = 'wsq-info2@mail.ru';
+        $paypal_email = 'multiprokat.msk@gmail.com';
         $return_url = 'https://mix.rent/paypalSuccess';
         $cancel_url = 'https://mix.rent/paypalCancel';
         $notify_url = 'https://mix.rent/paypalPayment';
@@ -87,7 +87,7 @@ class PayPalController extends Controller
         $querystring .= "notify_url=".urlencode($notify_url);
         $querystring .= "&custom=".$custom;
 
-        $url ='https://www.sandbox.paypal.com/cgi-bin/webscr'.$querystring;
+        $url ='https://www.paypal.com/cgi-bin/webscr'.$querystring;
 
         return new RedirectResponse($url);
     }
@@ -122,7 +122,7 @@ class PayPalController extends Controller
 
         $raw_post_data = file_get_contents('php://input');
 
-        file_put_contents('raw_post.txt',$raw_post_data);
+        //file_put_contents('raw_post.txt',$raw_post_data);
 
         $raw_post_array = explode('&', $raw_post_data);
         $myPost = array();
@@ -146,7 +146,7 @@ class PayPalController extends Controller
           $req .= "&$key=$value";
         }
 
-        $ch = curl_init('https://ipnpb.sandbox.paypal.com/cgi-bin/webscr');
+        $ch = curl_init('https://ipnpb.paypal.com/cgi-bin/webscr');
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -159,7 +159,7 @@ class PayPalController extends Controller
         $res = curl_exec($ch);
         curl_close($ch);
 
-        file_put_contents('curl.txt',$res);
+        //file_put_contents('curl.txt',$res);
 
         if ( !($res) ) {
           // error

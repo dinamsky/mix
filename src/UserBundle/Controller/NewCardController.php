@@ -698,7 +698,7 @@ class NewCardController extends Controller
             else {
 
                 // PayPal settings
-                $paypal_email = 'wsq-info2@mail.ru';
+                $paypal_email = 'multiprokat.msk@gmail.com';
                 $return_url = 'https://mix.rent/paypalSuccess';
                 $cancel_url = 'https://mix.rent/paypalCancel';
                 $notify_url = 'https://mix.rent/paypalPayment';
@@ -735,7 +735,7 @@ class NewCardController extends Controller
                 $querystring .= "notify_url=".urlencode($notify_url);
                 $querystring .= "&custom=".$custom;
 
-                $url ='https://www.sandbox.paypal.com/cgi-bin/webscr'.$querystring;
+                $url ='https://www.paypal.com/cgi-bin/webscr'.$querystring;
 
                 $response = new RedirectResponse($url);
             }
