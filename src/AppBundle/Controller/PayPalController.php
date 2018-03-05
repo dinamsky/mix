@@ -58,38 +58,78 @@ class PayPalController extends Controller
      */
     public function paypalPayProAction(Request $request, EntityManagerInterface $em )
     {
-        // PayPal settings
-        $paypal_email = 'multiprokat.msk@gmail.com';
-        $return_url = 'https://mix.rent/paypalSuccess';
-        $cancel_url = 'https://mix.rent/paypalCancel';
-        $notify_url = 'https://mix.rent/paypalPayment';
+        $url = "https://api.sandbox.paypal.com/v1/oauth2/token";
+                $headers = array(
+                    'Accept' => 'application/json',
+                    'Accept-Language' => 'en_US',
+                );
 
-        $item_id = $this->get('session')->get('logged_user')->getId();
-        $item_amount = 99.99;
-        $custom = 'pro';
+                $clientID = 'AVtyX4DQ_AxvLHzGbdGk3meMLtJD6vNPEcR1Ffqq23AKfZAqOWyUSb_QXES9_l25nPdITbiNJVQLenOz';
+                $clientSecret = 'EAWY5q29JVzJbcfX4oM0GmsEy987zoD-_fyps0yRTg__pSa1SFwR1uOMdwFSjJtPDwbtIEwmm9dfSXv_';
 
-        $querystring = '';
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($ch, CURLOPT_USERPWD, $clientID . ':' . $clientSecret);
+                $curl = curl_exec($ch);
+                curl_close($ch);
 
-        $querystring .= "?business=".urlencode($paypal_email)."&";
+                dump($curl);
 
-        $querystring .= "item_number=".urlencode($item_id)."&";
-        $querystring .= "amount=".urlencode($item_amount)."&";
-
-        $querystring .= "cmd=_xclick&";
-        $querystring .= "no_note=1&";
-
-        $querystring .= "currency_code=USD&";
-        $querystring .= "bn=MixRentPRO_BuyNow_WPS_RU&";
+                $x = json_decode($curl, TRUE);
+                $accesstoken = $x['access_token'];
 
 
-        $querystring .= "return=".urlencode(stripslashes($return_url))."&";
-        $querystring .= "cancel_return=".urlencode(stripslashes($cancel_url))."&";
-        $querystring .= "notify_url=".urlencode($notify_url);
-        $querystring .= "&custom=".$custom;
+                $headers2 = array(
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $accesstoken
+                );
 
-        $url ='https://www.paypal.com/cgi-bin/webscr'.$querystring;
+                $data = array(
+                    "intent" => "sale",
+                    "redirect_urls" => array(
+                        "return_url" => "https://mix.rent/paypalSuccess",
+                        "cancel_url" => "https://mix.rent/paypalCancel"
+                    ),
+                    "payer" => array(
+                        "payment_method" => "paypal"
+                    ),
+                    "transactions" => array(
+                        "amount" => array(
+                            "total" => '99.99',
+                            "currency" => "USD"
 
-        return new RedirectResponse($url);
+                        ),
+                        "custom" => 'pro'
+                    )
+                );
+
+                $saleurl = "https://api.sandbox.paypal.com/v1/payments/payment";
+
+                $sale = curl_init();
+                curl_setopt($sale, CURLOPT_URL, $saleurl);
+                curl_setopt($sale, CURLOPT_VERBOSE, TRUE);
+                curl_setopt($sale, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($sale, CURLOPT_SSL_VERIFYPEER, FALSE);
+                curl_setopt($sale, CURLOPT_SSL_VERIFYHOST, FALSE);
+                curl_setopt($sale, CURLOPT_POSTFIELDS, json_encode($data));
+                curl_setopt($sale, CURLOPT_HTTPHEADER, $headers2);
+                 //curl_setopt($sale, CURLOPT_USERPWD, $clientID . ':' . $clientSecret);
+                $finalsale = curl_exec($sale);
+                curl_close($sale);
+
+                dump($finalsale);
+
+                $url = json_decode($finalsale, TRUE);
+
+                dump($finalsale);
+                //$response = new RedirectResponse($url);
+
+        //return new RedirectResponse($url);
     }
 
     /**
@@ -226,7 +266,16 @@ class PayPalController extends Controller
 
     }
 
+    /**
+     * @Route("/paypalReturnUrl", name="paypalReturnUrl")
+     */
+    public function paypalReturnUrlAction(Request $request)
+    {
+
+    }
+
 }
 
 //multiprokat.msk.merchant@gmail.com
 //multi261262
+//https://www.paypal.com/cgi-bin/webscr?business=multiprokat.msk%40gmail.com&item_number=3665&amount=99.99&cmd=_xclick&no_note=1&currency_code=USD&bn=MixRentPRO_BuyNow_WPS_RU&return=https%3A%2F%2Fmix.rent%2FpaypalSuccess&cancel_return=https%3A%2F%2Fmix.rent%2FpaypalCancel&notify_url=https%3A%2F%2Fmix.rent%2FpaypalPayment&custom=pro

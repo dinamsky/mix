@@ -745,9 +745,73 @@ class NewCardController extends Controller
                 $querystring .= "notify_url=".urlencode($notify_url);
                 $querystring .= "&custom=".$custom;
 
-                $url ='https://www.paypal.com/cgi-bin/webscr'.$querystring;
+                //$url ='https://www.paypal.com/cgi-bin/webscr'.$querystring;
 
-                $response = new RedirectResponse($url);
+
+
+
+                $url = "https://api.sandbox.paypal.com/v1/oauth2/token";
+                $headers = array(
+                    'Accept' => 'application/json',
+                    'Accept-Language' => 'en_US',
+                );
+
+                $clientID = 'AVtyX4DQ_AxvLHzGbdGk3meMLtJD6vNPEcR1Ffqq23AKfZAqOWyUSb_QXES9_l25nPdITbiNJVQLenOz';
+                $clientSecret = 'EAWY5q29JVzJbcfX4oM0GmsEy987zoD-_fyps0yRTg__pSa1SFwR1uOMdwFSjJtPDwbtIEwmm9dfSXv_';
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($ch, CURLOPT_USERPWD, $clientID . ':' . $clientSecret);
+                $curl = curl_exec($ch);
+
+                $x = json_decode($curl, TRUE);
+                $accesstoken = $x['access_token'];
+
+
+                $headers2 = array(
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $accesstoken
+                );
+
+                $data = array(
+                    "intent" => "sale",
+                    "redirect_urls" => array(
+                        "return_url" => "https://mix.rent/paypalSuccess",
+                        "cancel_url" => "https://mix.rent/paypalCancel"
+                    ),
+                    "payer" => array(
+                        "payment_method" => "paypal"
+                    ),
+                    "transactions" => array(
+                        "transactions" => array(
+                            "total" => $item_amount,
+                            "currency" => "USD",
+                            "custom" => $custom
+                        )
+                    )
+                );
+
+                $saleurl = "https://api.sandbox.paypal.com/v1/payments/payment";
+
+                $sale = curl_init();
+                curl_setopt($sale, CURLOPT_URL, $saleurl);
+                curl_setopt($sale, CURLOPT_VERBOSE, TRUE);
+                curl_setopt($sale, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($sale, CURLOPT_SSL_VERIFYPEER, FALSE);
+                curl_setopt($sale, CURLOPT_SSL_VERIFYHOST, FALSE);
+                curl_setopt($sale, CURLOPT_POSTFIELDS, json_encode($data));
+                curl_setopt($sale, CURLOPT_HTTPHEADER, $headers2);
+                $finalsale = curl_exec($sale);
+
+                $url = json_decode($finalsale, TRUE);
+
+                //$response = new RedirectResponse($url);
+
             }
 
             if (!$this->get('session')->has('admin')) {
