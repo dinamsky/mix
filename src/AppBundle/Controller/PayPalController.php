@@ -76,7 +76,7 @@ class PayPalController extends Controller
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
                 curl_setopt($ch, CURLOPT_USERPWD, $clientID . ':' . $clientSecret);
                 $curl = curl_exec($ch);
-                curl_close($ch);
+                //curl_close($ch);
 
                 dump($curl);
 
@@ -84,13 +84,13 @@ class PayPalController extends Controller
                 $accesstoken = $x['access_token'];
 
 
-                $headers2 = array(
-                    'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . $accesstoken
-                );
+//                $headers2 = array(
+//                    'Content-Type' => 'application/json',
+//                    'Authorization' => 'Bearer ' . $accesstoken
+//                );
 
                 $data = array(
-                    "intent" => "sale",
+                    "intent" => "authorize",
                     "redirect_urls" => array(
                         "return_url" => "https://mix.rent/paypalSuccess",
                         "cancel_url" => "https://mix.rent/paypalCancel"
@@ -100,11 +100,12 @@ class PayPalController extends Controller
                     ),
                     "transactions" => array(
                         "amount" => array(
-                            "total" => '99.99',
-                            "currency" => "USD"
+                            "total" => "99.99",
+                            "currency" => "RUB"
 
                         ),
-                        "custom" => 'pro'
+                        "custom" => 'pro',
+
                     )
                 );
 
@@ -117,7 +118,7 @@ class PayPalController extends Controller
                 curl_setopt($sale, CURLOPT_SSL_VERIFYPEER, FALSE);
                 curl_setopt($sale, CURLOPT_SSL_VERIFYHOST, FALSE);
                 curl_setopt($sale, CURLOPT_POSTFIELDS, json_encode($data));
-                curl_setopt($sale, CURLOPT_HTTPHEADER, $headers2);
+                curl_setopt($sale, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer ".$accesstoken));
                  //curl_setopt($sale, CURLOPT_USERPWD, $clientID . ':' . $clientSecret);
                 $finalsale = curl_exec($sale);
                 curl_close($sale);
