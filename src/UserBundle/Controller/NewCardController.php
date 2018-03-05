@@ -747,7 +747,7 @@ class NewCardController extends Controller
                 $x = json_decode($curl, TRUE);
                 $accesstoken = $x['access_token'];
 
-                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"'.$item_amount.'","currency":"RUB"},"custom":'.$custom.'}]}';
+                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"'.$item_amount.'","currency":"RUB"},"custom":"'.$custom.'"}]}';
 
                 $saleurl = "https://api.sandbox.paypal.com/v1/payments/payment";
 

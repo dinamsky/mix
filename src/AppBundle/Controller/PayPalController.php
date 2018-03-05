@@ -60,7 +60,7 @@ class PayPalController extends Controller
     {
 
         $user = $this->get('session')->get('logged_user');
-
+dump($user);
         $url = "https://api.sandbox.paypal.com/v1/oauth2/token";
                 $headers = array(
                     'Accept' => 'application/json',
@@ -92,7 +92,7 @@ class PayPalController extends Controller
 //                    'Authorization' => 'Bearer ' . $accesstoken
 //                );
 
-                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"99.99","currency":"RUB"},"custom":"pro_"'.$user->getId().'}]}';
+                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"99.99","currency":"RUB"},"custom":"pro_'.$user->getId().'"}]}';
 
                 $saleurl = "https://api.sandbox.paypal.com/v1/payments/payment";
 
@@ -112,7 +112,7 @@ class PayPalController extends Controller
 
                 $url = json_decode($finalsale, TRUE);
 
-                //dump($finalsale);
+                dump($finalsale);
                 //$response = new RedirectResponse($url);
             //return new Response();
         return new RedirectResponse($url['links'][1]['href']);
