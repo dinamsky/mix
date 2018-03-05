@@ -713,23 +713,30 @@ class NewCardController extends Controller
 
 
                 if($post->has('one_card')){
-                    $item_amount = '7.00';
+                    $cost = '7.00';
                     $custom = 'card_'.$card->getId();
+                    $item_name = 'One card payment';
                 }
                 if($post->has('pay_pro')){
-                    $item_amount = '99.99';
+                    $cost = '99.99';
                     $custom = 'cardpro_'.$card->getId().','.$user->getId();
-
+                    $item_name = 'PRO Account';
                 }
 
-                $url = "https://api.sandbox.paypal.com/v1/oauth2/token";
+                $url = "https://api.paypal.com/v1/oauth2/token";
                 $headers = array(
                     'Accept' => 'application/json',
                     'Accept-Language' => 'en_US',
                 );
 
-                $clientID = 'AVtyX4DQ_AxvLHzGbdGk3meMLtJD6vNPEcR1Ffqq23AKfZAqOWyUSb_QXES9_l25nPdITbiNJVQLenOz';
-                $clientSecret = 'EAWY5q29JVzJbcfX4oM0GmsEy987zoD-_fyps0yRTg__pSa1SFwR1uOMdwFSjJtPDwbtIEwmm9dfSXv_';
+                //$clientID = 'AVtyX4DQ_AxvLHzGbdGk3meMLtJD6vNPEcR1Ffqq23AKfZAqOWyUSb_QXES9_l25nPdITbiNJVQLenOz';
+                //$clientSecret = 'EAWY5q29JVzJbcfX4oM0GmsEy987zoD-_fyps0yRTg__pSa1SFwR1uOMdwFSjJtPDwbtIEwmm9dfSXv_';
+
+                $clientID = 'AdY3c4Ha4pY1nE3m2DUdSUZH651XUDz_iMp2sGY2ba7_BdWQfPDMNgWxV7IgE1Fy5V23GCot3GI3Popy';
+                $clientSecret = 'EJ-dt00hpLDAj73WnM6oylCK-_TfaDIQlof3dpVlvA9LSMAIDsMcIqcqKEa1duDhq6Du9gaNEIF4E-cu';
+
+
+
 
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $url);
@@ -747,9 +754,15 @@ class NewCardController extends Controller
                 $x = json_decode($curl, TRUE);
                 $accesstoken = $x['access_token'];
 
-                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"'.$item_amount.'","currency":"RUB"},"custom":"'.$custom.'"}]}';
 
-                $saleurl = "https://api.sandbox.paypal.com/v1/payments/payment";
+
+                $cost = '99.99';
+                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"'.$cost.'","currency":"USD"},"item_list":{"items":[{"quantity":"1","name":"'.$item_name.'","price":"'.$cost.'","currency":"USD"}]},"custom":"'.$custom.'"}]}';
+
+
+                //$data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"'.$item_amount.'","currency":"RUB"},"custom":"'.$custom.'"}]}';
+
+                $saleurl = "https://api.paypal.com/v1/payments/payment";
 
                 $sale = curl_init();
                 curl_setopt($sale, CURLOPT_URL, $saleurl);
