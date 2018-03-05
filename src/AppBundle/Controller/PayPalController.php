@@ -60,7 +60,7 @@ class PayPalController extends Controller
     {
 
         $user = $this->get('session')->get('logged_user');
-dump($user);
+
         $url = "https://api.sandbox.paypal.com/v1/oauth2/token";
                 $headers = array(
                     'Accept' => 'application/json',
@@ -112,7 +112,7 @@ dump($user);
 
                 $url = json_decode($finalsale, TRUE);
 
-                dump($finalsale);
+                //dump($finalsale);
                 //$response = new RedirectResponse($url);
             //return new Response();
         return new RedirectResponse($url['links'][1]['href']);
@@ -347,7 +347,7 @@ dump($user);
             }
 
         }
-
+        return new RedirectResponse('/paypalSuccess');
     }
 
 }
