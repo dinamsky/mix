@@ -89,25 +89,7 @@ class PayPalController extends Controller
 //                    'Authorization' => 'Bearer ' . $accesstoken
 //                );
 
-                $data = array(
-                    "intent" => "authorize",
-                    "redirect_urls" => array(
-                        "return_url" => "https://mix.rent/paypalSuccess",
-                        "cancel_url" => "https://mix.rent/paypalCancel"
-                    ),
-                    "payer" => array(
-                        "payment_method" => "paypal"
-                    ),
-                    "transactions" => array(
-                        "amount" => array(
-                            "total" => "99.99",
-                            "currency" => "RUB"
-
-                        ),
-                        "custom" => 'pro',
-
-                    )
-                );
+                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"99.99","currency":"RUB"},"custom":"pro"}]}';
 
                 $saleurl = "https://api.sandbox.paypal.com/v1/payments/payment";
 
@@ -117,7 +99,7 @@ class PayPalController extends Controller
                 curl_setopt($sale, CURLOPT_RETURNTRANSFER, TRUE);
                 curl_setopt($sale, CURLOPT_SSL_VERIFYPEER, FALSE);
                 curl_setopt($sale, CURLOPT_SSL_VERIFYHOST, FALSE);
-                curl_setopt($sale, CURLOPT_POSTFIELDS, json_encode($data));
+                curl_setopt($sale, CURLOPT_POSTFIELDS, $data);
                 curl_setopt($sale, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer ".$accesstoken));
                  //curl_setopt($sale, CURLOPT_USERPWD, $clientID . ':' . $clientSecret);
                 $finalsale = curl_exec($sale);
@@ -129,8 +111,8 @@ class PayPalController extends Controller
 
                 dump($finalsale);
                 //$response = new RedirectResponse($url);
-
-        //return new RedirectResponse($url);
+            //return new Response();
+        return new RedirectResponse($url['links'][1]['href']);
     }
 
     /**
@@ -268,10 +250,57 @@ class PayPalController extends Controller
     }
 
     /**
-     * @Route("/paypalReturnUrl", name="paypalReturnUrl")
+     * @Route("/paypalResult", name="paypalReturnUrl")
      */
     public function paypalReturnUrlAction(Request $request)
     {
+        $payment_id = $request->query->get('paymentId');
+        $payer_id = $request->query->get('PayerID');
+
+
+        $url = "https://api.sandbox.paypal.com/v1/oauth2/token";
+        $headers = array(
+            'Accept' => 'application/json',
+            'Accept-Language' => 'en_US',
+        );
+
+        $clientID = 'AVtyX4DQ_AxvLHzGbdGk3meMLtJD6vNPEcR1Ffqq23AKfZAqOWyUSb_QXES9_l25nPdITbiNJVQLenOz';
+        $clientSecret = 'EAWY5q29JVzJbcfX4oM0GmsEy987zoD-_fyps0yRTg__pSa1SFwR1uOMdwFSjJtPDwbtIEwmm9dfSXv_';
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_USERPWD, $clientID . ':' . $clientSecret);
+        $curl = curl_exec($ch);
+        //curl_close($ch);
+
+        dump($curl);
+
+        $x = json_decode($curl, TRUE);
+        $accesstoken = $x['access_token'];
+
+
+        $final_url = "https://api.sandbox.paypal.com/v1/payments/payment/".$payment_id.'/execute';
+
+        $sale = curl_init();
+        curl_setopt($sale, CURLOPT_URL, $final_url);
+        curl_setopt($sale, CURLOPT_VERBOSE, TRUE);
+        curl_setopt($sale, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($sale, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($sale, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($sale, CURLOPT_POSTFIELDS, '{"payer_id":"'.$payer_id.'"}');
+        curl_setopt($sale, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer ".$accesstoken));
+        $final = curl_exec($sale);
+        curl_close($sale);
+        $final = json_decode($final, true);
+
+        if($final['id'] == $payment_id and $final['state'] == 'approved'){
+            dump($final);
+        }
 
     }
 
