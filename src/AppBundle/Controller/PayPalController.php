@@ -58,6 +58,9 @@ class PayPalController extends Controller
      */
     public function paypalPayProAction(Request $request, EntityManagerInterface $em )
     {
+
+        $user = $this->get('session')->get('logged_user');
+
         $url = "https://api.sandbox.paypal.com/v1/oauth2/token";
                 $headers = array(
                     'Accept' => 'application/json',
@@ -78,7 +81,7 @@ class PayPalController extends Controller
                 $curl = curl_exec($ch);
                 //curl_close($ch);
 
-                dump($curl);
+                //dump($curl);
 
                 $x = json_decode($curl, TRUE);
                 $accesstoken = $x['access_token'];
@@ -89,7 +92,7 @@ class PayPalController extends Controller
 //                    'Authorization' => 'Bearer ' . $accesstoken
 //                );
 
-                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"99.99","currency":"RUB"},"custom":"pro"}]}';
+                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"99.99","currency":"RUB"},"custom":"pro_"'.$user->getId().'}]}';
 
                 $saleurl = "https://api.sandbox.paypal.com/v1/payments/payment";
 
@@ -105,11 +108,11 @@ class PayPalController extends Controller
                 $finalsale = curl_exec($sale);
                 curl_close($sale);
 
-                dump($finalsale);
+                //dump($finalsale);
 
                 $url = json_decode($finalsale, TRUE);
 
-                dump($finalsale);
+                //dump($finalsale);
                 //$response = new RedirectResponse($url);
             //return new Response();
         return new RedirectResponse($url['links'][1]['href']);
@@ -278,7 +281,7 @@ class PayPalController extends Controller
         $curl = curl_exec($ch);
         //curl_close($ch);
 
-        dump($curl);
+        //dump($curl);
 
         $x = json_decode($curl, TRUE);
         $accesstoken = $x['access_token'];
@@ -299,7 +302,50 @@ class PayPalController extends Controller
         $final = json_decode($final, true);
 
         if($final['id'] == $payment_id and $final['state'] == 'approved'){
-            dump($final);
+
+            $em = $this->getDoctrine()->getManager();
+
+
+            $xc = explode("_",$final['transactions'][0]['custom']);
+
+            if($xc[0] == 'card') {
+                $card = $this->getDoctrine()
+                    ->getRepository(Card::class)
+                    ->find($xc[1]);
+                $card->setIsActive(true);
+                $em->persist($card);
+                $em->flush();
+            }
+
+            if($xc[0] == 'pro') {
+
+                $user = $this->getDoctrine()
+                    ->getRepository(User::class)
+                    ->find($xc[1]);
+                $user->setAccountTypeId(1);
+                $em->persist($user);
+                $em->flush();
+            }
+
+            if($xc[0] == 'cardpro') {
+
+                $cp = explode(",",$xc[1]);
+
+                $card = $this->getDoctrine()
+                    ->getRepository(Card::class)
+                    ->find($cp[0]);
+                $card->setIsActive(true);
+                $em->persist($card);
+                $em->flush();
+
+                $user = $this->getDoctrine()
+                    ->getRepository(User::class)
+                    ->find($cp[1]);
+                $user->setAccountTypeId(1);
+                $em->persist($user);
+                $em->flush();
+            }
+
         }
 
     }

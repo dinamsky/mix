@@ -702,53 +702,25 @@ class NewCardController extends Controller
 
             else {
 
-                // PayPal settings
-                $paypal_email = 'multiprokat.msk@gmail.com';
-                $return_url = 'https://mix.rent/paypalSuccess';
-                $cancel_url = 'https://mix.rent/paypalCancel';
-                $notify_url = 'https://mix.rent/paypalPayment';
+//                // PayPal settings
+//                $paypal_email = 'multiprokat.msk@gmail.com';
+//                $return_url = 'https://mix.rent/paypalSuccess';
+//                $cancel_url = 'https://mix.rent/paypalCancel';
+//                $notify_url = 'https://mix.rent/paypalPayment';
 
 
 
 
-                $custom = 'card';
+
                 if($post->has('one_card')){
-                    $item_id = $card->getId();
-                    $item_amount = 7.00;
-                    $custom = 'card';
-                    $button = 'MixRentCard_BuyNow_WPS_RU';
+                    $item_amount = '7.00';
+                    $custom = 'card_'.$card->getId();
                 }
                 if($post->has('pay_pro')){
-                    $item_id = $user->getId();
-                    $item_amount = 99.99;
-                    $custom = 'pro_'.$card->getId();
-                    $button = 'MixRentPRO_BuyNow_WPS_RU';
+                    $item_amount = '99.99';
+                    $custom = 'cardpro_'.$card->getId().','.$user->getId();
+
                 }
-
-                $querystring = '';
-
-                $querystring .= "?business=".urlencode($paypal_email)."&";
-
-                $querystring .= "item_number=".urlencode($item_id)."&";
-                $querystring .= "amount=".urlencode($item_amount)."&";
-
-                $querystring .= "cmd=_xclick&";
-                $querystring .= "no_note=1&";
-
-                $querystring .= "currency_code=USD&";
-                $querystring .= "bn=".$button."&";
-
-
-
-                $querystring .= "return=".urlencode(stripslashes($return_url))."&";
-                $querystring .= "cancel_return=".urlencode(stripslashes($cancel_url))."&";
-                $querystring .= "notify_url=".urlencode($notify_url);
-                $querystring .= "&custom=".$custom;
-
-                //$url ='https://www.paypal.com/cgi-bin/webscr'.$querystring;
-
-
-
 
                 $url = "https://api.sandbox.paypal.com/v1/oauth2/token";
                 $headers = array(
@@ -768,33 +740,14 @@ class NewCardController extends Controller
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
                 curl_setopt($ch, CURLOPT_USERPWD, $clientID . ':' . $clientSecret);
                 $curl = curl_exec($ch);
+                //curl_close($ch);
+
+                //dump($curl);
 
                 $x = json_decode($curl, TRUE);
                 $accesstoken = $x['access_token'];
 
-
-                $headers2 = array(
-                    'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . $accesstoken
-                );
-
-                $data = array(
-                    "intent" => "sale",
-                    "redirect_urls" => array(
-                        "return_url" => "https://mix.rent/paypalSuccess",
-                        "cancel_url" => "https://mix.rent/paypalCancel"
-                    ),
-                    "payer" => array(
-                        "payment_method" => "paypal"
-                    ),
-                    "transactions" => array(
-                        "transactions" => array(
-                            "total" => $item_amount,
-                            "currency" => "USD",
-                            "custom" => $custom
-                        )
-                    )
-                );
+                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"'.$item_amount.'","currency":"RUB"},"custom":'.$custom.'}]}';
 
                 $saleurl = "https://api.sandbox.paypal.com/v1/payments/payment";
 
@@ -804,13 +757,19 @@ class NewCardController extends Controller
                 curl_setopt($sale, CURLOPT_RETURNTRANSFER, TRUE);
                 curl_setopt($sale, CURLOPT_SSL_VERIFYPEER, FALSE);
                 curl_setopt($sale, CURLOPT_SSL_VERIFYHOST, FALSE);
-                curl_setopt($sale, CURLOPT_POSTFIELDS, json_encode($data));
-                curl_setopt($sale, CURLOPT_HTTPHEADER, $headers2);
+                curl_setopt($sale, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($sale, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer ".$accesstoken));
+
                 $finalsale = curl_exec($sale);
+                curl_close($sale);
+
+                //dump($finalsale);
 
                 $url = json_decode($finalsale, TRUE);
 
-                //$response = new RedirectResponse($url);
+                //dump($finalsale);
+
+                $response = new RedirectResponse($url['links'][1]['href']);
 
             }
 
