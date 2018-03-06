@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use AppBundle\Controller\MailGunController;
 use AppBundle\Entity\Card;
 use AppBundle\Foto\FotoUtils;
 use AppBundle\Menu\ServiceStat;
@@ -341,7 +342,7 @@ class ProfileController extends Controller
             foreach($post->get('abuse') as $ms){
                 $msg[] = $ms.'<br>';
             }
-            $msg[] = 'Жалоба отправлена со <a href="https://multiprokat.com/card/'.$card_id.'">страницы</a>';
+            $msg[] = 'Жалоба отправлена со <a href="https://mix.rent/card/'.$card_id.'">страницы</a>';
             $msg = implode("",$msg);
 
             $message = (new \Swift_Message('Жалоба от пользователя'))
@@ -372,7 +373,7 @@ class ProfileController extends Controller
     /**
  * @Route("/user/sendMessage")
  */
-    public function sendMessageAction(Request $request, \Swift_Mailer $mailer)
+    public function sendMessageAction(Request $request, MailGunController $mgc)
     {
         $_t = $this->get('translator');
 
@@ -401,12 +402,28 @@ class ProfileController extends Controller
 
 
 
-            $message = (new \Swift_Message($_t->trans('Сообщение от пользователя')))
-                ->setFrom(['mail@multiprokat.com' => 'Робот Мультипрокат'])
-                ->setTo($user->getEmail())
-                ->setCc('mail@multiprokat.com')
-                ->setBody(
-                    $this->renderView(
+//            $message = (new \Swift_Message($_t->trans('Сообщение от пользователя')))
+//                ->setFrom(['mail@multiprokat.com' => 'Робот Мультипрокат'])
+//                ->setTo($user->getEmail())
+//                ->setCc('mail@multiprokat.com')
+//                ->setBody(
+//                    $this->renderView(
+//                        $_SERVER['LANG'] == 'ru' ? 'email/request.html.twig' : 'email/request_'.$_SERVER['LANG'].'.html.twig',
+//                        array(
+//                            'header' => $user->getHeader(),
+//                            'message' => $post->get('message'),
+//                            'email' => $post->get('email'),
+//                            'name' => $post->get('name'),
+//                            'phone' => $post->get('phone'),
+//                            'card' => $card,
+//                            'user' => $user
+//                        )
+//                    ),
+//                    'text/html'
+//                );
+//            $mailer->send($message);
+
+            $mgc->sendMG($user->getEmail(),$_t->trans('Сообщение от пользователя'),$this->renderView(
                         $_SERVER['LANG'] == 'ru' ? 'email/request.html.twig' : 'email/request_'.$_SERVER['LANG'].'.html.twig',
                         array(
                             'header' => $user->getHeader(),
@@ -417,10 +434,7 @@ class ProfileController extends Controller
                             'card' => $card,
                             'user' => $user
                         )
-                    ),
-                    'text/html'
-                );
-            $mailer->send($message);
+                    ));
 
             $this->addFlash(
                 'notice',
