@@ -45,15 +45,17 @@ class MailGunController extends Controller
 
     public function sendMG($to,$subject,$message)
     {
-        $mgClient = new Mailgun('key-5f23100bafffe48a6225c2bf4792e85f');
+
+        $mg = Mailgun::create('key-5f23100bafffe48a6225c2bf4792e85f');
         $domain = "mail.mix.rent";
 
-        $result = $mgClient->sendMessage($domain, array(
-            'from'    => 'mail@mix.rent',
+        $mg->messages()->send($domain, [
+            'from'    => 'MixRent <mail@mix.rent>',
             'to'      => $to,
             'subject' => $subject,
-            'text'    => $message
-        ));
+            'html'    => $message
+        ]);
+
         return new Response();
     }
 
