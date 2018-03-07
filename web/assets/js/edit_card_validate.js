@@ -19,10 +19,10 @@ function edit_card_validate(){
     //     message.push('\nФотографии');
     // }
 
-    if (!general_type) message.push('\nТип транспорта');
+    if (!general_type) message.push('\nVehicle type');
     //if (!header) message.push('\nЗаголовок');
-    if (!model || model === 0) message.push('\nМодель');
-    if (!city || city === '0') message.push('\nГород');
+    if (!model || model === 0) message.push('\nModel');
+    if (!city || city === '0') message.push('\nCity');
 
     // $('.sub_field_field').each(function(){
     //     var field_id = $(this).data('id');
@@ -45,7 +45,7 @@ function edit_card_validate(){
     // if (subfields.length === 0) message.push('Дополнительные поля транспорта\n');
 
     if (message.length > 0){
-        alert('Заполните поля:\n'+message);
+        alert('Please fill:\n'+message);
         return false;
     }
 }

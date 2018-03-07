@@ -40,55 +40,55 @@ function new_card_validate(){
 
     if($('#new_card_form').hasClass('no_phone')){
         var phone = $('#phone').val();
-        if (!phone) message.push('<br>Заполните номер телефона!');
+        if (!phone) message.push('<br>Fill phone number!');
     }
 
-    if ((!city || city === '0') && !is_new_city) message.push('<br>Город');
+    if ((!city || city === '0') && !is_new_city) message.push('<br>City');
 
-    if (!general_type) message.push('<br>Тип транспорта');
+    if (!general_type) message.push('<br>Vehicle type');
 
     //if (!header) message.push('<br>Заголовок');
 
     if (!mark || mark === 0) {
         if(noMark){
-            if (!ownMark) message.push('<br>Впишите свою марку');
+            if (!ownMark) message.push('<br>Type your mark');
         } else {
-            message.push('<br>Марка');
+            message.push('<br>Mark');
             $('.mark_placeholder').find('.select2-selection').addClass('error');
         }
     }
 
     if (!model || model === 0) {
         if(noModel){
-            if (!ownModel)  message.push('<br>Впишите свою модель');
-            if (!mark && !noMark) message.push('<br>Выберите марку');
+            if (!ownModel)  message.push('<br>Type your model');
+            if (!mark && !noMark) message.push('<br>Select mark');
         } else {
-            message.push('<br>Модель');
+            message.push('<br>Model');
             $('.model_placeholder').find('.select2-selection').addClass('error');
         }
     }
 
     if($('#foto_upload').val() === ''){
-        message.push('<br>Фотографии');
+        message.push('<br>Fotos');
         $('.foto_placeholder').addClass('error');
     }
 
     if(gt_top !== 29) {
         if (!priceHour && !priceDay) {
-            message.push('<br>Цена');
+            message.push('<br>Price');
             $('input[name="price[2]"]').css('border-color', 'red');
         }
     } else { // if this is plane
         $('input[name="price[6]"]').css('border-color','#e5e5e5');
         var price_plane = $('input[name="price[6]"]').val();
         if (!price_plane) {
-            message.push('<br>Цена');
+            message.push('<br>Price');
             $('input[name="price[6]"]').css('border-color', 'red');
         }
     }
 
     if(!desc){
-        message.push('<br>Описание');
+        message.push('<br>Description');
         $('textarea[name="content"]').css('border-color','red');
     }
 
@@ -109,15 +109,15 @@ function new_card_validate(){
             $('input[name="r_email"]').css('border-color','red');
         }
         if(r_phone === '') {
-            message.push('<br>Номер телефона!');
+            message.push('<br>Phone number!');
             $('input[name="r_phone"]').css('border-color','red');
         }
         if(r_password === '') {
-            message.push('<br>Пароль!');
+            message.push('<br>Password!');
             $('input[name="r_password"]').css('border-color','red');
         }
         if(r_header === '') {
-            message.push('<br>Имя!');
+            message.push('<br>Name!');
             $('input[name="r_header"]').css('border-color','red');
         }
     }

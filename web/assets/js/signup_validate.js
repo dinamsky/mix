@@ -4,16 +4,16 @@ function signup_validate(){
 
     var message = [];
     if (!email) message.push('\nemail');
-    if (!password) message.push('\nПароль');
+    if (!password) message.push('\nPassword');
 
 
     if (message.length > 0){
-        alert('Заполните поля:\n'+message);
+        alert('Please fill:\n'+message);
         return false;
     }
 
     if (!validateEmail(email)) {
-        alert('Заполните email правильно! Допустимы: a-z 0-9 точка дефис @');
+        alert('Fill email correct! Available: a-z 0-9 dot minus @');
         return false;
     }
 }

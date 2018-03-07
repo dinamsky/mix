@@ -12,6 +12,6 @@ function check_if_capcha_is_filled() {
     console.log(allowSubmit);
     if(allowSubmit) return true;
 
-    alert('Ответьте на каптчу!');
+    alert('Captcha!');
     return false;
 }

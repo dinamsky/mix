@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use AppBundle\Controller\MailGunController;
 use AppBundle\Menu\ServiceStat;
 use MarkBundle\Entity\CarModel;
 use MarkBundle\Entity\CarMark;
@@ -220,7 +221,7 @@ class UserController extends Controller
     /**
      * @Route("/userSignUp")
      */
-    public function signUpAction(Request $request, Password $password, \Swift_Mailer $mailer)
+    public function signUpAction(Request $request, Password $password, MailGunController $mgc)
     {
         $_t = $this->get('translator');
 
@@ -252,20 +253,30 @@ class UserController extends Controller
         $em->persist($user);
         $em->flush();
 
-        $message = (new \Swift_Message($_t->trans('Регистрация на сайте multiprokat.com')))
-            ->setFrom('mail@multiprokat.com')
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->renderView(
-                    $_SERVER['LANG'] == 'ru' ? 'email/registration.html.twig' : 'email/registration_'.$_SERVER['LANG'].'.html.twig',
+//        $message = (new \Swift_Message($_t->trans('Регистрация на сайте multiprokat.com')))
+//            ->setFrom('mail@multiprokat.com')
+//            ->setTo($user->getEmail())
+//            ->setBody(
+//                $this->renderView(
+//                    $_SERVER['LANG'] == 'ru' ? 'email/registration.html.twig' : 'email/registration_'.$_SERVER['LANG'].'.html.twig',
+//                    array(
+//                        'header' => $user->getHeader(),
+//                        'code' => $code
+//                    )
+//                ),
+//                'text/html'
+//            );
+//        $mailer->send($message);
+
+
+        $mgc->sendMG($user->getEmail(),$_t->trans('Регистрация на сайте multiprokat.com'),$this->renderView(
+                        $_SERVER['LANG'] == 'ru' ? 'email/registration.html.twig' : 'email/registration_'.$_SERVER['LANG'].'.html.twig',
                     array(
                         'header' => $user->getHeader(),
                         'code' => $code
                     )
-                ),
-                'text/html'
-            );
-        $mailer->send($message);
+                    ));
+
 
         $this->addFlash(
             'notice',
@@ -281,6 +292,9 @@ class UserController extends Controller
     {
         $_t = $this->get('translator');
 
+        $mgc = new MailGunController();
+
+
         $return_url = 'homepage';
 
         $user = $this->getDoctrine()
@@ -295,12 +309,17 @@ class UserController extends Controller
                 $user->setPassword($user->getTempPassword());
                 $message = $_t->trans('Ваш новый пароль успешно активирован!');
             } else {
-                $msg = (new \Swift_Message('Регистрация на сайте multiprokat.com'))
-                ->setFrom('mail@multiprokat.com')
-                ->setTo('mail@multiprokat.com')
-                ->setBody('Только что был успешно зарегистрирован <a href="https://multiprokat.com/user/'.$user->getId().'">пользователь</a>','text/html');
+//                $msg = (new \Swift_Message('Регистрация на сайте multiprokat.com'))
+//                ->setFrom('mail@multiprokat.com')
+//                ->setTo('mail@multiprokat.com')
+//                ->setBody('Только что был успешно зарегистрирован <a href="https://multiprokat.com/user/'.$user->getId().'">пользователь</a>','text/html');
+//
+//                $this->mailer->send($msg);
 
-                $this->mailer->send($msg);
+                $m = 'Только что был успешно зарегистрирован <a href="https://multiprokat.com/user/'.$user->getId().'">пользователь</a>';
+
+                $mgc->sendMG('mail@mix.rent','New registration',$m);
+
             }
             $user->setTempPassword('');
             $user->setIsActivated(true);
@@ -338,7 +357,7 @@ class UserController extends Controller
     /**
      * @Route("/userRecover")
      */
-    public function recoverAction(Request $request, \Swift_Mailer $mailer, Password $password)
+    public function recoverAction(Request $request, MailGunController $mgc, Password $password)
     {
         $_t = $this->get('translator');
 
@@ -357,20 +376,30 @@ class UserController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                $message = (new \Swift_Message($_t->trans('Восстановление пароля на сайте multiprokat.com')))
-                    ->setFrom('mail@multiprokat.com')
-                    ->setTo($user->getEmail())
-                    ->setBody(
-                        $this->renderView(
-                            $_SERVER['LANG'] == 'ru' ? 'email/recover.html.twig' : 'email/recover_' . $_SERVER['LANG'] . '.html.twig',
+//                $message = (new \Swift_Message($_t->trans('Восстановление пароля на сайте multiprokat.com')))
+//                    ->setFrom('mail@multiprokat.com')
+//                    ->setTo($user->getEmail())
+//                    ->setBody(
+//                        $this->renderView(
+//                            $_SERVER['LANG'] == 'ru' ? 'email/recover.html.twig' : 'email/recover_' . $_SERVER['LANG'] . '.html.twig',
+//                            array(
+//                                'header' => $user->getHeader(),
+//                                'code' => $code
+//                            )
+//                        ),
+//                        'text/html'
+//                    );
+//                $mailer->send($message);
+
+
+                $mgc->sendMG($user->getEmail(),$_t->trans('Восстановление пароля на сайте multiprokat.com'),$this->renderView(
+                        $_SERVER['LANG'] == 'ru' ? 'email/recover.html.twig' : 'email/recover_' . $_SERVER['LANG'] . '.html.twig',
                             array(
                                 'header' => $user->getHeader(),
                                 'code' => $code
                             )
-                        ),
-                        'text/html'
-                    );
-                $mailer->send($message);
+                    ));
+
 
                 $this->addFlash(
                     'notice',
@@ -379,7 +408,7 @@ class UserController extends Controller
             } else {
                 $this->addFlash(
                     'notice',
-                    'Данного email не  существует!'
+                    'Email is not exist!'
                 );
             }
             return $this->redirect($request->request->get('return'));
@@ -695,7 +724,7 @@ class UserController extends Controller
     /**
      * @Route("/ajax/send_chat_message")
      */
-    public function sendChatMsg(Request $request, \Swift_Mailer $mailer)
+    public function sendChatMsg(Request $request, MailGunController $mgc)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -720,23 +749,32 @@ class UserController extends Controller
         ->getRepository(User::class)
         ->find($request->request->get('visitor_id'));
 
-        $message = (new \Swift_Message('#'.$msg->getId().' Вам пришло новое сообщение'))
-                ->setFrom(['mail@multiprokat.com' => 'Робот Мультипрокат'])
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView(
-                     $_SERVER['LANG'] == 'ru' ? 'email/chat.html.twig' : 'email/chat_'.$_SERVER['LANG'].'.html.twig',
+//        $message = (new \Swift_Message('#'.$msg->getId().' Вам пришло новое сообщение'))
+//                ->setFrom(['mail@multiprokat.com' => 'Робот Мультипрокат'])
+//                ->setTo($user->getEmail())
+//                ->setBody(
+//                    $this->renderView(
+//                     $_SERVER['LANG'] == 'ru' ? 'email/chat.html.twig' : 'email/chat_'.$_SERVER['LANG'].'.html.twig',
+//                        array(
+//                            'user' => $user,
+//                            'message' => $request->request->get('message'),
+//                            'card' => $card,
+//                            'visitor' => $visitor,
+//                        )
+//                    ),
+//                    'text/html'
+//                );
+//            $mailer->send($message);
+
+        $mgc->sendMG($user->getEmail(),'New message',$this->renderView(
+                        $_SERVER['LANG'] == 'ru' ? 'email/chat.html.twig' : 'email/chat_'.$_SERVER['LANG'].'.html.twig',
                         array(
                             'user' => $user,
                             'message' => $request->request->get('message'),
                             'card' => $card,
                             'visitor' => $visitor,
                         )
-                    ),
-                    'text/html'
-                );
-            $mailer->send($message);
-
+                    ));
 
         return new Response($msg->getId());
     }

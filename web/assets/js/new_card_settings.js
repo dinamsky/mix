@@ -72,7 +72,7 @@ $( document ).ready(function() {
     $('.newcard_mailcheck').on('click', function(){
         var check_email = $('input[name="check_email"]').val();
         if (!validateEmail(check_email)) {
-            alert('Заполните email правильно! Допустимы: a-z 0-9 точка дефис @');
+            alert('Fill email correctly! Available: a-z 0-9 dot minus @');
             return false;
         } else {
             $(this).hide();
