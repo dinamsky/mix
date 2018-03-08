@@ -22,20 +22,42 @@ class MailGunController extends Controller
      */
     public function mc_testAction(Request $request, EntityManagerInterface $em )
     {
-        # Instantiate the client.
-        $mg = Mailgun::create('key-5f23100bafffe48a6225c2bf4792e85f');
-        $domain = "mail.mix.rent";
-
-        # Make the call to the client.
 
 
-        $mg->messages()->send($domain, [
-            'from'    => 'mail@mix.rent',
-            'to'      => 'wqs-info@mail.ru',
-            'subject' => 'Hello',
-            'text'    => 'Testing some Mailgun awesomness!',
-            'html'    => 'Testing some <b>Mailgun</b> awesomness!'
-        ]);
+        $query = $em->createQuery('SELECT c,u,f FROM AppBundle:Card c LEFT JOIN c.user u WITH u.id = c.userId LEFT JOIN c.fotos f WITH f.cardId = c.id AND f.isMain =1 WHERE c.cityId > 1257');
+        $query->setMaxResults(7);
+        $result = $query->getResult();
+        foreach($result as $r)
+        {
+            echo $this->renderView(
+                            'email/admin_registration_en.html.twig',
+                            array(
+                                'header' => $r->getUser()->getHeader(),
+                                'password' => $r->getUser()->getTempPassword(),
+                                'email' => $r->getUser()->getEmail(),
+                                'card' => $r,
+                                'main_foto' => 'http://multiprokat.com/assets/images/cards/'.$r->getFotos()[0]->getFolder().'/t/'.$r->getFotos()[0]->getId().'.jpg',
+                                'c_price' => 0,
+                                'c_ed' => '$'
+                            )
+                        );
+        }
+
+
+//        # Instantiate the client.
+//        $mg = Mailgun::create('key-5f23100bafffe48a6225c2bf4792e85f');
+//        $domain = "mail.mix.rent";
+//
+//        # Make the call to the client.
+//
+//
+//        $mg->messages()->send($domain, [
+//            'from'    => 'mail@mix.rent',
+//            'to'      => 'wqs-info@mail.ru',
+//            'subject' => 'Hello',
+//            'text'    => 'Testing some Mailgun awesomness!',
+//            'html'    => 'Testing some <b>Mailgun</b> awesomness!'
+//        ]);
 
 
         //return new RedirectResponse($url['links'][1]['href']);
