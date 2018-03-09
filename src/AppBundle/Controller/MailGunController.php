@@ -82,9 +82,9 @@ class MailGunController extends Controller
         return new Response();
     }
 
-    public function sendForAll(Request $request, EntityManagerInterface $em)
+    public function sendForAll()
     {
-
+        $em = $this->getDoctrine()->getManager();
 
         $query = $em->createQuery("SELECT s FROM AppBundle:Settings s WHERE s.sKey = 'mailsend'");
         $res = $query->getResult();

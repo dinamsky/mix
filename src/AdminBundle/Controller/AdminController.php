@@ -2,6 +2,7 @@
 
 namespace AdminBundle\Controller;
 
+use AppBundle\Controller\MailGunController;
 use AppBundle\Entity\Card;
 use AppBundle\Entity\Comment;
 use AppBundle\Foto\FotoUtils;
@@ -449,14 +450,16 @@ class AdminController extends Controller
          /**
  * @Route("/sendNow", name="sendNow")
  */
-    public function sendNowAction()
+    public function sendNowAction(MailGunController $mgc)
     {
         if ($this->get('session')->get('admin') === null) return $this->render('AdminBundle::admin_enter_form.html.twig');
         else {
 
+            $mgc->sendForAll();
+
             $city = $this->get('session')->get('city');
 
-            return $this->render('AdminBundle::admin_mail_new.html.twig', [
+            return $this->render('AdminBundle::admin_mail_done.html.twig', [
 
                 'city' => $city,
             ]);
