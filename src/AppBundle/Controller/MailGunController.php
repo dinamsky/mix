@@ -24,7 +24,7 @@ class MailGunController extends Controller
     {
 
 
-        $query = $em->createQuery('SELECT c,u,f FROM AppBundle:Card c LEFT JOIN c.user u WITH u.id = c.userId LEFT JOIN c.fotos f WITH f.cardId = c.id AND f.isMain =1 WHERE c.cityId > 1257');
+        $query = $em->createQuery('SELECT c,u,f FROM AppBundle:Card c LEFT JOIN c.user u WITH u.id = c.userId LEFT JOIN c.fotos f WITH f.cardId = c.id AND f.isMain =1 WHERE c.cityId > 1257 GROUP BY c.userId');
         $query->setMaxResults(7);
         $result = $query->getResult();
         foreach($result as $r)

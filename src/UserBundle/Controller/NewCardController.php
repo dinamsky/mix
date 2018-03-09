@@ -68,20 +68,20 @@ class NewCardController extends Controller
 
         if(!$admin and $user) {
             if ($user->getIsBanned()) return new Response("", 404);
-            if ($user->getAccountTypeId() == 0 and count($user->getCards()) > 1){
-                $this->addFlash(
-                    'notice',
-                    'В стандартном аккаунте вам доступно не более 2-х объявлений.<br>Оплатите PRO аккаунт для неограниченного количества объявлений'
-                );
-                $stat_arr = [
-                    'url' => '/card/new',
-                    'event_type' => 'need_PRO',
-                    'page_type' => 'form',
-                ];
-                if(isset($user)) $stat_arr['user_id'] = $user->getId();
-                $stat->setStat($stat_arr);
-                return new RedirectResponse('/user/cards');
-            }
+//            if ($user->getAccountTypeId() == 0 and count($user->getCards()) > 1){
+//                $this->addFlash(
+//                    'notice',
+//                    'You may pay for PRO account to unlimited cards'
+//                );
+//                $stat_arr = [
+//                    'url' => '/card/new',
+//                    'event_type' => 'need_PRO',
+//                    'page_type' => 'form',
+//                ];
+//                if(isset($user)) $stat_arr['user_id'] = $user->getId();
+//                $stat->setStat($stat_arr);
+//                return new RedirectResponse('/user/cards');
+//            }
         }
 
         $card = new Card();
@@ -282,7 +282,7 @@ class NewCardController extends Controller
             else {
                 $this->addFlash(
                                 'notice',
-                                'Модель не указана!'
+                                'Select model!'
                             );
                 return new RedirectResponse('/card/new');
             }
@@ -386,9 +386,9 @@ class NewCardController extends Controller
                             if(count($user->getCards()) > 1) {
                                 $this->addFlash(
                                     'notice',
-                                    'В стандартном аккаунте вам доступно не более 2-х объявлений.<br>Оплатите PRO аккаунт для неограниченного количества объявлений'
+                                    'You may pay for PRO account to unlimited cards'
                                 );
-                                return new RedirectResponse('/user/cards');
+                                return new RedirectResponse('/card/new');
                             }
                         } else {
                             $this->addFlash(
