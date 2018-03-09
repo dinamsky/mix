@@ -86,11 +86,11 @@ class MailGunController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery("SELECT s FROM AppBundle:Settings s WHERE s.sKey = 'mailsend'");
-        $res = $query->getResult();
-        $res = $res[0];
+        $st = $this->getDoctrine()
+                    ->getRepository(Settings::class)
+                    ->findBy(['sKey'=>'mailsend']);
 
-        if($res->getSValue() == 'ready') {
+        if($st->getSValue() == 'ready') {
 
             $mg = Mailgun::create('key-5f23100bafffe48a6225c2bf4792e85f');
             $domain = "mail.mix.rent";
@@ -116,7 +116,7 @@ class MailGunController extends Controller
                 //$to = $r->getUser()->getEmail();
                 $to = 'wqs-info@mail.ru';
 
-                $subject = '';
+                $subject = '#'.$r->getId().' Your transport in MixRent';
 
                 $mg->messages()->send($domain, [
                     'from' => 'MixRent <mail@mix.rent>',
