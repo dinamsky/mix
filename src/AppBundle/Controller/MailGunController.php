@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Card;
 use UserBundle\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManagerInterface as em;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,10 +18,17 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class MailGunController extends Controller
 {
 
+    private $em;
+
+    public function __construct(em $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route("/mc_test", name="mc_test")
      */
-    public function mc_testAction(Request $request, EntityManagerInterface $em )
+    public function mc_testAction(Request $request, em $em )
     {
 
 
@@ -84,9 +91,9 @@ class MailGunController extends Controller
 
     public function sendForAll()
     {
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
 
-        $st = $this->getDoctrine()
+        $st = $this->em
                     ->getRepository(Settings::class)
                     ->findBy(['sKey'=>'mailsend']);
 
@@ -95,7 +102,7 @@ class MailGunController extends Controller
             $mg = Mailgun::create('key-5f23100bafffe48a6225c2bf4792e85f');
             $domain = "mail.mix.rent";
 
-            $query = $em->createQuery('SELECT c,u,f FROM AppBundle:Card c LEFT JOIN c.user u WITH u.id = c.userId LEFT JOIN c.fotos f WITH f.cardId = c.id AND f.isMain =1 WHERE c.cityId > 1257 GROUP BY c.userId');
+            $query = $this->em->createQuery('SELECT c,u,f FROM AppBundle:Card c LEFT JOIN c.user u WITH u.id = c.userId LEFT JOIN c.fotos f WITH f.cardId = c.id AND f.isMain =1 WHERE c.cityId > 1257 GROUP BY c.userId');
             //$query->setMaxResults(7);
             $result = $query->getResult();
             foreach ($result as $r) {
@@ -126,12 +133,12 @@ class MailGunController extends Controller
                 ]);
             }
 
-                $st = $this->getDoctrine()
+                $st = $this->em
                     ->getRepository(Settings::class)
                     ->findBy(['sKey'=>'mailsend']);
                 $st->setSValue('done');
-                $em->persist($st);
-                $em->flush();
+                $this->em->persist($st);
+                $this->em->flush();
 
         }
         //return new RedirectResponse($url['links'][1]['href']);
