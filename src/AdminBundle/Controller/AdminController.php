@@ -394,8 +394,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/adminUpdateSlider", name="adminUpdateSlider")
-     */
+ * @Route("/adminUpdateSlider", name="adminUpdateSlider")
+ */
     public function updateSliderAction(Request $request,FotoUtils $fu)
     {
         if ($this->get('session')->get('admin') === null) return $this->render('AdminBundle::admin_enter_form.html.twig');
@@ -427,5 +427,39 @@ class AdminController extends Controller
             $query->execute();
         }
         return $this->redirectToRoute('adminMainSlider');
+    }
+
+     /**
+ * @Route("/sendForNews", name="sendForNews")
+ */
+    public function sendForNewsAction()
+    {
+        if ($this->get('session')->get('admin') === null) return $this->render('AdminBundle::admin_enter_form.html.twig');
+        else {
+
+            $city = $this->get('session')->get('city');
+
+            return $this->render('AdminBundle::admin_mail_new.html.twig', [
+
+                'city' => $city,
+            ]);
+        }
+    }
+
+         /**
+ * @Route("/sendNow", name="sendNow")
+ */
+    public function sendNowAction()
+    {
+        if ($this->get('session')->get('admin') === null) return $this->render('AdminBundle::admin_enter_form.html.twig');
+        else {
+
+            $city = $this->get('session')->get('city');
+
+            return $this->render('AdminBundle::admin_mail_new.html.twig', [
+
+                'city' => $city,
+            ]);
+        }
     }
 }
