@@ -95,7 +95,7 @@ class MailGunController extends Controller
 
         $st = $this->em
                     ->getRepository(Settings::class)
-                    ->findBy(['sKey'=>'mailsend']);
+                    ->findOneBy(['sKey'=>'mailsend']);
 
         if($st->getSValue() == 'ready') {
 
@@ -135,7 +135,7 @@ class MailGunController extends Controller
 
                 $st = $this->em
                     ->getRepository(Settings::class)
-                    ->findBy(['sKey'=>'mailsend']);
+                    ->findOneBy(['sKey'=>'mailsend']);
                 $st->setSValue('done');
                 $this->em->persist($st);
                 $this->em->flush();
