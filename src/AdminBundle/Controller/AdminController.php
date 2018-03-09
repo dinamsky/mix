@@ -2,6 +2,8 @@
 
 namespace AdminBundle\Controller;
 
+use Mailgun\Mailgun;
+use AppBundle\Entity\Settings;
 use AppBundle\Controller\MailGunController;
 use AppBundle\Entity\Card;
 use AppBundle\Entity\Comment;
@@ -455,7 +457,56 @@ class AdminController extends Controller
         if ($this->get('session')->get('admin') === null) return $this->render('AdminBundle::admin_enter_form.html.twig');
         else {
 
-            $mgc->sendForAll();
+            $em = $this->getDoctrine()->getManager();
+
+            $st = $this->getDoctrine()
+                    ->getRepository(Settings::class)
+                    ->findOneBy(['sKey'=>'mailsend']);
+
+        if($st->getSValue() == 'ready') {
+
+            $mg = Mailgun::create('key-5f23100bafffe48a6225c2bf4792e85f');
+            $domain = "mail.mix.rent";
+
+            $query = $this->em->createQuery('SELECT c,u,f FROM AppBundle:Card c LEFT JOIN c.user u WITH u.id = c.userId LEFT JOIN c.fotos f WITH f.cardId = c.id AND f.isMain =1 WHERE c.cityId > 1257 GROUP BY c.userId');
+            //$query->setMaxResults(7);
+            $result = $query->getResult();
+            foreach ($result as $r) {
+
+                $message = $this->renderView(
+                    'email/admin_registration_en.html.twig',
+                    array(
+                        'header' => $r->getUser()->getHeader(),
+                        'password' => $r->getUser()->getTempPassword(),
+                        'email' => $r->getUser()->getEmail(),
+                        'card' => $r,
+                        'main_foto' => 'http://mix.rent/assets/images/cards/' . $r->getFotos()[0]->getFolder() . '/t/' . $r->getFotos()[0]->getId() . '.jpg',
+                        'c_price' => 0,
+                        'c_ed' => '$'
+                    )
+                );
+
+                //$to = $r->getUser()->getEmail();
+                $to = 'wqs-info@mail.ru';
+
+                $subject = '#'.$r->getId().' Your transport in MixRent';
+
+                $mg->messages()->send($domain, [
+                    'from' => 'MixRent <mail@mix.rent>',
+                    'to' => $to,
+                    'subject' => $subject,
+                    'html' => $message
+                ]);
+            }
+
+                $st = $this->getDoctrine()
+                    ->getRepository(Settings::class)
+                    ->findOneBy(['sKey'=>'mailsend']);
+                $st->setSValue('done');
+                $em->persist($st);
+                $em->flush();
+
+        }
 
             $city = $this->get('session')->get('city');
 
