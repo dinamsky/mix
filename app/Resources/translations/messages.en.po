@@ -915,8 +915,8 @@ msgstr "Expand details"
 msgid "Свернуть"
 msgstr "Close up details"
 
-msgid ""
-msgstr ""
+msgid "Сообщения"
+msgstr "Messages"
 
 msgid ""
 msgstr ""

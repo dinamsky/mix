@@ -36,7 +36,7 @@ class MailGunController extends Controller
                                 'password' => $r->getUser()->getTempPassword(),
                                 'email' => $r->getUser()->getEmail(),
                                 'card' => $r,
-                                'main_foto' => 'http://multiprokat.com/assets/images/cards/'.$r->getFotos()[0]->getFolder().'/t/'.$r->getFotos()[0]->getId().'.jpg',
+                                'main_foto' => 'http://mix.rent/assets/images/cards/'.$r->getFotos()[0]->getFolder().'/t/'.$r->getFotos()[0]->getId().'.jpg',
                                 'c_price' => 0,
                                 'c_ed' => '$'
                             )
@@ -61,7 +61,7 @@ class MailGunController extends Controller
 
 
         //return new RedirectResponse($url['links'][1]['href']);
-        return new Response('ok');
+        return new Response('ok2');
     }
 
 
