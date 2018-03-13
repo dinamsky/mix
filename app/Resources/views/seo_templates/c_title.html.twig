@@ -1,1 +1,1 @@
-{{ seo.service }} {{ seo.type.plural }} {{ seo.bodyType}} {{ seo.mark }} {{ seo.model }} в {{ lang=='en' and seo.city.id>1251 ? seo.city.header~' '~seo.city.iso~' '~seo.city.country :seo.city.gde }}
+{{ seo.service }} {{ seo.type.plural }} {{ seo.bodyType}} {{ seo.mark }} {{ seo.model }} {% trans %}в{% endtrans %} {{ lang=='en' and seo.city.id>1251 ? seo.city.header~' '~seo.city.iso~' '~seo.city.country : seo.city.url }}

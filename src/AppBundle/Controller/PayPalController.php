@@ -94,7 +94,7 @@ class PayPalController extends Controller
 
                 $item_name = 'PRO Account';
                 $cost = '99.99';
-                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"'.$cost.'","currency":"RUB"},"item_list":{"items":[{"quantity":"1","name":"'.$item_name.'","price":"'.$cost.'","currency":"RUB"}]},"custom":"pro_'.$user->getId().'"}]}';
+                $data = '{"intent":"sale","redirect_urls":{"return_url":"https://mix.rent/paypalResult","cancel_url":"https://mix.rent/paypalCancel"},"payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"'.$cost.'","currency":"USD"},"item_list":{"items":[{"quantity":"1","name":"'.$item_name.'","price":"'.$cost.'","currency":"USD"}]},"custom":"pro_'.$user->getId().'"}]}';
 
 
 
