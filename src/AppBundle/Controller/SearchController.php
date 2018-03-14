@@ -236,7 +236,7 @@ class SearchController extends Controller
         if($model){
             $model = $this->getDoctrine()
                 ->getRepository(CarModel::class)
-                ->findOneBy(['header' => $model, 'carMarkId' => $mark->getId()]);
+                ->findOneBy(['header' => urldecode($model), 'carMarkId' => $mark->getId()]);
 
             if(!$model) throw $this->createNotFoundException(); //404
 
