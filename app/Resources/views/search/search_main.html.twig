@@ -110,7 +110,7 @@
 
 
                 <div class="uk-margin-top">
-                    {% if service == 'all' and  total_cards > 0%}
+                    {% if service == 'all' and  total_cards > 0 and model %}
                         <a class="sort_button buyout_link {{ is_mobile() ? 'uk-width-1-1' }}" href="/rent/{{ city.url }}/leasebuyout/{{ general.url }}{{ mark and mark.header !='' ? '/'~mark.header }}{{ model and model.header!='' and model.header !='Любая модель' and mark and mark.header !='' ? '/'~model.header }}">
                             <span class="buyout_box c_blue"><i class="fa fa-check"></i></span></span> {{ 'Аренда с правом выкупа'|trans }}
                         </a>
