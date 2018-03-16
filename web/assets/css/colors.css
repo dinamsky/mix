@@ -26,6 +26,10 @@
     background: #464646;
 }
 
+.bg_lightgrey{
+    background: lightgrey;
+}
+
 .bg_yellow{
     background: #f5e503;
 }

@@ -20,7 +20,7 @@
                 <div uk-toggle="target: #share_butons"><i uk-icon="icon:social"></i></div>
             </div>
         </div>
-        <button class="uk-button uk-button-primary uk-width-1-1" uk-toggle="target: #user_book_form">{% trans %}Отправить заявку{% endtrans %}</button>
+
     </div>
 </div>
 
@@ -44,6 +44,27 @@
         <i class="fa fa-star c_blue"></i> {{ opinions }}/5 <span class="uk-text-small c_grey">{% trans %}звезд из{% endtrans %}</span> {{ total_opinions }}
         <span class="uk-text-small c_grey">{% trans %}отзывов{% endtrans %}</span>
     </div>
+    <hr>
+    {% if not reserved %}
+                <div class="uk-margin-bottom card_page_phone" {{ is_mobile() ? '' : '' }}>
+                    <div uk-grid class="uk-grid-collapse uk-grid-match b_shadowed">
+                        <div class="phone_block uk-width-1-1">
+                            {% if app.session.get('phone')[card.user.id] is not defined %}
+                                <div class="hidden_phone bg_white show_phone uk-text-center c_grey" data-card_id="{{ card.id }}" data-profile="0">
+                                    <div class="uk-text-center">{% trans %}Показать телефон{% endtrans %}</div>
+                                    <i class="fa fa-phone"></i> {% for info in card.user.information if info.uiKey == 'phone' %}{{ info.uiValue|slice(0,5) }} XXX-XX-XX{% endfor %}
+                                </div>
+
+                            {% else %}
+                                <a class="opened_phone bg_green c_white uk-text-center" href="tel:{% for info in card.user.information if info.uiKey == 'phone' %}{{ info.uiValue }}{% endfor %}">
+                                    <i class="fa fa-phone"></i> {% for info in card.user.information if info.uiKey == 'phone' %}{{ info.uiValue }}{% endfor %}
+                                </a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+                {% endif %}
     <hr>
     <div class="uk-text-center"><a class="c_blue" href="/user/{{ card.user.id }}">{% trans %}Все объявления{% endtrans %} {% trans %}пользователя{% endtrans %} ({{ card.user.cards|length }})</a></div>
 

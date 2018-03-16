@@ -110,7 +110,8 @@
                 {% endif %}
                 >
                     {% if k == 0 %}
-                    <img src="https://multiprokat.com/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" alt="" style="visibility: hidden; height: 0;width: 0;" itemprop="image">
+
+                    <img src="{{ app.request.getSchemeAndHttpHost() ~ mainFoto }}" alt="" style="visibility: hidden; height: 0;width: 0;" itemprop="image">
                     {% endif %}
                     {#<img src="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" alt="" style="max-height: auto">#}
                 </a>
@@ -317,26 +318,10 @@
 
             <div class="uk-width-1-4@s">
 
-                {% if not reserved %}
-                <div class="uk-margin-bottom card_page_phone" {{ is_mobile() ? '' : 'uk-sticky="offset: 110"' }}>
-                    <div uk-grid class="uk-grid-collapse uk-grid-match b_shadowed">
-                        <div class="phone_block uk-width-1-1">
-                            {% if app.session.get('phone')[card.user.id] is not defined %}
-                                <div class="hidden_phone bg_blue show_phone uk-text-center c_white" data-card_id="{{ card.id }}" data-profile="0">
-                                    <div class="uk-text-center">{% trans %}Показать телефон{% endtrans %}</div>
-                                    <i class="fa fa-phone"></i> {% for info in card.user.information if info.uiKey == 'phone' %}{{ info.uiValue|slice(0,5) }} XXX-XX-XX{% endfor %}
-                                </div>
 
-                            {% else %}
-                                <a class="opened_phone bg_green c_white uk-text-center" href="tel:{% for info in card.user.information if info.uiKey == 'phone' %}{{ info.uiValue }}{% endfor %}">
-                                    <i class="fa fa-phone"></i> {% for info in card.user.information if info.uiKey == 'phone' %}{{ info.uiValue }}{% endfor %}
-                                </a>
-                            {% endif %}
-                        </div>
+                <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom" uk-toggle="target: #user_book_form" style="padding:10px 0;">{% trans %}Отправить заявку{% endtrans %}</button>
 
-                    </div>
-                </div>
-                {% endif %}
+
 
                 {% if not is_mobile() %}
                     {% include '/card/card_show_price_owner_block.html.twig' %}
@@ -375,7 +360,16 @@
                         <button class="uk-modal-close-default" type="button" uk-close></button>
                         <form action="/user/bookMessage" uk-grid class="uk-grid-small" method="POST" >
 
-                            <div class="uk-width-1-1">
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">Image</span>
+                                <div style="
+                                        background: url({{ app.request.getSchemeAndHttpHost() ~ mainFoto }}) center center no-repeat;
+                                        background-size: cover;
+                                        height: 150px;
+                                        "></div>
+                            </div>
+
+                            <div class="uk-width-1-2">
                                 <span class="uk-text-small">{% trans %}Транспортное средство{% endtrans %}</span>
                                 <input type="text" name="header" class="uk-input" value="{{ card.markModel.mark.header }} {{ card.markModel.header }}">
                             </div>
