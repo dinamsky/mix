@@ -65,7 +65,7 @@ class ArticleController extends Controller
         $content[0] = explode("---<br />",$content[0]);
         $content[1] = explode("---<br />",$content[1]);
 
-        dump($content);
+
         return $this->render('InfoBundle::howdoesitwork.html.twig', [
             'city' => $city,
             'lang' => $_SERVER['LANG'],
