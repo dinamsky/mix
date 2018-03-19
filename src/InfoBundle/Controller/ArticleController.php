@@ -5,6 +5,7 @@ use InfoBundle\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Settings;
 
 class ArticleController extends Controller
 {
@@ -38,6 +39,38 @@ class ArticleController extends Controller
         return $this->render('InfoBundle::contacts.html.twig', [
             'city' => $city,
             'lang' => $_SERVER['LANG']
+        ]);
+    }
+
+    /**
+     * @Route("/howdoesitwork")
+     */
+    public function howWorkAction()
+    {
+        $city = $this->get('session')->get('city');
+        $slider = [
+            '/assets/images/interface/howto/howtoslidet01.jpg',
+            '/assets/images/interface/howto/howtoslidet02.jpg',
+            '/assets/images/interface/howto/howtoslidet03.jpg',
+            '/assets/images/interface/howto/howtoslidet04.jpg',
+            '/assets/images/interface/howto/howtoslidet05.jpg',
+        ];
+
+        $st = $this->getDoctrine()
+                ->getRepository(Settings::class)
+                ->findOneBy(['sKey'=>'howitwork']);
+        $content = $st->getSValue();
+
+        $content = explode("***<br />",strip_tags($content,'<strong>,<br>'));
+        $content[0] = explode("---<br />",$content[0]);
+        $content[1] = explode("---<br />",$content[1]);
+
+        dump($content);
+        return $this->render('InfoBundle::howdoesitwork.html.twig', [
+            'city' => $city,
+            'lang' => $_SERVER['LANG'],
+            'slider' => $slider,
+            'content' => $content,
         ]);
     }
 }

@@ -529,4 +529,46 @@ class AdminController extends Controller
             ]);
         }
     }
+
+         /**
+ * @Route("/adminHowWork", name="adminHowWork")
+ */
+    public function adminHowWorkAction()
+    {
+        if ($this->get('session')->get('admin') === null) return $this->render('AdminBundle::admin_enter_form.html.twig');
+        else {
+
+            $city = $this->get('session')->get('city');
+
+            $st = $this->getDoctrine()
+                    ->getRepository(Settings::class)
+                    ->findOneBy(['sKey'=>'howitwork']);
+            $content = $st->getSValue();
+
+            return $this->render('AdminBundle::admin_how_work.html.twig', [
+
+                'content' => $content,
+                'city' => $city,
+            ]);
+        }
+    }
+
+
+         /**
+ * @Route("/adminSaveHowWork", name="adminSaveHowWork")
+ */
+    public function adminSaveHowWorkAction(Request $request)
+    {
+        if ($this->get('session')->get('admin') === null) return $this->render('AdminBundle::admin_enter_form.html.twig');
+        else {
+            $em = $this->getDoctrine()->getManager();
+            $st = $this->getDoctrine()
+                    ->getRepository(Settings::class)
+                    ->findOneBy(['sKey'=>'howitwork']);
+                $st->setSValue($request->request->get('content'));
+                $em->persist($st);
+                $em->flush();
+        }
+        return $this->redirectToRoute('adminHowWork');
+    }
 }
