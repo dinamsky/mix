@@ -90,6 +90,14 @@
     width: 70px;
 }
 
+#page_slider .svg path{
+    fill: white;
+}
+
+#page_slider .svg{
+    height: 27px;
+}
+
 .howto_inner svg {
     height: 27px;
 }
@@ -164,4 +172,30 @@ display:none;
 
 .right_howto_block.blk_5 .right_corner{
     top:40px;
+}
+
+.howto_lb{
+    background: #52eac8;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    display: block;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.howto_rb{
+    background: #00a9ff;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    display: block;
+    text-transform: uppercase;
+    box-sizing: border-box;
 }

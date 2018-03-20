@@ -3,6 +3,8 @@ $( document ).ready(function() {
         var items = $(this).data('items');
         var dots = $(this).data('dots');
         var full = $(this).data('full');
+        var ratio = $(this).data('ratio');
+        if (!ratio) ratio = 2;
         var fnc = '';
         var nav = true;
         if(dots === 0){
@@ -29,7 +31,7 @@ $( document ).ready(function() {
             'nav': nav,
             'margin' : margin,
             'slideBy' : items,
-            'navText': ['<i uk-icon="icon:chevron-left; ratio: 2"></i>', '<i uk-icon="icon:chevron-right; ratio: 2"></i>'],
+            'navText': ['<i uk-icon="icon:chevron-left; ratio: '+ratio+'"></i>', '<i uk-icon="icon:chevron-right; ratio: '+ratio+'"></i>'],
             // 'autoHeight': true,
             'dots': dots,
             'loop': dots,

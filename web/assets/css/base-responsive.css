@@ -326,6 +326,45 @@
         margin: 0 5%;
     }
 
+    .right_corner{
+        display: none;
+    }
+
+    .right_round{
+        display: none;
+    }
+
+    .left_corner{
+        display: none;
+    }
+
+    .left_round{
+        display: none;
+    }
+
+    .hw_mob{
+        position: static !important;
+        box-sizing: border-box;
+    }
+
+    .how_h1{
+        font-size: 20px !important;
+    margin-left: 0 !important;
+    left: 0 !important;
+    width: 100%;
+    text-align: center;
+    }
+
+    .hw_mouse{
+        display: none;
+    }
+    .how_black{
+        height: 430px !important;
+    }
+
+    .howto_inner{
+        padding: 10px !important;
+    }
 }
 
 @media (min-width: 600px) and (max-width: 1024px){
