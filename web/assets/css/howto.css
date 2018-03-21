@@ -1,4 +1,4 @@
-#content *{
+#content *:not(i){
     font-family: 'Montserrat', sans-serif;
 }
 
