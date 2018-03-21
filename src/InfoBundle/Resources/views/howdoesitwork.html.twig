@@ -123,7 +123,7 @@
             <div class="uk-width-1-2@s">
                 <div class="howto_inner">
                     {% for k,right in content[1] %}
-                        <div class="right_howto_block uk-margin-bottom blk_{{ k }}" {% if not is_mobile() %}uk-scrollspy="cls:uk-animation-slide-left; delay: 200; offset-top:-200"{% endif %}>
+                        <div class="right_howto_block uk-margin-bottom blk_{{ k }}" {% if not is_mobile() %}uk-scrollspy="cls:uk-animation-slide-right; delay: 200; offset-top:-200"{% endif %}>
                             <div>{{ right|raw }}</div>
                             <div class="right_round">
                                 {%  if k == 0 %}<img class="svg" src="/assets/images/interface/howto/car.svg" alt="">{% endif %}
