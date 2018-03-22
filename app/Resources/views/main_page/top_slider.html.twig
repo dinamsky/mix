@@ -10,7 +10,7 @@
             {% if app.session.has('logged_user') %}
                 <a href="/card/new" class="" title="Хотите сюда?<br>Разместите объявление!" uk-tooltip>{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
             {% else %}
-                <a class="" title="Хотите сюда?<br>Разместите объявление!" uk-tooltip uk-toggle="target: #sign_in_or_up">{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
+                <a class="" title="Want to be here?<br>Add listing!" uk-tooltip uk-toggle="target: #sign_in_or_up">{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
             {% endif %}
         </div>
     </div>
