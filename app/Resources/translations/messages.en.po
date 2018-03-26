@@ -607,7 +607,7 @@ msgid "стандартный"
 msgstr "standart"
 
 msgid "Вы можете разместить не более 2-х объявлений"
-msgstr "You can place no more than 2 cards"
+msgstr "You can place listings by pay for them"
 
 msgid "Оплатить PRO аккаунт"
 msgstr "Pay PRO account"
@@ -616,10 +616,10 @@ msgid "Оплаченный PRO аккаунт действует бессроч
 msgstr "Payed PRO account has unlimited lifetime"
 
 msgid "и дает больше возможностей, в том числе: размещать больше объявлений и получать больше звонков от клиентов"
-msgstr "and gives more possibilities, like: to place more cards and get more calls from clients"
+msgstr "and gives more possibilities, like: to place more listings and get more calls from clients"
 
 msgid "Вы можете разместить неограниченное количество объявлений"
-msgstr "You can place unlimited amount of cards"
+msgstr "You can place unlimited amount of listings"
 
 msgid "Кратко о себе/компании"
 msgstr "Briefly about yourself / company"
