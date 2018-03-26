@@ -269,10 +269,10 @@ class UserController extends Controller
 //        $mailer->send($message);
 
 
-        $mgc->sendMG($user->getEmail(),$_t->trans('Регистрация на сайте multiprokat.com'),$this->renderView(
+        $mgc->sendMG($request->request->get('email'),$_t->trans('Регистрация на сайте multiprokat.com'),$this->renderView(
                         $_SERVER['LANG'] == 'ru' ? 'email/registration.html.twig' : 'email/registration_'.$_SERVER['LANG'].'.html.twig',
                     array(
-                        'header' => $user->getHeader(),
+                        'header' => $request->request->get('header'),
                         'code' => $code
                     )
                     ));
@@ -292,7 +292,9 @@ class UserController extends Controller
     {
         $_t = $this->get('translator');
 
-        $mgc = new MailGunController();
+        $em = $this->getDoctrine()->getManager();
+
+        $mgc = new MailGunController($em);
 
 
         $return_url = 'homepage';

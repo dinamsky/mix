@@ -73,6 +73,25 @@ class MailGunController extends Controller
     }
 
 
+    /**
+     * @Route("/mctest2", name="mc_test")
+     */
+    public function mctest2Action(Request $request )
+    {
+        $_t = $this->get('translator');
+        $this->sendMG('bazzalth@yandex.ru',$_t->trans('Регистрация на сайте multiprokat.com'),$this->renderView(
+                        $_SERVER['LANG'] == 'ru' ? 'email/registration.html.twig' : 'email/registration_'.$_SERVER['LANG'].'.html.twig',
+                    array(
+                        'header' => '11111111',
+                        'code' => '2222222'
+                    )
+                    ));
+
+        return new Response('ok2');
+    }
+
+
+
     public function sendMG($to,$subject,$message)
     {
 
