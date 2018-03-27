@@ -73,4 +73,16 @@ class ArticleController extends Controller
             'content' => $content,
         ]);
     }
+
+    /**
+     * @Route("/about")
+     */
+    public function aboutAction()
+    {
+        $city = $this->get('session')->get('city');
+        return $this->render('InfoBundle::about.html.twig', [
+            'city' => $city,
+            'lang' => $_SERVER['LANG']
+        ]);
+    }
 }
