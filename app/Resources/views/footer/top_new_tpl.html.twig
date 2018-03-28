@@ -6,6 +6,17 @@
     {% set bgrnd = 'white' %}
 {% endif %}
 
+
+
+{% set currency = {
+        'RUB': '₽',
+        'EUR': '€',
+        'USD': '$',
+        'CAD': '$',
+        'THB': '฿',
+        'MXN': '$'
+    } %}
+
 <a href="/card/{{ card.id }}" class="uk-display-block uk-margin-bottom" uk-scrollspy="cls:uk-animation-slide-bottom;delay:1000">
     <div uk-grid class="uk-grid-small">
         <div class="uk-width-auto">
@@ -23,7 +34,7 @@
             <div class="c_grey uk-text-truncate uk-text-small"><i class="fa fa-map-marker"></i> {{ card.getCity.header }}, {{ card.getCity.getParent.header }}</div>
             <div class="c_grey uk-text-truncate uk-text-small">
                 {% for price in card.cardPrices if price.priceId == 2 %}
-                    {{ price.value|number_format(0,'.','<span class="thousand_separator"></span>')|raw }} ₽/{% trans %}день{% endtrans %}
+                    {{ price.value|number_format(0,'.','<span class="thousand_separator"></span>')|raw }} {{ currency[card.currency]|raw}}/{% trans %}день{% endtrans %}
                 {% endfor %}</div>
         </div>
     </div>
