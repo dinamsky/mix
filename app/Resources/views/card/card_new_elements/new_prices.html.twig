@@ -8,8 +8,11 @@
         <div class="uk-margin-bottom">
             <select name="currency" class="uk-width-1-5@s uk-select">
                 <option value="EUR">EUR</option>
-                <option value="USD" {{ city.country == 'USA' or city.country == 'CAN' ? 'selected' }}>USD</option>
-                <option value="RUB" {{ city.country == 'RUS' or city.country == 'RUS' ? 'selected' }}>RUB</option>
+                <option value="USD" {{ city.country == 'USA' ? 'selected' }}>USD</option>
+                <option value="CAD" {{ city.country == 'CAN' ? 'selected' }}>CAD</option>
+                <option value="THB" {{ city.country == 'ТНА' ? 'selected' }}>THB</option>
+                <option value="MXN" {{ city.country == 'MEX' ? 'selected' }}>MXN</option>
+                <option value="RUB" {{ city.country == 'RUS' ? 'selected' }}>RUB</option>
             </select>
         </div>
 
