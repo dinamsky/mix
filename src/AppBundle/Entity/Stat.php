@@ -92,12 +92,21 @@ class Stat
      */
     private $isEmpty;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_mixrent", type="boolean")
+     */
+
+    private $isMixrent;
+
 
     /**
      * Get id
      *
      * @return int
      */
+
     public function getId()
     {
         return $this->id;
@@ -342,5 +351,28 @@ class Stat
     {
         return $this->isEmpty;
     }
-}
 
+    /**
+     * Set isMixrent
+     *
+     * @param boolean $isMixrent
+     *
+     * @return Stat
+     */
+    public function setIsMixrent($isMixrent)
+    {
+        $this->isMixrent = $isMixrent;
+
+        return $this;
+    }
+
+    /**
+     * Get isMixrent
+     *
+     * @return boolean
+     */
+    public function getIsMixrent()
+    {
+        return $this->isMixrent;
+    }
+}

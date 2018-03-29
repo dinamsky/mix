@@ -40,12 +40,18 @@ class ServiceStat extends Controller
                 if (!isset($data['card_id'])) $data['card_id'] = null;
                 if (!isset($data['user_id'])) $data['user_id'] = null;
 
+
+                $http_host = explode(".",$_SERVER['HTTP_HOST']);
+                $domain = $http_host[count($http_host)-2];
+                if ($domain == 'mix') $d = true; else $d = false;
+
                 $stat = new Stat();
                 $stat->setUrl($data['url']);
                 $stat->setCardId($data['card_id']);
                 $stat->setUserId($data['user_id']);
                 $stat->setEventType($data['event_type']);
                 $stat->setPageType($data['page_type']);
+                $stat->setIsMixrent($d);
                 $stat->setQty(1);
 
 
