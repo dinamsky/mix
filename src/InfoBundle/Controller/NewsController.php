@@ -47,5 +47,7 @@ class NewsController extends Controller
             'lang' => $_SERVER['LANG'],
 
         ]);
+
+        //
     }
 }
