@@ -60,6 +60,13 @@ class News
     /**
      * @var string
      *
+     * @ORM\Column(name="country", type="string", length=255)
+     */
+    private $country;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="thumbnail", type="string", length=255)
      */
     private $thumbnail;
