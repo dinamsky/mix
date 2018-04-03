@@ -27,12 +27,12 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
         $result = [];
         $em = $this->getEntityManager();
         foreach ($gts as $gt) {
-            $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.generalTypeId = ' . $gt . ' AND c.cityId= ?1 ORDER BY c.isTop DESC, c.dateTariffStart DESC, c.dateUpdate DESC');
+            $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.generalTypeId = ' . $gt . ' AND c.cityId= ?1 ORDER BY c.isTop DESC,  c.dateUpdate DESC');
             if ($cityId>1251) $query->setParameter(1, $cityId);
             else $query->setParameter(1, 2407); // los angeles
             $query->setMaxResults(7);
             if(count($query->getScalarResult())<2) {
-                $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.generalTypeId = ' . $gt . ' AND c.cityId > 1251 ORDER BY c.isTop DESC, c.dateTariffStart DESC, c.dateUpdate DESC');
+                $query = $em->createQuery('SELECT c.id FROM AppBundle:Card c JOIN c.tariff t WHERE c.generalTypeId = ' . $gt . ' AND c.cityId > 1251 ORDER BY c.isTop DESC,  c.dateUpdate DESC');
                 $query->setMaxResults(7);
             }
 
@@ -41,7 +41,7 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
 
 
 
-        $dql = 'SELECT c,f,p,g,m FROM AppBundle:Card c JOIN c.tariff t LEFT JOIN c.fotos f LEFT JOIN c.cardPrices p LEFT JOIN c.city g LEFT JOIN c.markModel m WHERE c.id IN ('.implode(",",$cars_ids).') ORDER BY c.isTop DESC, c.dateTariffStart DESC, c.dateUpdate DESC';
+        $dql = 'SELECT c,f,p,g,m FROM AppBundle:Card c JOIN c.tariff t LEFT JOIN c.fotos f LEFT JOIN c.cardPrices p LEFT JOIN c.city g LEFT JOIN c.markModel m WHERE c.id IN ('.implode(",",$cars_ids).') ORDER BY c.isTop DESC, c.dateUpdate DESC';
         $query = $em->createQuery($dql);
         foreach($query->getResult() as $row){
             $result[$row->getGeneralTypeId()][] = $row;
