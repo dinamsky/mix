@@ -400,4 +400,37 @@ class EditCardController extends Controller
         }
     }
 
+    /**
+     * @Route("/ajaxMakeMainSlider", name="ajaxMakeMainSlider")
+     */
+    public function ajaxMakeMainSliderAction(EntityManagerInterface $em, Request $request)
+    {
+        $post = $request->request;
+
+        $card = $this->getDoctrine()
+            ->getRepository(Card::class)
+            ->find($post->get('card_id'));
+
+        $card->setIsTop(true);
+        $em->persist($card);
+        $em->flush();
+        return new Response();
+    }
+
+    /**
+     * @Route("/ajaxMakeBestOffer", name="ajaxMakeBestOffer")
+     */
+    public function ajaxMakeBestOfferAction(EntityManagerInterface $em, Request $request)
+    {
+        $post = $request->request;
+
+        $card = $this->getDoctrine()
+            ->getRepository(Card::class)
+            ->find($post->get('card_id'));
+
+        $card->setIsBest(true);
+        $em->persist($card);
+        $em->flush();
+        return new Response();
+    }
 }

@@ -95,10 +95,10 @@ class Stat
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_mixrent", type="boolean")
+     * @ORM\Column(name="is_mixrent", type="boolean", options={"default" : 0})
      */
 
-    private $isMixrent;
+    private $isMixrent = 0;
 
 
     /**

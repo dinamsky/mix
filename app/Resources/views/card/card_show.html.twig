@@ -482,6 +482,25 @@
 
         </div>
 
+
+        {% if app.session.has('admin') and app.session.get('admin').role == 'superadmin' %}
+            {% if card.isTop %}
+                <div class="uk-label uk-label-warning">already in main slider</div>
+            {% else %}
+                <button id="make_main_slider" type="button" class="uk-button" style="background: orange;color:white" data-id="{{ card.id }}">to main slider</button>
+            {% endif %}
+
+
+            {% if card.isBest %}
+                <div class="uk-label" style="background: pink;color:white">already in best offer</div>
+            {% else %}
+                <button id="make_best_offer" type="button" class="uk-button" style="background: pink;color:white" data-id="{{ card.id }}">to best offers</button>
+            {% endif %}
+
+
+        {% endif %}
+
+
     </div>
 
     {% if app.session.has('first_card') %}

@@ -44,6 +44,33 @@ $( document ).ready(function() {
         });
     });
 
+
+    $('#make_main_slider').on('click', function () {
+        var card_id = $(this).data('id');
+        $.ajax({
+            //edit card controller
+            url: '/ajaxMakeMainSlider',
+            type: 'POST',
+            data: {card_id: card_id},
+            success: function () {
+                document.location.href = '/card/' + card_id;
+            }
+        });
+    });
+
+    $('#make_best_offer').on('click', function () {
+        var card_id = $(this).data('id');
+        $.ajax({
+            //edit card controller
+            url: '/ajaxMakeBestOffer',
+            type: 'POST',
+            data: {card_id: card_id},
+            success: function () {
+                document.location.href = '/card/' + card_id;
+            }
+        });
+    });
+
     // $('.show_phone_big').on('click', function () {
     //     var card_id = $(this).data('card_id');
     //     var t = $(this);

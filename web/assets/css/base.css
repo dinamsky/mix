@@ -657,10 +657,20 @@ footer a:hover{
     border-color: rgba(111, 111, 111, 0.39);
 }
 
+.cat_main_header{
+    text-decoration: underline;
+    font-size: 18px;
+    display: inline-block;
+    margin-bottom: 7px;
+}
 
+.cat_main_header.c_white:hover{
+    color: grey;
+    text-decoration: underline;
+}
 
-.cat_main_header:hover{
-    color: white;
+.cat_main_header.c_grey:hover{
+    color: #07d;
     text-decoration: underline;
 }
 

@@ -204,6 +204,13 @@ class Card
     /**
      * @var bool
      *
+     * @ORM\Column(name="is_best", type="boolean", nullable=true)
+     */
+    private $isBest = 0;
+
+    /**
+     * @var bool
+     *
      * @ORM\Column(name="is_messages", type="boolean", nullable=true)
      */
     private $isMessages = 1;
@@ -1466,5 +1473,29 @@ class Card
     public function getIsMessages()
     {
         return $this->isMessages;
+    }
+
+    /**
+     * Set isBest
+     *
+     * @param boolean $isBest
+     *
+     * @return Card
+     */
+    public function setIsBest($isBest)
+    {
+        $this->isBest = $isBest;
+
+        return $this;
+    }
+
+    /**
+     * Get isBest
+     *
+     * @return boolean
+     */
+    public function getIsBest()
+    {
+        return $this->isBest;
     }
 }
