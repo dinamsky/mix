@@ -23,11 +23,11 @@
 
 {% block metaTags %}
     {{ parent() }}
-    <meta name="description" content="{{ user.header }} user page. All transport rent and leasing {% trans %}в{% endtrans %} {{ lang=='en' and city.id>1251 ? city.header~' '~city.iso~' '~city.country : city.url }}">
+    <meta name="description" content="{{ user.header }} user page. All transport rent and leasing {% trans %}в{% endtrans %} {{ lang=='en' and user.cards[0].city.id>1251 ? user.cards[0].city.header~' '~user.cards[0].city.iso~' '~user.cards[0].city.country : user.cards[0].city.url }}">
 {% endblock %}
 
 
-{% block title %} {{ user.header }} user page {% trans %}в{% endtrans %} {{ lang=='en' and city.id>1251 ? city.header~' '~city.iso~' '~city.country : city.url }}
+{% block title %} {{ user.header }} user page {% trans %}в{% endtrans %} {{ lang=='en' and user.cards[0].city.id>1251 ? user.cards[0].city.header~' '~user.cards[0].city.iso~' '~user.cards[0].city.country : user.cards[0].city.url }}
 {% endblock %}
 
 
