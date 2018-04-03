@@ -45,12 +45,23 @@
 
 
             {% for s in cover_slider %}
-                <div class="cov_sl" style="background:url({{ s.img }}) center center;background-size: cover;
+                <div class="cov_sl" style="
+                        background:
+                        linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6) ),
+                        url({{ s.img }}) center center;background-size: cover;
                         height: {{ is_mobile() ? '200px' : '600px' }};position:relative;display: block;">
-                    <a href="{{ s.link }}" class="b_content_block">
-                        <h2>{{ s.header|raw }}</h2>
-                        <p>{{ s.content|raw }}</p>
-                    </a>
+                    {#<a href="{{ s.link }}" class="b_content_block">#}
+                        {#<h2>{{ s.header|raw }}</h2>#}
+                        {#<p>{{ s.content|raw }}</p>#}
+                    {#</a>#}
+
+                    <div style="position: absolute;
+                                top: 30%;
+                                left: 50%;
+                                color: white;">
+                        <div style="font-size: 71px;font-weight: 800">Platform for rent</div>
+                        <div style="font-size: 18px;font-weight: 300">Cars, yachts, boats, motorcycles, bicycles, scooters, and all transport</div>
+                    </div>
 
                 </div>
 
@@ -96,6 +107,11 @@
 
     <div class="main_top_form" id="mtf_id">
         <div class="mtf_content">
+
+            <h4 style="font-size: 15px;
+                font-weight: 800;
+                margin-bottom: 5px;">Search by city, type of transport and price:</h4>
+
             <div class="uk-margin-bottom">
                 <span class="uk-text-small">{% trans %}Город{% endtrans %}</span>
                 <div >
@@ -121,8 +137,8 @@
             </div>
 
             <div>
-
-                <div class="uk-margin-large-top uk-margin-bottom">
+                <span class="uk-text-small uk-text-center uk-width-1-1 uk-display-inline-block">{% trans %}Цена{% endtrans %}</span>
+                <div class="uk-margin-top uk-margin-bottom">
                     <input id="r_from_top_price" type="hidden" name="price_from" value="{{ app.request.get('price_from') is defined ? app.request.get('price_from') : 0 }}" class="uk-input uk-width-1-3">
                     <input id="r_to_top_price" type="hidden" name="price_to" value="{{ app.request.get('price_to') is defined ? app.request.get('price_to') : 20000 }}" class="uk-input uk-width-1-3">
 
@@ -134,11 +150,11 @@
                          data-start="0"
                          data-finish="20000"></div>
                 </div>
-                <span class="uk-text-small">{% trans %}Цена{% endtrans %}</span>
-            </div>
 
+            </div>
+            <a class="mtf_button" href="/rent/{{ city.url }}/all/cars">{% trans %}Найти{% endtrans %}</a>
         </div>
-        <a class="mtf_button" href="/rent/{{ city.url }}/all/cars">{% trans %}Найти{% endtrans %}</a>
+
     </div>
 
 

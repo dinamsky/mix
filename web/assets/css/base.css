@@ -95,7 +95,7 @@ button{
 
 .top_user_actions a, .top_user_actions_button{
     border: 0;
-    border-left: 1px solid white;
+    border-left: 1px solid transparent;
     display: inline-block;
     text-align: center;
     vertical-align: top;
@@ -1738,4 +1738,22 @@ top: 80%;
 .b_content_block:hover{
     text-decoration: none;
     color:white;
+}
+
+
+.main_page #header .top_sticky{
+    position: absolute;
+    background: transparent;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.main_page #header .top_sticky.inactive * {
+    color:white !important;
+}
+
+
+
+
+.main_page #header .top_sticky.uk-active{
+    background: white;
 }
