@@ -918,5 +918,18 @@ msgstr "Close up details"
 msgid "Сообщения"
 msgstr "Messages"
 
+msgid "Дата начала аренды"
+msgstr "Rent start date"
+
+
+msgid "Дата окончания аренды"
+msgstr "Rent finish date"
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
 msgid ""
 msgstr ""

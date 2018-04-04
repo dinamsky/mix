@@ -57,11 +57,9 @@
                         <a rel="nofollow" href="/contacts" class="c_grey">{% trans %}Контакты{% endtrans %}</a>
                         <hr>
 
-                        {% if page_type is defined and general is defined and general is not iterable%}
-                            <a href="/card/new/{{ general.url }}" class="c_grey">Сдать в {{ general.url == 'special-machines' or general.url == 'airplanes' ? 'аренду' : 'прокат/аренду' }} {{ general.headerSingular|lower }} в {{ city.gde }}</a>
-                        {% else %}
+
                             <a href="/promo" class="c_grey">{% trans %}Сдать свой автомобиль{% endtrans %}</a>
-                        {% endif %}
+
                     <hr>
                     <a rel="nofollow" href="/howdoesitwork" class="c_grey">How does it work?</a>
                     <hr>

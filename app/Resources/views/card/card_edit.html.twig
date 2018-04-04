@@ -73,10 +73,10 @@
                 <div class=""><span class="red_star">*</span>{% trans %}Адрес{% endtrans %}: <span uk-toggle="target: #city_selector">{{ city.header }} <i uk-icon="icon:chevron-down"></i></span></div>
 
                 <div class="uk-display-inline-block uk-margin-top">
-                    Доставка транспорта клиенту:
-                    <label><input type="radio" name="deliveryStatus" value="0" {{ card.deliveryStatus == 0 ? 'checked' }}> нет</label>
-                    <label><input type="radio" name="deliveryStatus" value="1" {{ card.deliveryStatus == 1 ? 'checked' }}> да</label>
-                    <label><input type="radio" name="deliveryStatus" value="2" {{ card.deliveryStatus == 2 ? 'checked' }}> возможна</label>
+                    To renter delivery:
+                    <label><input type="radio" name="deliveryStatus" value="0" {{ card.deliveryStatus == 0 ? 'checked' }}> no</label>
+                    <label><input type="radio" name="deliveryStatus" value="1" {{ card.deliveryStatus == 1 ? 'checked' }}> yes</label>
+                    <label><input type="radio" name="deliveryStatus" value="2" {{ card.deliveryStatus == 2 ? 'checked' }}> possible</label>
                 </div>
 
                 <div class="expandable_block" id="city_selector" hidden>
@@ -183,7 +183,7 @@
                 <hr>
 
                 <div class="uk-margin-bottom">
-                    Валюта:
+                    Currency:
                     <select name="currency" class="uk-width-1-5 uk-select">
                         <option value="EUR" {{ card.currency == 'EUR' ? 'selected' }}>EUR</option>
                         <option value="USD" {{ card.currency == 'USA' ? 'selected' }}>USD</option>
@@ -236,14 +236,14 @@
                         <div>
                             {% for feature in features %}
                                 <div>
-                                    <b>{{ feature.header }}</b>
+                                    <b>{{ {{ lang == 'ru' ? feature.header : feature.headerEn }} }}</b>
                                     <div>
                                         {% for item in feature.getChildren %}
                                             <div>
                                                 <label>
                                                     <input class="feature_item" type="checkbox" name="feature[{{ item.id }}]" value="{{  item.id in setFeatures ? '1' : '0' }}"
                                                             {{  item.id in setFeatures ? 'checked' : '0' }}
-                                                    > {{ item.header }}
+                                                    > {{ lang == 'ru' ? item.header : item.headerEn }}
                                                 </label>
                                             </div>
                                         {% endfor %}
@@ -290,7 +290,7 @@
                         <div class="uk-text-small"><span class="red_star">*</span>{% trans %}Состояние{% endtrans %}</div>
                         <select name="conditionId" class="uk-select">
                             {% for condition in conditions %}
-                                <option value="{{ condition.id }}" {{ condition.id == card.conditionId ? 'selected' : '' }}>{{ condition.header }}</option>
+                                <option value="{{ condition.id }}" {{ condition.id == card.conditionId ? 'selected' : '' }}>{{ lang == 'ru' ? condition.header : condition.headerEn }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -298,9 +298,9 @@
                     <div class="uk-width-1-3">
                         <div class="uk-text-small"><span class="red_star">*</span>{% trans %}Цвет{% endtrans %}</div>
                         <select name="colorId" class="uk-select">
-                            <option value="0" {{ 0 == card.colorId ? 'selected' : '' }}>- выберите -</option>
+                            <option value="0" {{ 0 == card.colorId ? 'selected' : '' }}>- select -</option>
                             {% for color in colors %}
-                                <option value="{{ color.id }}" {{ color.id == card.colorId ? 'selected' : '' }}>{{ color.header }}</option>
+                                <option value="{{ color.id }}" {{ color.id == card.colorId ? 'selected' : '' }}>{{ lang == 'ru' ? color.header : color.headerEn }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -308,7 +308,7 @@
                     <div class="uk-width-1-3">
                         <div class="uk-text-small"><span class="red_star">*</span>{% trans %}Год выпуска{% endtrans %}</div>
                         <select name="prodYear" class="uk-select">
-                            <option value="0" {{  0 == card.prodYear  ? 'selected'}}>- выберите -</option>
+                            <option value="0" {{  0 == card.prodYear  ? 'selected'}}>- select -</option>
                             {% for year in 'now'|date('Y')..1950 %}
                                 <option value="{{ year }}" {{  year == card.prodYear  ? 'selected'}}>{{ year }}</option>
                             {% endfor %}
