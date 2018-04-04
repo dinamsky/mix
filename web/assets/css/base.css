@@ -1744,7 +1744,7 @@ top: 80%;
 .main_page #header .top_sticky{
     position: absolute;
     background: transparent;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow: none;
 }
 
 .main_page #header .top_sticky.inactive * {

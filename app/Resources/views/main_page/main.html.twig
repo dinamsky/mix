@@ -55,13 +55,7 @@
                         {#<p>{{ s.content|raw }}</p>#}
                     {#</a>#}
 
-                    <div style="position: absolute;
-                                top: 30%;
-                                left: 50%;
-                                color: white;">
-                        <div style="font-size: 71px;font-weight: 800">Platform for rent</div>
-                        <div style="font-size: 18px;font-weight: 300">Cars, yachts, boats, motorcycles, bicycles, scooters, and all transport</div>
-                    </div>
+
 
                 </div>
 
@@ -85,6 +79,14 @@
             {#</div>#}
         </div>
     </div>
+
+    <div style="position: absolute;
+                                top: 30%;
+                                left: 50%;
+                                color: white;z-index: 100;" class="msl_txt">
+                        <div class="slt1" style="font-size: 83px;font-weight: 800">Rental platform</div>
+                        <div class="slt2" style="font-size: 26px;font-weight: 300">Cars, yachts, boats, motorcycles, bicycles, scooters<br>and all transport</div>
+                    </div>
 
     <script>
         // console.log(window.innerHeight);
@@ -110,7 +112,7 @@
 
             <h4 style="font-size: 15px;
                 font-weight: 800;
-                margin-bottom: 5px;">Search by city, type of transport and price:</h4>
+                margin-bottom: 5px;">Search by city, vehicle type<br>and price:</h4>
 
             <div class="uk-margin-bottom">
                 <span class="uk-text-small">{% trans %}Город{% endtrans %}</span>
