@@ -236,7 +236,7 @@
                         <div>
                             {% for feature in features %}
                                 <div>
-                                    <b>{{ {{ lang == 'ru' ? feature.header : feature.headerEn }} }}</b>
+                                    <b> {{ lang == 'ru' ? feature.header : feature.headerEn }} </b>
                                     <div>
                                         {% for item in feature.getChildren %}
                                             <div>
