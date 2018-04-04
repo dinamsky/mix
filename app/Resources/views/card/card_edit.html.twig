@@ -84,14 +84,14 @@
                     <select name="countryCode" id="countryCode" class="uk-select">
                         {#{{ include( 'common/ajax_edit_options.html.twig', { 'options': countries, 'id': countryCode }) }}#}
 
-                        <option value="0">-выберите страну-</option>
+                        <option value="0">-select-</option>
 
                         {% if app.session.has('admin') %}
                             {% for cntr in countries %}
-                            <option value="{{ cntr.iso3 }}" {{ card.city.country == cntr.iso3 ? 'selected' }}>{{ cntr.header }}</option>
+                            <option value="{{ cntr.iso3 }}" {{ card.city.country == cntr.iso3 ? 'selected' }}>{{ cntr.headerEn }}</option>
                             {% endfor %}
                         {% else %}
-                            <option value="RUS" selected>Россия</option>
+                            <option value="RUS" selected>Russia</option>
                         {% endif %}
 
 
