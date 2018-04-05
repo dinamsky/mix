@@ -33,11 +33,13 @@
     </div>
     <div><i class="fa fa-map-marker c_blue"></i>
         <span class="uk-text-small">
-            {% if card.address != '' %}
-                {{ card.address }}
-            {% else %}
-                {{ card.getCity.header }}, {{ card.getCity.getParent.header }}, {{ card.getCity.country }}
-            {% endif %}
+            {#{% if card.address != '' %}#}
+                {#{{ card.address }}#}
+            {#{% else %}#}
+                {{ card.getCity.url }}
+
+            {#, {{ card.getCity.getParent.header }}, {{ card.getCity.country }}#}
+            {#{% endif %}#}
         </span>
     </div>
     <div><i class="fa fa-calendar c_blue"></i> {{ card.dateCreate|date("d.m.Y") }}</div>

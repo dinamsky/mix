@@ -5,7 +5,7 @@ msgid "Лучшие предложения"
 msgstr "Best offers"
 
 msgid "Разместить объявление в ТОП"
-msgstr "Move card to TOP"
+msgstr "Move listing to TOP"
 
 msgid "Большой выбор транспорта в аренду"
 msgstr "Wide transport offer to select"
@@ -17,7 +17,7 @@ msgid "еще категории"
 msgstr "more categories"
 
 msgid "Объявлений"
-msgstr "Cards"
+msgstr "Listings"
 
 msgid "Просмотров объявлений"
 msgstr "Views"
@@ -86,7 +86,7 @@ msgid "Профиль"
 msgstr "Profile"
 
 msgid "Объявления"
-msgstr "My cards"
+msgstr "My listings"
 
 msgid "Выход"
 msgstr "Logout"
@@ -140,7 +140,7 @@ msgid "быструю регистрацию"
 msgstr "fast signup"
 
 msgid "чтобы разместить ваше объявление"
-msgstr "to place your card"
+msgstr "to place your listing"
 
 msgid "Выберите пакет 'Премиум', чтобы попасть в ТОП"
 msgstr "Choose 'Premium' to get in TOP"
@@ -153,10 +153,10 @@ msgid "Найдено"
 msgstr "Found"
 
 msgid "объявлений"
-msgstr "cards"
+msgstr "listings"
 
 msgid "Объявлений не найдено"
-msgstr "Cards not found"
+msgstr "Listings not found"
 
 msgid "Любой кузов"
 msgstr "Any bodytype"
@@ -222,19 +222,19 @@ msgid "час"
 msgstr "hour"
 
 msgid "Пока никто не разместил объявление в этом городе и категории."
-msgstr "So far, no one has placed a card in this city and category."
+msgstr "So far, no one has placed a listing in this city and category."
 
 msgid "Будь первым - добавь объявления и получай клиентов!"
-msgstr "Be first - add your card and get clients!"
+msgstr "Be first to add your listing and get clients!"
 
 msgid "Разместить объявление!"
-msgstr "Place card!"
+msgstr "Add listing!"
 
 msgid "На странице"
 msgstr "On page"
 
 msgid "объявлений"
-msgstr "cards"
+msgstr "listings"
 
 msgid "Показать"
 msgstr "Show"
@@ -313,7 +313,7 @@ msgid "отзывов"
 msgstr "opinions"
 
 msgid "Все объявления"
-msgstr "All cards"
+msgstr "All listings"
 
 msgid "пользователя"
 msgstr "of user"
@@ -346,13 +346,13 @@ msgid "чтобы оставить отзыв"
 msgstr "to send opinion"
 
 msgid "Разместить еще объявление"
-msgstr "Place one more card"
+msgstr "Place one more listing"
 
 msgid "Редактировать объявление"
-msgstr "Edit card"
+msgstr "Edit listing"
 
 msgid "Похожие объявления"
-msgstr "Similar cards"
+msgstr "Similar listings"
 
 msgid "Показать телефон"
 msgstr "Show phone"
@@ -403,7 +403,7 @@ msgid "Телефон не отвечает"
 msgstr "Phone don't answer"
 
 msgid "Объявление больше не актуально"
-msgstr "Card is no longer relevant"
+msgstr "Listing is no longer relevant"
 
 msgid "Ворованные фото"
 msgstr "Stolen photos"
@@ -416,16 +416,16 @@ msgstr "Rude owner"
 
 
 msgid "Новое объявление"
-msgstr "New card"
+msgstr "New listing"
 
 msgid "Разместите объявление и будьте готовы принимать звонки и email-сообщения от клиентов."
-msgstr "Place your card and be ready to get calls and emails from your new clients"
+msgstr "Place your listing and be ready to get calls and emails from your new clients"
 
 msgid "Заполните номер телефона"
 msgstr "Type your phone number"
 
 msgid "Тип объявления"
-msgstr "Card type"
+msgstr "Listing type"
 
 msgid "Сдаете в прокат или в аренду?"
 msgstr "Rent or lease?"
@@ -527,7 +527,7 @@ msgid "Дополнительно"
 msgstr "Additional"
 
 msgid "Дополнительные параметры объявления будут участвовать в фильтрации"
-msgstr "Card additional parameters will take part in filtering"
+msgstr "Listing additional parameters will take part in filtering"
 
 msgid "например"
 msgstr "for example"
@@ -560,7 +560,7 @@ msgid "Если вы уже зарегистрированы - выполнит�
 msgstr "If you already registered - follow"
 
 msgid "и продолжайте подавать объявление."
-msgstr "and continue to place your card"
+msgstr "and continue to place your listing"
 
 msgid "Если вы здесь впервые - нажмите"
 msgstr "If this is your first time here, click"
@@ -595,7 +595,7 @@ msgid "Мой профиль"
 msgstr "My profile"
 
 msgid "Мои объявления"
-msgstr "My cards"
+msgstr "My listings"
 
 msgid "Выход"
 msgstr "Logout"
@@ -631,7 +631,7 @@ msgid "Фото"
 msgstr "Photo"
 
 msgid "Объявления пользователя"
-msgstr "User’s cards"
+msgstr "User’s listings"
 
 msgid "все"
 msgstr "all"
@@ -662,13 +662,13 @@ msgid "Разместить бесплатно"
 msgstr "Place for free"
 
 msgid "Ваше объявление на самом заметном месте сайта: на главной странице, на первом месте в выбранной вами категории.<br>Премиум размещение дает плюс 1000 просмотров.<br>Размещение объявления на главной странице сайта привлекает больше просмотров, вы повысите количество клиентов за короткий срок."
-msgstr "Your card will be  at the prominent site location: on the main page and in the first place in your chosen category<br>Premium placement gives you +1000 views<br>Placement on the main page gives you more views and customers in a short time"
+msgstr "Your listing will be  at the prominent site location: on the main page and in the first place in your chosen category<br>Premium placement gives you +1000 views<br>Placement on the main page gives you more views and customers in a short time"
 
 msgid "Разместите ваше объявление в разделе «похожие объявления».<br>Ваше объявление в течении 7-ми дней будет размещено в карточках похожих объявлений выбранного региона.<br>Будьте лидером в своем регионе!"
-msgstr "Place your card in «similars»<br>Your card will be in similar cards for one week in the chosen region<br>Be a leader in your region!"
+msgstr "Place your listing in «similars»<br>Your listing will be in similar listings for one week in the chosen region<br>Be a leader in your region!"
 
 msgid "Бесплатное размещение вашего объявления на 365 дней<br>Объявление вытесняется другими, не участвует в продвижении на сайте.<br>Нужно больше клиентов в вашем городе?<br>Воспользуйтесь тарифами"
-msgstr "Free placement for one year<br>Your card will move down with other new cards and not take part in advancement on the website<br>Do you need more customers? Choose tariffs"
+msgstr "Free placement for one year<br>Your listing will move down with other new listings and not take part in advancement on the website<br>Do you need more customers? Choose tariffs"
 
 
 # -------------------------------------------- modals -----------------------------------------
@@ -877,7 +877,7 @@ msgid "Выберите фотографии транспорта"
 msgstr "Select your vehicle photos"
 
 msgid "Возможности продвижения объявления"
-msgstr "Card promo possibilities"
+msgstr "Listing promo possibilities"
 
 msgid "Минимальная и максимальная цена на сайте"
 msgstr "Minimal and maximal price on site"

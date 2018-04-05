@@ -25,6 +25,11 @@
     {% else %}
         <meta name="description" content="{% include '/seo_templates/c_description.html.twig' %}">
     {% endif %}
+
+    {% if total_cards == 0 %}
+    <meta name="robots" content="noindex">
+    {% endif %}
+
 {% endblock %}
 
 {% block title %}{% if custom_seo and custom_seo.title != '' %}{% include(template_from_string(custom_seo.title)) %}{% else %}{% include '/seo_templates/c_title.html.twig' %}{% endif %}{% endblock %}

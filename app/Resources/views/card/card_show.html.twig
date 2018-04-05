@@ -75,7 +75,7 @@
     <div class="standard_wide breadcrumbs uk-margin-top uk-margin-bottom uk-visible@s">
         <a class="c_blue" href="/">{% trans %}Главная{% endtrans %}</a>
         <i uk-icon="icon:chevron-right"></i>
-        <a class="c_blue" href="/rent/{{ card.city.url }}">{{ lang=='en' and card.city.id>1251 ? card.city.header~' '~card.city.iso~' '~card.city.country :card.city.gde }}</a>
+        <a class="c_blue" href="/rent/{{ card.city.url }}">{{ lang=='en' and card.city.id>1251 ? card.city.header~' '~card.city.iso~' '~card.city.country :card.city.url }}</a>
         <i uk-icon="icon:chevron-right"></i>
         <a class="c_blue" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}">{{ lang == 'ru' ? card.generalType.header|capitalize : card.generalType.url|capitalize }}</a>
 
