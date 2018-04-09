@@ -96,9 +96,10 @@
 
 
 
-        <div id="page_slider" class="owl-carousel owl-carousel-all owl-theme" data-items="1" data-full="1" data-dots="2">
+        <div id="page_slider" class="owl-carousel owl-carousel-all owl-theme" data-items="1" data-full="1" data-dots="2"  uk-lightbox>
+
             {% for k,foto in card.getFotos %}
-                <div uk-lightbox>
+                <div>
                 <a href="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" class="slide uk-width-1-1" style="
                         background:url('/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg') center center;
                         background-size: cover;
@@ -121,6 +122,7 @@
 
 
             {% endfor %}
+
         </div>
 
         <div class="standard_wide uk-position-absolute" style="top: 0;left:0;right: 0;">
