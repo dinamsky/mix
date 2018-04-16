@@ -109,6 +109,13 @@ class User
     private $adminId = null;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="card_counter", type="integer", options={"default" : 0})
+     */
+    private $cardCounter = 0;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AdminBundle\Entity\Admin", inversedBy="users")
      * @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
      */
@@ -638,5 +645,29 @@ class User
     public function getIsSubscriber()
     {
         return $this->isSubscriber;
+    }
+
+    /**
+     * Set cardCounter
+     *
+     * @param integer $cardCounter
+     *
+     * @return User
+     */
+    public function setCardCounter($cardCounter)
+    {
+        $this->cardCounter = $cardCounter;
+
+        return $this;
+    }
+
+    /**
+     * Get cardCounter
+     *
+     * @return integer
+     */
+    public function getCardCounter()
+    {
+        return $this->cardCounter;
     }
 }

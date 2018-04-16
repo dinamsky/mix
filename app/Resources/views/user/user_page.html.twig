@@ -67,7 +67,7 @@
                 <div class="uk-width-expand@s">
                     <h1 class=" uk-margin-remove">
                         {{ user.header }}
-                        {% if user.accountTypeId == 0 and app.session.has('admin') %}
+                        {% if user.accountTypeId == 0 and app.session.has('admin') and app.session.get('admin').role == 'superadmin' %}
                             <button class="uk-button uk-button-danger uk-button-small go_pro" data-id="{{ user.id }}">Перевести в PRO</button>
                         {% endif %}
                     </h1>

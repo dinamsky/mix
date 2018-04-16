@@ -18,7 +18,7 @@
     <script src="{{ asset('assets/js/new_card_validate.js') }}"></script>
     <script src="{{ asset('assets/js/auto-complete.min.js') }}"></script>
     <script src="{{ asset('assets/js/form_autocomplete.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWdm1zrblFjsdUfi1-6fsPvj30ACCiCxk"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuCmXhgXVtnc3hnO_b4PGmYIqNsL0TciM"></script>
     <script src="{{ asset('assets/js/new_card_settings.js') }}"></script>
     <script src="{{ asset('assets/js/newCardForm.js') }}"></script>
     <script src="{{ asset('assets/js/tariff_selector.js') }}"></script>
@@ -28,6 +28,9 @@
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/select_combo.js') }}"></script>
     <script src="{{ asset('assets/js/signup_validate.js') }}"></script>
+
+
+
 {% endblock %}
 
 {% block bodyVars %}data-lang="{{ lang }}"{% endblock %}
@@ -176,8 +179,15 @@
                     </div>
 
                     <div class="uk-text-center">
-                        {% if user and user.accountTypeId == 1 %}
+                        {% if ( ( user and user.accountTypeId == 1 ) or ( user and user.cardCounter == 0) or (not user))   %}
                             <button class="uk-button pay_tariff_button uk-margin-top" name="one_card">Save</button>
+
+                            <div class="uk-margin-top">
+                                First listing - for free.<br>
+                                Next one - for $7 per listing or $99.99 for PRO account and unlimited listings forever.
+                            </div>
+
+
                         {% else %}
                             <button class="uk-button pay_tariff_button uk-margin-top" name="one_card">One listing - $7</button>
                             <button class="uk-button pay_tariff_button uk-margin-top" name="pay_pro">PRO account - $99.99 unlimited listings forever</button>

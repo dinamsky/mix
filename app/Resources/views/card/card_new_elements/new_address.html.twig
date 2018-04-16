@@ -15,7 +15,7 @@
 
         <span class="expander_button" uk-toggle="target: #city_selector"><span id="xpb_name">{{ city.header }}</span> <i uk-icon="icon:chevron-down"></i></span>
 
-        <div class="expandable_block" id="city_selector" hidden>
+        <div class="expandable_block" id="city_selector" hidden data-coords="{{ city.coords }}">
             <div class="uk-text-small">{% trans %}Страна{% endtrans %}</div>
             <select name="countryCode" id="countryCode" class="uk-select">
                 {#<option value="0">-выберите страну-</option>#}

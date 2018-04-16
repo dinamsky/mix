@@ -166,4 +166,32 @@ $( document ).ready(function() {
         });
     });
 
+    //console.log($('select[name="cityId"] option:selected').html());
+
+    var crds = $('#city_selector').data('coords');
+
+    if (crds === '') {
+        var address = $('select[name="cityId"] option:selected').html().replace(/_/, " ");
+
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+            'address': address
+        }, function (results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                var Lat = results[0].geometry.location.lat();
+                var Lng = results[0].geometry.location.lng();
+
+                //console.log(Lat + ' ' + Lng);
+
+                $('input[name="coords"]').val(Lat+','+Lng);
+
+            } else {
+                //console.log('not found');
+            }
+        });
+    } else {
+        //console.log('coords is present');
+    }
+
 });
+

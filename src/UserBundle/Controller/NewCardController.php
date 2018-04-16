@@ -357,6 +357,10 @@ class NewCardController extends Controller
 
             $card->setServiceTypeId($post->get('serviceTypeId'));
 
+
+            $is_new_user = false;
+
+
             if ($post->has('user_email') and $this->get('session')->has('admin')){
                 $user = $this->getDoctrine()
                     ->getRepository(User::class)
@@ -369,6 +373,7 @@ class NewCardController extends Controller
                         ->getRepository(User::class)
                         ->find($this->get('session')->get('logged_user')->getId());
                 } else {
+
                     if($post->get('l_email') != '' and $post->get('l_password') != ''){ // if sign in
                         $user = $this->getDoctrine()
                             ->getRepository(User::class)
@@ -383,21 +388,25 @@ class NewCardController extends Controller
                                 if($info->getUiKey() == 'foto') $this->get('session')->set('user_pic', $info->getUiValue());
                             }
 
-                            if(count($user->getCards()) > 1) {
-                                $this->addFlash(
-                                    'notice',
-                                    'You may pay for PRO account to unlimited cards'
-                                );
-                                return new RedirectResponse('/card/new');
-                            }
+//                            if(count($user->getCards()) > 1) {
+//                                $this->addFlash(
+//                                    'notice',
+//                                    'You may pay for PRO account to unlimited cards'
+//                                );
+//                                return new RedirectResponse('/card/new');
+//                            }
+
                         } else {
                             $this->addFlash(
                                 'notice',
-                                'Неверный пароль!'
+                                'Wrong password!'
                             );
                             return new RedirectResponse('/card/new');
                         }
                     }
+
+
+
                     if($post->get('r_email') != '' and $post->get('r_password') != '' and $post->get('r_phone') != ''){
                         $card->setIsActive(false);
 
@@ -406,11 +415,10 @@ class NewCardController extends Controller
                             ->findOneBy(array(
                                 'email' => $post->get('r_email')
                             ));
+
                         $_t = $this->get('translator');
 
                         if(!$user){
-
-
 
                             $code = md5(rand(0,99999999));
                             $user = new User();
@@ -454,6 +462,9 @@ class NewCardController extends Controller
                                 'notice',
                                 $_t->trans('На вашу почту было отправлено письмо для активации аккаунта!')
                             );
+
+                            $is_new_user = true;
+
                         } else {
                             $this->addFlash(
                                 'notice',
@@ -691,12 +702,22 @@ class NewCardController extends Controller
                 $card->setIsActive(true);
                 $em->persist($card);
                 $em->flush();
+
+                $user->setCardCounter($user->getCardCounter() + 1);
+                $em->persist($user);
+                $em->flush();
+
                 $response = $this->redirectToRoute('admin_main');
 
-            } elseif($user->getAccountTypeId() == 1){
+            } elseif($user->getAccountTypeId() == 1 or $user->getCardCounter() == 0 or $is_new_user){
                 $card->setIsActive(true);
                 $em->persist($card);
                 $em->flush();
+
+                $user->setCardCounter($user->getCardCounter() + 1);
+                $em->persist($user);
+                $em->flush();
+
                 $response = $this->redirect('/user/cards');
             }
 
