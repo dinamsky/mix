@@ -496,8 +496,8 @@ class AdminController extends Controller
                     )
                 );
 
-                //$to = $r->getUser()->getEmail();
-                $to = 'wqs-info@mail.ru';
+                $to = $r->getUser()->getEmail();
+                //$to = 'wqs-info@mail.ru';
 
                 $subject = '#'.$r->getId().' Your transport in MixRent';
 
@@ -507,6 +507,7 @@ class AdminController extends Controller
                     'subject' => $subject,
                     'html' => $message,
                     'o:deliverytime' => date('r', strtotime("+".$minute." minutes"))
+
                 ]);
 
                 $minute ++;
