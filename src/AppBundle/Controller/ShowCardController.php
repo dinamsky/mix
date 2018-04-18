@@ -35,6 +35,10 @@ class ShowCardController extends Controller
     {
         $_t = $this->get('translator');
 
+        $topSlider = $this->getDoctrine()
+                    ->getRepository(Card::class)
+                    ->getTopSlider($this->get('session')->get('city')->getId());
+
         $em = $this->get('doctrine')->getManager();
 
         $card = $this->getDoctrine()
@@ -86,7 +90,8 @@ class ShowCardController extends Controller
                     'allincity' => $allincity,
                     'general' => $general,
                     'model' => $model,
-
+'lang' => $_SERVER['LANG'],
+                    'topSlider' => $topSlider,
                     'generalTypes' => $generalTypes,
                     'car_type_id' => $general->getCarTypeIds(),
                     'in_city' => $city->getUrl(),
@@ -292,9 +297,7 @@ class ShowCardController extends Controller
         }
 
 
-        $topSlider = $this->getDoctrine()
-                    ->getRepository(Card::class)
-                    ->getTopSlider($this->get('session')->get('city')->getId());
+
 
         $prs = [];
         //dump($card->getCardPrices());
