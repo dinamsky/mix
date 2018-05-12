@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use AppBundle\Controller\MailGunController;
 use AppBundle\Menu\ServiceStat;
 use MarkBundle\Entity\CarModel;
 use MarkBundle\Entity\CarMark;
@@ -46,7 +47,7 @@ class NewCardController extends Controller
     /**
      * @Route("/card/new/{gt_url}", name="card_new")
      */
-    public function indexAction($gt_url = '', MenuMarkModel $markmenu, MenuGeneralType $mgt, MenuCity $mc, Request $request, FotoUtils $fu, EntityManagerInterface $em, \Swift_Mailer $mailer, ServiceStat $stat, Password $pass)
+    public function indexAction($gt_url = '', MenuMarkModel $markmenu, MenuGeneralType $mgt, MenuCity $mc, Request $request, FotoUtils $fu, EntityManagerInterface $em, \Swift_Mailer $mailer, MailGunController $mgc, ServiceStat $stat, Password $pass)
     {
 
         $admin = false;
@@ -618,7 +619,8 @@ class NewCardController extends Controller
             $fu->uploadImages($card);
 
 
-            if($this->get('session')->has('admin') and isset($new_card) and $card->getCity()->getCountry() == 'RUS'){
+            //if($this->get('session')->has('admin') and isset($new_card) and $card->getCity()->getCountry() == 'RUS'){
+            if($this->get('session')->has('admin') and isset($new_card)){
 
 
                 $main_foto = $this->getDoctrine()
@@ -665,26 +667,42 @@ class NewCardController extends Controller
 
                 //
 
-                $message = (new \Swift_Message('Ваша компания теперь на сайте multiprokat.com. Мы разместили ваше объявление: '.$card->getMarkModel()->getMark()->getHeader().' '.$card->getMarkModel()->getHeader()))
-                    ->setFrom('mail@multiprokat.com','Multiprokat.com - прокат и аренда транспорта')
-                    ->setTo($user->getEmail())
-                    ->setBcc('mail@multiprokat.com')
-                    ->setBody(
-                        $this->renderView(
-                            'email/admin_registration.html.twig',
-                            array(
-                                'header' => $user->getHeader(),
-                                'password' => $user->getTempPassword(),
-                                'email' => $user->getEmail(),
-                                'card' => $card,
-                                'main_foto' => 'http://multiprokat.com/assets/images/cards/'.$main_foto->getFolder().'/t/'.$main_foto->getId().'.jpg',
-                                'c_price' => $c_price,
-                                'c_ed' => $c_ed
-                            )
-                        ),
-                        'text/html'
-                    );
-                $mailer->send($message);
+//                $message = (new \Swift_Message('Ваша компания теперь на сайте multiprokat.com. Мы разместили ваше объявление: '.$card->getMarkModel()->getMark()->getHeader().' '.$card->getMarkModel()->getHeader()))
+//                    ->setFrom('mail@multiprokat.com','Multiprokat.com - прокат и аренда транспорта')
+//                    ->setTo($user->getEmail())
+//                    ->setBcc('mail@multiprokat.com')
+//                    ->setBody(
+//                        $this->renderView(
+//                            'email/admin_registration.html.twig',
+//                            array(
+//                                'header' => $user->getHeader(),
+//                                'password' => $user->getTempPassword(),
+//                                'email' => $user->getEmail(),
+//                                'card' => $card,
+//                                'main_foto' => 'http://multiprokat.com/assets/images/cards/'.$main_foto->getFolder().'/t/'.$main_foto->getId().'.jpg',
+//                                'c_price' => $c_price,
+//                                'c_ed' => $c_ed
+//                            )
+//                        ),
+//                        'text/html'
+//                    );
+//                $mailer->send($message);
+
+
+                $mgc->sendMG($user->getEmail(),'Your company in mix.rent now. We place this listing for you: '.$card->getMarkModel()->getMark()->getHeader().' '.$card->getMarkModel()->getHeader(),$this->renderView(
+                        $_SERVER['LANG'] == 'ru' ? 'email/admin_registration.html.twig' : 'email/admin_registration_'.$_SERVER['LANG'].'.html.twig',
+                    array(
+                        'header' => $user->getHeader(),
+                        'password' => $user->getTempPassword(),
+                        'email' => $user->getEmail(),
+                        'card' => $card,
+                        'main_foto' => 'http://multiprokat.com/assets/images/cards/'.$main_foto->getFolder().'/t/'.$main_foto->getId().'.jpg',
+                        'c_price' => $c_price,
+                        'c_ed' => $c_ed
+                    )
+                    ));
+
+
 
                 $user->setTempPassword('');
                 $em->persist($user);

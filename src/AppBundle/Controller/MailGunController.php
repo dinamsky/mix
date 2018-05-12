@@ -101,6 +101,7 @@ class MailGunController extends Controller
         $mg->messages()->send($domain, [
             'from'    => 'MixRent <mail@mix.rent>',
             'to'      => $to,
+            'bcc'     => 'mail@mix.rent',
             'subject' => $subject,
             'html'    => $message
         ]);
