@@ -696,7 +696,7 @@ class NewCardController extends Controller
                         'password' => $user->getTempPassword(),
                         'email' => $user->getEmail(),
                         'card' => $card,
-                        'main_foto' => 'http://multiprokat.com/assets/images/cards/'.$main_foto->getFolder().'/t/'.$main_foto->getId().'.jpg',
+                        'main_foto' => 'http://mix.rent/assets/images/cards/'.$main_foto->getFolder().'/t/'.$main_foto->getId().'.jpg',
                         'c_price' => $c_price,
                         'c_ed' => $c_ed
                     )
