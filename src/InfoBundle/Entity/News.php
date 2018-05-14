@@ -224,4 +224,28 @@ class News
     {
         return $this->anons;
     }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     *
+     * @return News
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
 }

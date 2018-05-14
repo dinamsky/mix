@@ -99,11 +99,12 @@ class AdminNewsController extends Controller
             $post = $request->request;
             $news = new News();
             $news->setHeader($post->get('header'));
+            $news->setCountry('USA');
             $news->setSlug($fu->translit($post->get('header')));
 
             if(isset($_FILES['thumbnail']['name']) and $_FILES['thumbnail']['name']!='') {
                 $news->setThumbnail(basename(md5($_FILES['thumbnail']['name'])).'.jpg');
-            }
+            } else $news->setThumbnail('');
 
             $news->setAnons($post->get('anons'));
             $news->setContent($post->get('content'));
