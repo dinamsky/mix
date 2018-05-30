@@ -103,7 +103,7 @@ class ShowCardController extends Controller
         if ($card->getIsActive() == 0) {
             $this->addFlash(
                 'notice',
-                'Объявление №' . $card->getId() . ' временно недоступно!<br>Если это ваше объявление -<br>активируйте свой аккаунт через ссылку в письме регистрации,<br>тогда ваше объявление станет доступным.'
+                'Listing №' . $card->getId() . ' temporarily unavailable!<br>If it is yours -<br>please activate it through link in registration email,<br>then this listing will be available.'
             );
             return $this->redirectToRoute('homepage');
         }

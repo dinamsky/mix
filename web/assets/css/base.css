@@ -351,7 +351,7 @@ button{
 
 #main_message{
     background: #fffdb3;
-    z-index: 100;
+    z-index: 999;
     border: 1px solid lightgrey;
     box-shadow: 3px 3px 4px #b7b7b7;
 }
