@@ -1751,9 +1751,25 @@ top: 80%;
     color:white !important;
 }
 
-
+.main_page #header .top_sticky.inactive .logo_link {
+    background: url('/assets/images/interface/logo-m.png');
+}
 
 
 .main_page #header .top_sticky.uk-active{
     background: white;
+}
+
+#header .top_sticky .logo_link{
+    background: url('/assets/images/interface/logo-ms.png');
+}
+
+.main_page #header .top_sticky.uk-active .logo_link{
+    background: url('/assets/images/interface/logo-ms.png');
+}
+
+.logo_link{
+    background: url('/assets/images/interface/logo-m.png');
+    width: 109px;
+    height: 29px;
 }
