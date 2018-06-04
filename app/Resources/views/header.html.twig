@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="uk-width-auto uk-flex uk-flex-middle">
-                    <a href="/" class="uk-display-block" style="line-height: 10px"><img class="logo" src="/assets/images/interface/logo.svg" alt=""></a>
+                    <a href="/" class="uk-display-block" style="line-height: 10px"><img class="logo" src="/assets/images/interface/logo-m.png" alt=""></a>
                 </div>
 
                 <div class="uk-width-expand uk-flex uk-flex-middle">
@@ -110,18 +110,7 @@
                             text-decoration: underline;">How does it work?</a>
                         </div>
 
-                        <div class="uk-height-1-1">
-                            <a href="https://ico.mix.rent" style="
-                            display: inline-block;
-                            min-height: 17px;
-                            vertical-align: top;
-                            padding: 2px 10px;
-                            font-size: 15px;
-                            color: #2d9cdb !important;
-                            font-weight: bold;
-                            border: 1px solid;
-                            margin-top: 5px;">Mix Rent ICO</a>
-                        </div>
+
 
 
                         <div class="uk-height-1-1">
@@ -132,7 +121,22 @@
                             {#{% else %}#}
                                 {#<a uk-toggle="target: #sign_in" class="uk-button uk-button-success add_card_button">Сдать</a>#}
                             {#{% endif %}#}
-                            <a href="/card/new" class="add_card_button" title="Добавить транспорт">{% trans %}Сдать{% endtrans %}</a>
+                            <a href="/card/new" class="add_card_button" title="Добавить транспорт" style="background: transparent;
+    padding: 6px 0;">{% trans %}Сдать{% endtrans %}</a>
+                        </div>
+
+                        <div class="uk-height-1-1">
+                            <a href="https://ico.mix.rent" style="
+                            display: inline-block;
+                            min-height: 17px;
+                            vertical-align: top;
+                            padding: 5px 16px;
+                            font-size: 15px;
+                            color: #2d9cdb !important;
+                            font-weight: bold;
+                            margin-top: 4px;
+                            background: white;
+                            border-radius: 15px;">Mix Rent ICO</a>
                         </div>
                     </div>
                 </div>
