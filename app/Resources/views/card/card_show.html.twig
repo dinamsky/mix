@@ -37,9 +37,9 @@
 {% block openGraph %}
     {{ parent() }}
     <meta property="og:type" content="website">
-    <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ mainFoto }}">
+    <meta property="og:image" content="https://mix.rent{{ mainFoto }}">
     <meta property="og:title" content="{{ include(':seo_templates:p_h1.html.twig') }}">
-    <meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">
+    <meta property="og:url" content="https://mix.rent{{ app.request.requestUri }}">
 {% endblock %}
 
 {% block metaTags %}
@@ -48,7 +48,7 @@
 {% endblock %}
 
 {% block htmlblock %}
- prefix="og: http://ogp.me/ns#"
+ prefix="og: https://ogp.me/ns#"
 {% endblock %}
 
 {% block title %}{{ include(':seo_templates:p_title.html.twig') }}{% endblock %}
@@ -101,7 +101,7 @@
             {% for k,foto in card.getFotos %}
                 <div>
                 <a href="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" class="slide uk-width-1-1" style="
-                        background:url('/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg') center center;
+                        background:url('https://mix.rent/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg') center center;
                         background-size: cover;
                         display: block;
                         height: {% if is_mobile() %}200px{% else %}600px{% endif %};
@@ -112,7 +112,7 @@
                 >
                     {% if k == 0 %}
 
-                    <img src="{{ app.request.getSchemeAndHttpHost() ~ mainFoto }}" alt="" style="visibility: hidden; height: 0;width: 0;" itemprop="image">
+                    <img src="https://mix.rent{{ mainFoto }}" alt="" style="visibility: hidden; height: 0;width: 0;" itemprop="image">
                     {% endif %}
                     {#<img src="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" alt="" style="max-height: auto">#}
                 </a>
@@ -147,7 +147,7 @@
 
     <div class="standard_wide uk-margin-top">
 
-        <div uk-grid itemscope itemtype="http://schema.org/Product">
+        <div uk-grid itemscope itemtype="https://schema.org/Product">
             <div class="uk-width-3-4@s ">
 
 
@@ -365,7 +365,7 @@
                             <div class="uk-width-1-2">
                                 <span class="uk-text-small">Image</span>
                                 <div style="
-                                        background: url({{ app.request.getSchemeAndHttpHost() ~ mainFoto }}) center center no-repeat;
+                                        background: url(https://mix.rent{{ mainFoto }}) center center no-repeat;
                                         background-size: cover;
                                         height: 150px;
                                         "></div>
