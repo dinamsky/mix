@@ -4,6 +4,7 @@ namespace UserBundle\Controller;
 
 use AppBundle\Controller\MailGunController;
 use AppBundle\Menu\ServiceStat;
+use Facebook\Facebook;
 use MarkBundle\Entity\CarModel;
 use MarkBundle\Entity\CarMark;
 use UserBundle\Entity\Message;
@@ -797,4 +798,60 @@ class UserController extends Controller
 
         return new Response('<script>parent.refresh_chat();</script>');
     }
+
+    /**
+     * @Route("/fb_test")
+     */
+    public function fb_test()
+    {
+
+        $app_id = '626564254385013';
+        $secret = 'e6d9531ea6a08e0a657c65621b128200';
+
+        //$json = json_decode(file_get_contents("https://graph.facebook.com/oauth/access_token?type=client_cred&client_id=$app_id&client_secret=$secret"),true);
+
+        $access_token = 'EAATxmg247nwBAPw85jiKJmluPMZCMF4BQGVBe6SkLQl61LkfgE9KwWZC85ZAWOZAn3hZCl9eLlWSzSbju2usBn2RQ1WyJZBRxQZAH0J6g2w6zdWO0SZCYPdT82oNDysmFNL6EjS5qb3O8vkZCZAfFvmLYRbhM6uzyrG4y7ZCmX0QfJwmgZDZD';
+
+
+        $fb = new Facebook(array(
+            'app_id' => $app_id,
+            'app_secret' => $secret
+        ));
+
+
+        $linkData = [
+         'link' => 'https://mix.rent/card/47069',
+         'message' => 'Rent boat Tracker 14 in Lakefield ON CAN'
+        ];
+        $pageAccessToken = $access_token;
+
+        try {
+         $response = $fb->post('/me/feed', $linkData, $pageAccessToken);
+        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+         echo 'Graph returned an error: '.$e->getMessage();
+         exit;
+        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+         echo 'Facebook SDK returned an error: '.$e->getMessage();
+         exit;
+        }
+
+        $graphNode = $response->getGraphNode();
+
+        var_dump($response);
+
+        return new Response();
+    }
+
 }
+
+// https://graph.facebook.com/oauth/access_token?type=client_cred&client_id=626564254385013&client_secret=6d93ddafffc5a2cfaee82bc8499539d2
+
+// 166649987446297
+
+// FB.api('/me/accounts', 'get', {}, function(response) {
+//        console.log(response);
+//    });
+//}, {perms:'publish_stream,offline_access,manage_pages'});
+
+
+//e6d9531ea6a08e0a657c65621b128200
