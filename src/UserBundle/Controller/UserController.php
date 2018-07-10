@@ -820,13 +820,13 @@ class UserController extends Controller
 
 
         $linkData = [
-         'link' => 'https://mix.rent/card/47069',
-         'message' => 'Rent boat Tracker 14 in Lakefield ON CAN'
+         'link' => 'https://mix.rent/card/41261',
+         'message' => 'Rent truck Hino 268A in Marcy NY USA'
         ];
         $pageAccessToken = $access_token;
 
         try {
-         $response = $fb->post('/me/feed', $linkData, $pageAccessToken);
+         $response = $fb->post('/166649987446297/feed', $linkData, $pageAccessToken);
         } catch(Facebook\Exceptions\FacebookResponseException $e) {
          echo 'Graph returned an error: '.$e->getMessage();
          exit;
@@ -838,6 +838,27 @@ class UserController extends Controller
         $graphNode = $response->getGraphNode();
 
         var_dump($response);
+
+        return new Response();
+    }
+
+    /**
+     * @Route("/tw_test")
+     */
+
+    public function tw_test()
+    {
+        $consumerKey = 'p5YG14DfS9VIA0rvZMOhe6IpI';
+        $consumerSecret = '6JqpIYZtcq5VOvyvNUzElGQkBiCtFSAoqpDXlLnAY0V8J65yR3';
+        // Owner ID	997130977372790784
+        $accessToken = '997130977372790784-i7RN2vNqTnTFm1wwwW9ZJvRjktGXBmd';
+        $accessTokenSecret = 'fYh5NqzcyhAOis7iRnzFXELRIssFVOb6bJiLfRIeOb60o';
+
+        $twitter = new \Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+
+
+        $twitter->send('https://mix.rent/card/38268');
+        var_dump($twitter);
 
         return new Response();
     }
@@ -855,3 +876,7 @@ class UserController extends Controller
 
 
 //e6d9531ea6a08e0a657c65621b128200
+
+
+// 267645130676079
+// 33dd80a3ec19d6afe44942e61c9c9b9c

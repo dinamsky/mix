@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3d60ef2b571845cfa7e0a3dc4bb5be77",
-    "content-hash": "99ed1173e43990ddf569c0d889784d56",
+    "hash": "cbd5dc3e1076fc9dafec8566abedfddd",
+    "content-hash": "b21d9b149dea1506b10d004a1b386c69",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -223,6 +223,48 @@
                 "tls"
             ],
             "time": "2017-03-06 11:59:08"
+        },
+        {
+            "name": "dg/twitter-php",
+            "version": "v3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/twitter-php.git",
+                "reference": "d8bb9f21dfc31d06641ee60c04f2850b4d4801b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/twitter-php/zipball/d8bb9f21dfc31d06641ee60c04f2850b4d4801b5",
+                "reference": "d8bb9f21dfc31d06641ee60c04f2850b4d4801b5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "https://davidgrudl.com"
+                }
+            ],
+            "description": "Small and easy Twitter library for PHP",
+            "homepage": "https://github.com/dg/twitter-php",
+            "keywords": [
+                "oauth",
+                "twitter"
+            ],
+            "time": "2018-03-15 10:07:08"
         },
         {
             "name": "doctrine/annotations",
