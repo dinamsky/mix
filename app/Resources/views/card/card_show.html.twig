@@ -40,6 +40,11 @@
     <meta property="og:image" content="https://mix.rent{{ mainFoto }}">
     <meta property="og:title" content="{{ include(':seo_templates:p_h1.html.twig') }}">
     <meta property="og:url" content="https://mix.rent{{ app.request.requestUri }}">
+
+    <meta name="twitter:title" content="{{ include(':seo_templates:p_h1.html.twig') }}">
+    <meta name="twitter:description" content="{% include ':seo_templates:p_description.html.twig' %}">
+    <meta name="twitter:image" content="https://mix.rent{{ mainFoto }}">
+
 {% endblock %}
 
 {% block metaTags %}
