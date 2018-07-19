@@ -871,7 +871,7 @@ class UserController extends Controller
         $post = $request->request->all();
 
         file_put_contents('from_crypto.json',time().' --- '.json_encode($post));
-        file_put_contents('from_crypto2.json',file_get_contents("php://input"););
+        file_put_contents('from_crypto2.json',file_get_contents("php://input"));
 
         return new Response();
     }
