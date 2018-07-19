@@ -863,6 +863,18 @@ class UserController extends Controller
         return new Response();
     }
 
+    /**
+     * @Route("/crypto_check")
+     */
+    public function crypto_check(Request $request)
+    {
+        $post = $request->request->all();
+
+        file_put_contents('from_crypto.json',$post);
+
+        return new Response();
+    }
+
 }
 
 // https://graph.facebook.com/oauth/access_token?type=client_cred&client_id=626564254385013&client_secret=6d93ddafffc5a2cfaee82bc8499539d2
