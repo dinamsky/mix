@@ -560,13 +560,13 @@ class NewCardController extends Controller
 
             // ------- start of the POSTING
 
-            $consumerKey = 'p5YG14DfS9VIA0rvZMOhe6IpI';
-            $consumerSecret = '6JqpIYZtcq5VOvyvNUzElGQkBiCtFSAoqpDXlLnAY0V8J65yR3';
+            // $consumerKey = 'p5YG14DfS9VIA0rvZMOhe6IpI';
+            // $consumerSecret = '6JqpIYZtcq5VOvyvNUzElGQkBiCtFSAoqpDXlLnAY0V8J65yR3';
             // Owner ID	997130977372790784
-            $accessToken = '997130977372790784-i7RN2vNqTnTFm1wwwW9ZJvRjktGXBmd';
-            $accessTokenSecret = 'fYh5NqzcyhAOis7iRnzFXELRIssFVOb6bJiLfRIeOb60o';
-            $twitter = new \Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
-            $twitter->send('https://mix.rent/card/'.$card->getId());
+            // $accessToken = '997130977372790784-i7RN2vNqTnTFm1wwwW9ZJvRjktGXBmd';
+            // $accessTokenSecret = 'fYh5NqzcyhAOis7iRnzFXELRIssFVOb6bJiLfRIeOb60o';
+            // $twitter = new \Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+            // $twitter->send('https://mix.rent/card/'.$card->getId());
 
             // ------- end of the POSTING
 
