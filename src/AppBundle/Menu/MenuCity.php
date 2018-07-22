@@ -137,14 +137,20 @@ class MenuCity extends Controller
 
         $cities = $em->getRepository("AppBundle:City")->createQueryBuilder('c')
             ->where('c.header LIKE :ct')
+            ->orWhere('c.url LIKE :ct')
             ->andWhere('c.parent IS NOT NUll')
             ->setParameter('ct', '%'.$request->request->get('q').'%')
             ->getQuery()
             ->getResult();
 
         foreach($cities as $c){
+
+            $country = $c->getCountry();
+
             if($c->getIso()!='') $iso = ', '.$c->getIso(); else $iso = '';
-            $res[] = $c->getHeader().$iso.', '.$c->getCountry().'|'.$c->getId().'|'.$c->getUrl();
+            $r1 = $c->getHeader().$iso.', '.$country.'|'.$c->getId().'|'.$c->getUrl();
+            if ($country == 'RUS' and $_SERVER['LANG'] == 'en') $r1 = $c->getUrl().$iso.', '.$country.'|'.$c->getId().'|'.$c->getUrl();
+            $res[] = $r1;
         }
 
         return new Response(json_encode($res));

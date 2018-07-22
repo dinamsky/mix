@@ -68,6 +68,20 @@ class Card
     /**
      * @var string
      *
+     * @ORM\Column(name="content_en", type="text", nullable=true)
+     */
+    private $contentEn = null;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content_ru", type="text", nullable=true)
+     */
+    private $contentRu = null;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="address", type="text", nullable=true)
      */
     private $address = null;
@@ -1497,5 +1511,53 @@ class Card
     public function getIsBest()
     {
         return $this->isBest;
+    }
+
+    /**
+     * Set contentEn
+     *
+     * @param string $contentEn
+     *
+     * @return Card
+     */
+    public function setContentEn($contentEn)
+    {
+        $this->contentEn = $contentEn;
+
+        return $this;
+    }
+
+    /**
+     * Get contentEn
+     *
+     * @return string
+     */
+    public function getContentEn()
+    {
+        return $this->contentEn;
+    }
+
+    /**
+     * Set contentRu
+     *
+     * @param string $contentRu
+     *
+     * @return Card
+     */
+    public function setContentRu($contentRu)
+    {
+        $this->contentRu = $contentRu;
+
+        return $this;
+    }
+
+    /**
+     * Get contentRu
+     *
+     * @return string
+     */
+    public function getContentRu()
+    {
+        return $this->contentRu;
     }
 }

@@ -123,6 +123,49 @@ class ShowCardController extends Controller
 
         $city = $card->getCity();
 
+        $country = $city->getCountry();
+
+        $google_api_key = 'AIzaSyCsocnEg6RI_lrli1u59KQsYlkoX12lXgE';
+        $target_locale = 'en';
+        $source_locale = 'ru';
+
+        if ($_SERVER['LANG'] == 'ru') {
+            $target_locale = 'ru';
+            $source_locale = 'en';
+        }
+
+        $need_to_translate = urlencode(str_replace('<br>','^',$card->getContent()));
+
+        $to_google = "https://translation.googleapis.com/language/translate/v2?q=$need_to_translate&target=$target_locale&source=$source_locale&key=$google_api_key";
+
+        // https://translation.googleapis.com/language/translate/v2?q=Текст для перевода&target=en&source=ru&key=AIzaSyCsocnEg6RI_lrli1u59KQsYlkoX12lXgE
+
+        $em = $this->getDoctrine()->getManager();
+
+        //dump($card->getContentEn());
+
+        if($_SERVER['LANG'] == 'en' and is_null($card->getContentEn()) and $need_to_translate != ''){
+            $translate_result = json_decode(file_get_contents($to_google),true);
+            $t_en = $translate_result['data']['translations'][0]['translatedText'];
+            $card->setContentEn($t_en);
+            $em->persist($card);
+            $em->flush();
+            $card_content = $t_en;
+        }
+
+        if($_SERVER['LANG'] == 'ru' and is_null($card->getContentRu()) and $need_to_translate != ''){
+            $translate_result = json_decode(file_get_contents($to_google),true);
+            $t_ru = $translate_result['data']['translations'][0]['translatedText'];
+            $card->setContentRu($t_ru);
+            $em->persist($card);
+            $em->flush();
+            $card_content = $t_ru;
+        }
+
+        if ($_SERVER['LANG'] == 'ru' and $card->getContentRu() != '') $card_content = $card->getContentRu();
+        if ($_SERVER['LANG'] == 'en' and $card->getContentEn() != '') $card_content = $card->getContentEn();
+
+
         if ($card->getVideo() != '') $video = explode("=", $card->getVideo())[1];
         else $video = false;
 
@@ -344,7 +387,7 @@ class ShowCardController extends Controller
             'mainFoto' => $mainFoto,
             'seo' => $seo,
 
-
+            'card_content' => $card_content,
 
             'mark_arr_sorted' => $mark_arr_sorted,
             'models_in_mark' => $models_in_mark,

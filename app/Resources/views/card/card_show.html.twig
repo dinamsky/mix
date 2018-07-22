@@ -217,8 +217,8 @@
 
                         </div>
                         <div class="uk-margin-top">
-                            <div id="card_content" itemprop="description">{{ card.content|striptags('<br><p>')|raw }}</div>
-                            {% if card.content|length>300 %}
+                            <div id="card_content" itemprop="description">{{ card_content|striptags('<br><p>')|raw }}</div>
+                            {% if card_content|length>300 %}
                             <div class="uk-text-small uk-text-center uk-margin-top show_full_content cursor-pointer">{% trans %}показать полностью{% endtrans %}</div>
                             {% endif %}
                         </div>
