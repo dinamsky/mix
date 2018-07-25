@@ -119,4 +119,67 @@ $( document ).ready(function() {
         $('#'+id).removeClass('uk-hidden');
         UIkit.update(event = 'update');
     });
+
+
+    $('input[name="payment_system"]').on('change', function(){
+        var v = $(this).val();
+        if ( v === 'bitcoin' ) {
+            $('.pay_tariff_button').addClass('pay_by_bitcoin').attr('type','button');
+        }
+        if ( v === 'paypal' ){
+            $('.pay_tariff_button').removeClass('pay_by_bitcoin');
+            $('.pay_tariff_button').removeAttr('type');
+        }
+    });
+
+    $('#new_card_form').on('click','.pay_by_bitcoin', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var counter = 1;
+        var btc_amount = 0;
+        var btc_address = $('input[name="btc_address"]').val();
+        //$.getJSON( "https://develop.smartcontract.ru/api/acq.create/1BxmNSkA9Mhd4EHv1mCrsRFfBdmgb7HPeN/"+counter, function( data ) {
+            //$('#btc_address').val(data.address);
+
+            $.get( "https://blockchain.info/tobtc?currency=USD&value=7", function( data ) {
+              btc_amount = data;
+              $('#btc_price').val(btc_amount);
+              $('input[name="btc_price"]').val(btc_amount);
+            });
+
+            $('#btc_qr').html('<img src="https://chart.googleapis.com/chart?chs=225x225&chld=L|2&cht=qr&chl=bitcoin:'+btc_address+'?amount='+btc_amount+'%26label=MIX.RENT%26message=Payment-for-listing">');
+            UIkit.modal('#bitcoin_modal').show();
+        //});
+
+    });
+
+
 });
+
+function copy_btc_address() {
+  /* Get the text field */
+  var copyText = document.getElementById("btc_address");
+
+  /* Select the text field */
+  copyText.select();
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  alert("Copied the text: " + copyText.value);
+}
+
+function copy_btc_price() {
+  /* Get the text field */
+  var copyText = document.getElementById("btc_price");
+
+  /* Select the text field */
+  copyText.select();
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  alert("Copied the text: " + copyText.value);
+}

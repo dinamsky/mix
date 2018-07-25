@@ -189,6 +189,12 @@
 
 
                         {% else %}
+
+                            <div class="uk-margin-bottom">
+                                <div><label><input type="radio" name="payment_system" value="paypal" checked> Paypal</label></div>
+                                {#<div><label><input type="radio" name="payment_system" value="bitcoin"> Bitcoin</label></div>#}
+                            </div>
+
                             <button class="uk-button pay_tariff_button uk-margin-top" name="one_card">One listing - $7</button>
                             <button class="uk-button pay_tariff_button uk-margin-top" name="pay_pro">PRO account - $99.99 unlimited listings forever</button>
                         {% endif %}
@@ -244,5 +250,40 @@
         </div>
     </div>
 
+
+    <div id="bitcoin_modal" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title c_white">Bitcoin payment</h2>
+            </div>
+            <div class="uk-modal-body">
+                <div class="uk-margin-top uk-text-center">
+                    Payment address:<br><br>
+                    <input type="text"
+                           form="new_card_form"
+                           name="btc_address"
+                           id="btc_address"
+                           class="uk-width-5-6 uk-text-center"
+                           style="padding: 5px;text-align: center"
+                           value="{{ btc_address.address }}" readonly> <button type="button" onclick="copy_btc_address()" uk-icon="icon:copy"></button><br><br>
+                    Value: <input id="btc_price" readonly style="padding: 5px;" class="uk-width-1-2 uk-text-center"> <button type="button" onclick="copy_btc_price()" uk-icon="icon:copy"></button>
+                </div>
+
+                <div class="uk-margin-top uk-text-center" id="btc_qr">
+
+                </div>
+
+                <div class="uk-margin-top">
+                    After receiving funds, we will notify you by email about success transaction, and we will activate your account.
+                </div>
+
+                <div class="uk-margin-top">
+                    <input type="hidden" form="new_card_form" name="btc_price" value="" id="btc_price_input">
+                    <button class="uk-button uk-button-primary">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
