@@ -78,7 +78,8 @@ class MenuMarkModel extends Controller
     {
         $groupId = $request->request->get('groupId');
         return $this->render('common/ajax_options_url.html.twig', [
-            'options' => $this->getMarks($groupId)
+            'options' => $this->getMarks($groupId),
+    'lang' => $_SERVER['LANG']
         ]);
     }
 
@@ -89,7 +90,8 @@ class MenuMarkModel extends Controller
     {
         $markId = $request->request->get('markId');
         return $this->render('common/ajax_options_url.html.twig', [
-            'options' => $this->getModels($markId)
+            'options' => $this->getModels($markId),
+    'lang' => $_SERVER['LANG']
         ]);
     }
 
@@ -104,7 +106,8 @@ class MenuMarkModel extends Controller
         return $this->render('selector/model_block.html.twig', [
             'model_arr'=>$models,
             'mark_id'=>$markId,
-            'model'=>$models[$markId][0]
+            'model'=>$models[$markId][0],
+            'lang' => $_SERVER['LANG']
         ]);
     }
 
@@ -119,7 +122,8 @@ class MenuMarkModel extends Controller
         return $this->render('selector/model_block2.html.twig', [
             'model_arr'=>$models,
             'mark_id'=>$markId,
-            'model'=>$models[$markId][0]
+            'model'=>$models[$markId][0],
+            'lang' => $_SERVER['LANG']
         ]);
     }
 
@@ -142,7 +146,8 @@ class MenuMarkModel extends Controller
                 return $this->render('selector/mark_block.html.twig', [
                     'mark_arr' => $this->getExistMarks($cityId)['sorted_marks'],
                     'mark' => $marks[$result[0]->getId()][0]['mark'],
-                    'type' => $result[0]->getId()
+                    'type' => $result[0]->getId(),
+                    'lang' => $_SERVER['LANG']
                 ]);
             } else return new Response();
         } else {
@@ -169,7 +174,8 @@ class MenuMarkModel extends Controller
                 return $this->render('selector/mark_block2.html.twig', [
                     'mark_arr' => $this->getExistMarks($cityId)['sorted_marks'],
                     'mark' => $marks[$result[0]->getId()][0]['mark'],
-                    'type' => $result[0]->getId()
+                    'type' => $result[0]->getId(),
+                    'lang' => $_SERVER['LANG']
                 ]);
             } else return new Response();
         } else {
@@ -209,7 +215,8 @@ class MenuMarkModel extends Controller
                     $mark_arr[$qm->getCarTypeId()][$qm->getCarMarkId()] = [
                         'total' => 0,
                         'mark' => $qm->getMark(),
-                        'models' => []
+                        'models' => [],
+                        'lang' => $_SERVER['LANG']
                     ];
                 }
                 $mark_arr[$qm->getCarTypeId()][$qm->getCarMarkId()]['total'] = $mark_arr[$qm->getCarTypeId()][$qm->getCarMarkId()]['total'] + $qm->getTotal();
@@ -228,7 +235,7 @@ class MenuMarkModel extends Controller
             foreach (array_keys($types) as $type) {
                 array_multisort($mark_total[$type], SORT_DESC, $new_mark_arr[$type]);
             }
-            return ['sorted_marks' => $new_mark_arr, 'typed_marks' => $mark_arr, 'models_in_mark' => $models_in_mark];
+            return ['sorted_marks' => $new_mark_arr, 'typed_marks' => $mark_arr, 'models_in_mark' => $models_in_mark, 'lang' => $_SERVER['LANG']];
         } else {
             return false;
         }
