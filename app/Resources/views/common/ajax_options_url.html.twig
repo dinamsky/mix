@@ -1,4 +1,17 @@
-<option value="0">- все -</option>
+{#<option value="0">- все -</option>#}
+{#{% for option in options %}#}
+    {#<option value="{{ option.id }}" data-url="{{ option.url is defined ? option.url : option.header }}">{{ option.header }}</option>#}
+{#{% endfor %}#}
+
+<option value="0">- {% trans %}все{% endtrans %} -</option>
 {% for option in options %}
-    <option value="{{ option.id }}" data-url="{{ option.url is defined ? option.url : option.header }}">{{ option.header }}</option>
+    <option value="{{ option.id }}" {{ option.id == id ? 'selected' : '' }}
+            {% if option.url is defined %} data-url="{{ option.url }}"{% endif %}
+            {% if option.url is not defined %} data-url="{{ option.header }}"{% endif %}
+    >
+        {% if lang == 'en' and option.url is defined %}{{ option.url }}{% endif %}
+        {% if lang == 'en' and option.url is not defined %}{{ option.header }}{% endif %}
+
+        {% if lang == 'ru'  %}{{ option.header }}{% endif %}
+    </option>
 {% endfor %}
