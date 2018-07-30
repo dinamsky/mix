@@ -5,7 +5,7 @@
 
 <option value="0">- {% trans %}все{% endtrans %} -</option>
 {% for option in options %}
-    <option value="{{ option.id }}" {{ option.id == id ? 'selected' : '' }}
+    <option value="{{ option.id }}"
             {% if option.url is defined %} data-url="{{ option.url }}"{% endif %}
             {% if option.url is not defined %} data-url="{{ option.header }}"{% endif %}
     >
