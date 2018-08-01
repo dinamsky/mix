@@ -146,6 +146,20 @@ class User
      */
     private $opinions;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_new", type="boolean")
+     */
+    private $isNew = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="whois", type="string", length=255)
+     */
+    private $whois = '';
+
     public function __construct() {
         $this->information = new ArrayCollection();
         $this->userOrders = new ArrayCollection();
@@ -669,5 +683,53 @@ class User
     public function getCardCounter()
     {
         return $this->cardCounter;
+    }
+
+    /**
+     * Set isNew
+     *
+     * @param boolean $isNew
+     *
+     * @return User
+     */
+    public function setIsNew($isNew)
+    {
+        $this->isNew = $isNew;
+
+        return $this;
+    }
+
+    /**
+     * Get isNew
+     *
+     * @return boolean
+     */
+    public function getIsNew()
+    {
+        return $this->isNew;
+    }
+
+    /**
+     * Set whois
+     *
+     * @param string $whois
+     *
+     * @return User
+     */
+    public function setWhois($whois)
+    {
+        $this->whois = $whois;
+
+        return $this;
+    }
+
+    /**
+     * Get whois
+     *
+     * @return string
+     */
+    public function getWhois()
+    {
+        return $this->whois;
     }
 }
