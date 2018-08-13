@@ -9,10 +9,10 @@
             {% if option.url is defined %} data-url="{{ option.url }}"{% endif %}
             {% if option.url is not defined %} data-url="{{ option.header }}"{% endif %}
     >
-        {{ app.request.server.get("LANG") }}
-        {% if lang == 'en' and option.url is defined %}{{ option.url }}{% endif %}
-        {% if lang == 'en' and option.url is not defined %}{{ option.header }}{% endif %}
 
-        {% if lang == 'ru'  %}{{ option.header }}{% endif %}
+        {% if app.request.server.get("LANG") == 'en' and option.url is defined %}{{ option.url }}{% endif %}
+        {% if app.request.server.get("LANG") == 'en' and option.url is not defined %}{{ option.header }}{% endif %}
+
+        {% if app.request.server.get("LANG") == 'ru'  %}{{ option.header }}{% endif %}
     </option>
 {% endfor %}
