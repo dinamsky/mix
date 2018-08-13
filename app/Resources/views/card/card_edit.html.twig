@@ -98,11 +98,11 @@
                     </select>
                     <div class="uk-text-small">{% trans %}Регион{% endtrans %}</div>
                     <select name="regionId" id="regionId" class="uk-select">
-                        {{ include( 'common/ajax_edit_options.html.twig', { 'options': regions, 'id': regionId }) }}
+                        {{ include( 'common/ajax_edit_options.html.twig', { 'options': regions, 'id': regionId, 'lang':lang }) }}
                     </select>
                     <div class="uk-text-small">{% trans %}Город{% endtrans %}</div>
                     <select name="cityId" id="cityId" class="uk-select">
-                        {{ include( 'common/ajax_edit_options.html.twig', { 'options': cities, 'id': card.cityId }) }}
+                        {{ include( 'common/ajax_edit_options.html.twig', { 'options': cities, 'id': card.cityId, 'lang':lang }) }}
                     </select>
                     <div class="uk-text-small">{% trans %}Адрес{% endtrans %}</div>
                     <div>

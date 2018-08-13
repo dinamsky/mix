@@ -38,7 +38,7 @@
             </select>
             <div class="uk-text-small">{% trans %}Регион{% endtrans %}</div>
             <select name="regionId" id="regionId" class="uk-select">
-                {{ include( 'common/ajax_edit_options.html.twig', { 'options': regions, 'id': regionId }) }}
+                {{ include( 'common/ajax_edit_options.html.twig', { 'options': regions, 'id': regionId, 'lang':lang }) }}
             </select>
             {% if app.session.has('admin') %}
             <div>
@@ -47,7 +47,7 @@
             {% endif %}
             <div class="uk-text-small">{% trans %}Город{% endtrans %}</div>
             <select name="cityId" id="cityId" class="uk-select cityIdSelect">
-                {{ include( 'common/ajax_edit_options.html.twig', { 'options': cities, 'id': cityId }) }}
+                {{ include( 'common/ajax_edit_options.html.twig', { 'options': cities, 'id': cityId, 'lang':lang }) }}
             </select>
             {% if app.session.has('admin') %}
             <div>
