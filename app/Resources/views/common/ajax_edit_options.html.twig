@@ -4,6 +4,7 @@
             {% if option.url is defined %} data-url="{{ option.url }}"{% endif %}
             {% if option.url is not defined %} data-url="{{ option.header }}"{% endif %}
     >
+        {{ lang }}
         {% if lang == 'en' and option.url is defined %}{{ option.url }}{% endif %}
         {% if lang == 'en' and option.url is not defined %}{{ option.header }}{% endif %}
 
