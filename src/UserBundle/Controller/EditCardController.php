@@ -216,6 +216,7 @@ class EditCardController extends Controller
         }
 
         $card->setHeader(strip_tags($post->get('header')));
+        $card->setCurrency(strip_tags($post->get('currency')));
         $card->setContent(strip_tags($post->get('content')));
         $card->setAddress(strip_tags($post->get('address')));
         $card->setCoords($post->get('coords'));
