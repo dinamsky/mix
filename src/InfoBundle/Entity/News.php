@@ -55,7 +55,7 @@ class News
      *
      * @ORM\Column(name="slug", type="string", length=255)
      */
-    private $slug;
+    private $slug="";
 
     /**
      * @var string
