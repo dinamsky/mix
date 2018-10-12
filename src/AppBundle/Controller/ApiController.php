@@ -29,7 +29,7 @@ class ApiController extends Controller
     {
         $id = (int)$id;
         $card = $this->db->fetchAssoc('SELECT id,header,content,general_type_id as vehicle_type_id,model_id,user_id,views,city_id,currency FROM card WHERE id = ?', array($id));
-        $prices = $this->db->fetchAll('SELECT cp.id,cp.value FROM card_price cp WHERE card_id = ?', array($id));
+        $prices = $this->db->fetchAll('SELECT cp.price_id,cp.value FROM card_price cp WHERE card_id = ?', array($id));
 
         $main_foto = $this->db->fetchAssoc('SELECT id,folder FROM foto WHERE card_id = ? AND is_main=1', array($id));
         $extra_fotos = $this->db->fetchAll('SELECT id,folder FROM foto WHERE card_id = ? AND is_main!=1', array($id));
@@ -69,7 +69,7 @@ class ApiController extends Controller
             array($data['model_id'],$data['vehicle_type_id'],$data['city_id']));
 
             foreach ($cards as $c){
-                $c['prices'] = $this->db->fetchAll('SELECT сp.id,cp.value FROM card_price cp WHERE card_id = ?', array($c['id']));
+                $c['prices'] = $this->db->fetchAll('SELECT сp.price_id,cp.value FROM card_price cp WHERE card_id = ?', array($c['id']));
                 $mfu = $this->db->fetchAssoc('SELECT id,folder FROM foto WHERE card_id = ? AND is_main=1', array($c['id']));
                 $c['main_foto_url_thumb'] = $this->base_url.'/assets/images/cards/'.$mfu['folder'].'/t/'.$mfu['id'].'.jpg';
                 $rez[] = $c;
