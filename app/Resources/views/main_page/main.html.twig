@@ -181,9 +181,11 @@
             <div class="uk-width-1-3@s">
                 <a href="/rent/{{ in_city }}/all/cars" class="cat_main_header c_white uk-display-block">{% trans %}Легковые автомобили{% endtrans %}</a>
                 <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[2] is defined %}
                     {% for card in topcats[2] %}
                         {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
                     {% endfor %}
+                    {% endif %}
                 </div>
             </div>
             <div class="uk-width-1-3@s">

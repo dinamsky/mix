@@ -144,26 +144,28 @@ class ShowCardController extends Controller
 
         //dump($card->getContentEn());
 
-        if($_SERVER['LANG'] == 'en' and is_null($card->getContentEn()) and $need_to_translate != ''){
-            $translate_result = json_decode(file_get_contents($to_google),true);
-            $t_en = $translate_result['data']['translations'][0]['translatedText'];
-            $card->setContentEn($t_en);
-            $em->persist($card);
-            $em->flush();
-            $card_content = $t_en;
-        }
+//        if($_SERVER['LANG'] == 'en' and is_null($card->getContentEn()) and $need_to_translate != ''){
+//            $translate_result = json_decode(file_get_contents($to_google),true);
+//            $t_en = $translate_result['data']['translations'][0]['translatedText'];
+//            $card->setContentEn($t_en);
+//            $em->persist($card);
+//            $em->flush();
+//            $card_content = $t_en;
+//        }
+//
+//        if($_SERVER['LANG'] == 'ru' and is_null($card->getContentRu()) and $need_to_translate != ''){
+//            $translate_result = json_decode(file_get_contents($to_google),true);
+//            $t_ru = $translate_result['data']['translations'][0]['translatedText'];
+//            $card->setContentRu($t_ru);
+//            $em->persist($card);
+//            $em->flush();
+//            $card_content = $t_ru;
+//        }
 
-        if($_SERVER['LANG'] == 'ru' and is_null($card->getContentRu()) and $need_to_translate != ''){
-            $translate_result = json_decode(file_get_contents($to_google),true);
-            $t_ru = $translate_result['data']['translations'][0]['translatedText'];
-            $card->setContentRu($t_ru);
-            $em->persist($card);
-            $em->flush();
-            $card_content = $t_ru;
-        }
+//        if ($_SERVER['LANG'] == 'ru' and $card->getContentRu() != '') $card_content = $card->getContentRu();
+//        if ($_SERVER['LANG'] == 'en' and $card->getContentEn() != '') $card_content = $card->getContentEn();
 
-        if ($_SERVER['LANG'] == 'ru' and $card->getContentRu() != '') $card_content = $card->getContentRu();
-        if ($_SERVER['LANG'] == 'en' and $card->getContentEn() != '') $card_content = $card->getContentEn();
+        $card_content = $card->getContent();
 
 
         if ($card->getVideo() != '') $video = explode("=", $card->getVideo())[1];
