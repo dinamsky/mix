@@ -73,8 +73,9 @@
             <div class="uk-width-1-1@s">
                 {% if not phone %}
                 <div class="uk-margin-bottom uk-position-relative">
-                    <input type="text" name="phone" id="phone" placeholder="{% trans %}Заполните номер телефона{% endtrans %}" class="uk-input phone_validate">
-                    <div class="uk-position-absolute uk-position-top-left" style="left:5px;"><span class="red_star">*</span></div>
+                    <div class="uk-text-small">Phone number in format: +Country code(National destination code)Subscriber number, ex: +1(234)5678900</div>
+                    <input type="text" name="phone" id="phone" placeholder="{% trans %}Заполните номер телефона{% endtrans %}" class="uk-input">
+                    <div class="uk-position-absolute uk-position-top-left" style="left:5px;top:23px;"><span class="red_star">*</span></div>
                 </div>
                 {% endif %}
 
@@ -179,7 +180,10 @@
                     </div>
 
                     <div class="uk-text-center">
-                        {% if ( ( user and user.accountTypeId == 1 ) or ( user and user.cardCounter == 0) or (not user))   %}
+
+
+
+                        {% if ( ( user and user.accountTypeId == 1 ) or ( user and user.cards|length == 0) or (not user))   %}
                             <button class="uk-button pay_tariff_button uk-margin-top" name="one_card">Save</button>
 
                             <div class="uk-margin-top">

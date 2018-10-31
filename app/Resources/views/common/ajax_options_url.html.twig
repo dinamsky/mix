@@ -3,6 +3,8 @@
     {#<option value="{{ option.id }}" data-url="{{ option.url is defined ? option.url : option.header }}">{{ option.header }}</option>#}
 {#{% endfor %}#}
 
+
+
 <option value="0">- {% trans %}все{% endtrans %} -</option>
 {% for option in options %}
     <option value="{{ option.id }}"

@@ -840,6 +840,7 @@ class NewCardController extends Controller
 
         }
 
+        if(!isset($response) or $response == '') $response = $this->redirect('/');
         return $response;
     }
 
