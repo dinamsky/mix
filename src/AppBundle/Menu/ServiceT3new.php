@@ -100,4 +100,12 @@ class ServiceT3new extends Controller
         return $unread[0]['total'];
     }
 
+    public function getNotify()
+    {
+        $query = $this->em->createQuery('SELECT n FROM AppBundle:Notify n WHERE n.userId = ?1');
+        if($this->sess->get('logged_user') != NULL) {
+            $query->setParameter(1, $this->sess->get('logged_user')->getId());
+            return $query->getResult();
+        } else return array();
+    }
 }

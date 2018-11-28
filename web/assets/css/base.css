@@ -1774,3 +1774,343 @@ top: 80%;
     width: 110px;
     height: 29px;
 }
+
+.ord_toggler{
+    /*background: white;*/
+    padding: 10px;
+    /*box-shadow: 1px 1px 1px #bfbfbf;*/
+    position: relative;
+    cursor: pointer;
+}
+
+.ord_toggler.active{
+        background: white;
+    border-left: 1px solid grey;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    position: relative;
+}
+
+.ord_central{
+    background: white;
+    border-left: 1px solid grey;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+.ord_righter{
+    background: white;
+    border-right: 1px solid grey;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+/*.ord_toggler.active::after{*/
+    /*content: "►";*/
+    /*font-family: Arial, sans-serif;*/
+    /*font-size: 27px;*/
+    /*position: absolute;*/
+    /*right: -23px;*/
+    /*top: 50%;*/
+    /*color: white;*/
+    /*text-shadow: 2px 0 1px #bbbbbb;*/
+    /*z-index: 0;*/
+    /*height: 40px;*/
+    /*margin-top: -20px;*/
+/*}*/
+
+.ok_btn{
+    background: #25b45b;
+    color: white;
+    padding: 10px 25px;
+}
+
+.ok_btn:hover{
+    background: green;
+    color: white;
+    text-decoration: none;
+}
+
+.no_btn{
+    background: red;
+    color: white;
+    padding: 10px 25px;
+}
+
+.nt_btn{
+    background: lightgrey;
+    color: black;
+    padding: 10px 25px;
+}
+
+.nt_btn:hover{
+    background: grey;
+    color: white;
+    text-decoration: none;
+}
+
+.left_message{
+    float: left;
+}
+
+.left_message .ms_content{
+    background: lightgrey;
+    color:black;
+    display: inline-block;
+    padding: 5px 10px;
+    max-width: 80%;
+    border-radius: 0 20px 20px 20px;
+    margin-top: 5px;
+    word-break: break-all;
+}
+
+.right_message{
+    float: right;
+    text-align: right;
+}
+
+.right_message .ms_content{
+
+    background: #6f729b;
+    color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    max-width: 80%;
+    border-radius: 20px 0 20px 20px;
+    margin-top: 5px;
+    word-break: break-all;
+}
+
+.system_message{
+    background: lightgrey;
+    padding: 10px;
+    text-align: center;
+    color: #3a3a3a;
+}
+
+.system_ok_message{
+    background: #25b45b;
+    padding: 10px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.ord_pat{
+    cursor: pointer;
+    background: #f3f3f3;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+#ord_messaging textarea{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.uk-notification-message-danger a{
+    color:red;
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+
+.newbook{
+    border: 0 !important;
+    background: #1976d2;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    cursor: pointer;
+}
+
+.newbook .nbinner{
+    color: white;
+}
+
+.newbook:hover{
+    background:darkblue;
+}
+
+.rating_star{
+    color: grey;
+}
+
+.rating_star.filled{
+    color: #6f729b;
+}
+
+.rating_star.filled svg polygon{
+    fill: #6f729b;
+}
+
+.ok_big{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.big_order_list{
+    background: #e8e8e8;
+}
+
+.active_white{
+    position: absolute;
+    right: -1px;
+    top: 0;
+    background: white;
+    width: 1px;
+    height: 100%;
+}
+
+#signUpForm button[disabled]{
+    background: lightgrey !important;
+}
+
+#new_password button[disabled]{
+    background: lightgrey !important;
+}
+
+
+.underline{
+    text-decoration: underline;
+}
+
+.ord_messages{
+    overflow-y: auto;
+}
+
+.snd_btn[disabled]{
+    background: transparent;
+    padding: 10px 10px;
+    color: grey;
+}
+
+.snd_btn{
+    background: transparent;
+    padding: 10px 10px;
+    color: #07d;
+}
+
+.ord_content textarea{
+    outline: none;
+}
+
+.lft_blk{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ordbtn_left{
+float: left;
+    padding: 10px 30px;
+    width: 40%;
+ }
+
+.ordbtn_right{
+    float: right;
+    padding: 10px 30px;
+    width: 40%;
+
+}
+
+body.mobile .ord_toggler.active{
+    background: #ffffff7a !important;
+}
+
+body.mobile {
+    background: white !important;
+}
+
+.ht_cr{
+    font-size: 23px;
+    text-align: center;
+    width: 50px;
+    padding: 8px 0;
+    border-radius: 27px;
+    border: 2px solid #898989;
+    margin: 0 13px;
+}
+
+.ht_dl{
+    width: 2px;
+    height: 100px;
+    margin: 0 39px;
+    background: #898989;
+}
+
+#howtopay.ver1 b{
+    font-size: 22px;
+    color:black;
+}
+
+#howtopay.ver1 h2{
+    font-size: 38px;
+    color:black;
+    font-weight: bold;
+}
+
+#user_phone_form label{
+    display: block;
+    border: 2px solid transparent;
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+#user_phone_form label.active{
+    border: 2px solid #2162a2;
+}
+
+#user_phone_form label:hover{
+    border: 2px solid lightgrey;
+}
+
+.ord_page_header{
+    background: white;
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.uo_divider{
+    border-bottom: 1px solid lightgrey;
+    margin: 5px 0;
+}
+
+.mobile_top_button{
+    background: transparent;
+    color: white;
+    line-height: 13px;
+    /*width: 40px;*/
+    padding: 14px !important;
+    font-size: 20px;
+    display: block;
+    box-sizing: border-box;
+}
+
+.std_ord_notify{
+    background: red;
+    color: white;
+    display: inline-block;
+    padding: 0px 4px 3px 4px;
+    border-radius: 14px;
+    margin-right: 10px;
+}
+
+.ord_notify{
+    background: red;
+    color: white;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    padding: 0px 4px 3px 4px;
+    border-radius: 14px;
+}
+
+.top_ord_notify{
+    background: red;
+    color: white;
+    position: absolute;
+    right: -33px;
+    top: 4px;
+    padding: 0px 4px 4px 4px;
+    border-radius: 14px;
+}

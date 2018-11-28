@@ -17,6 +17,7 @@ use AppBundle\Entity\Price;
 use AppBundle\Entity\Tariff;
 use AppBundle\Foto\FotoUtils;
 use UserBundle\Entity\User;
+use UserBundle\Entity\UserInfo;
 use AppBundle\Entity\Card;
 use AppBundle\Entity\City;
 use AppBundle\Entity\Color;
@@ -875,6 +876,131 @@ class UserController extends Controller
 
         return new Response();
     }
+
+        /**
+     * @Route("/qreg_ajax_1")
+     */
+    public function qreg_ajax_1_Action(Request $request, Password $password)
+    {
+        $ok = true;
+
+        $r = '';
+
+        $user_info = $this->getDoctrine()
+            ->getRepository(UserInfo::class)
+            ->findOneBy(array(
+                'uiKey' => 'phone',
+                'uiValue' => $request->request->get('phone')
+            ));
+
+        if ($user_info) {
+            $this->addFlash(
+                'notice',
+                'User is already registered! Please log in'
+            );
+            $ok = false;
+        }
+
+        //$xn = explode("@",$request->request->get('email'));
+
+
+        $bu = $request->request->get('back_url');
+
+        $code = rand(111111,999999);
+        $user = new User();
+        $user->setEmail('');
+        $user->setLogin('');
+        $user->setPassword($password->HashPassword($code));
+        $user->setHeader($request->request->get('phone'));
+        //$user->setHeader('');
+        $user->setActivateString($code);
+        $user->setTempPassword($bu);
+        $user->setIsSubscriber(true);
+        $user->setIsNew(true);
+        $user->setWhois('new_renter');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        if($ok) {
+            $number = preg_replace('~[^0-9]+~','',$request->request->get('phone'));
+            //if(strlen($number)==11) $number = substr($number, 1);
+            //$message = urlencode('Ваш код регистрации: '.$code);
+            //$url = 'https://mainsms.ru/api/mainsms/message/send?apikey=72f5f151303b2&project=multiprokat&sender=MULTIPROKAT&recipients=' . $number . '&message=' . $message;
+            //$sms_result = file_get_contents($url);
+            $r = 'ok';
+
+
+            $rq = array(
+                "user-id"=>"mixrent",
+                "api-key"=>"xXFkynY1f4OmLHwNZGhWQ4rnn1mPSFGWF8e5Gg86qg1Loy05",
+                "number"=>$number,
+                "security-code"=>$code
+            );
+
+            $rq = json_encode($rq);
+
+            $url = "https://neutrinoapi.com/sms-verify";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($rq))
+            );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $rq);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            //$data = json_decode($response);
+
+        }
+
+        return new Response($r);
+    }
+
+    /**
+     * @Route("/qreg_ajax_2")
+     */
+    public function qreg_ajax_2_Action(Request $request, Password $password)
+    {
+        $code = $request->request->get('regcode');
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneBy(array(
+                'activateString' => $code
+            ));
+
+        if($user) {
+
+            $phone = $user->getHeader();
+
+            //$user->setTempPassword('');
+            $user->setHeader('');
+            $user->setIsActivated(true);
+            $user->setActivateString('');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $user_info = new UserInfo();
+            $user_info->setUser($user);
+            $user_info->setUiKey('phone');
+            $user_info->setUiValue($phone);
+            $em->persist($user_info);
+            $em->flush();
+
+            $this->get('session')->set('logged_user', $user);
+            $this->setAuthCookie($user);
+
+            $r = $phone;
+        } else {
+            $r = 'bad';
+        }
+
+        return new Response($r);
+    }
+
 
 }
 

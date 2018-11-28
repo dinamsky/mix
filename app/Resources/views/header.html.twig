@@ -1,6 +1,7 @@
 <header id="header">
 
     {% if is_mobile() %}
+        {% if no_header is not defined %}
         <div uk-grid class="uk-grid-collapse mobile_header  " uk-sticky>
 
 
@@ -44,6 +45,7 @@
 
 
         </div>
+            {% endif %}
     {% endif %}
 
     <div class="top_sticky desktop_header uk-hidden\@s" uk-sticky="cls-inactive:inactive">

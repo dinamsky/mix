@@ -409,7 +409,9 @@ class ShowCardController extends Controller
 
             'topSlider' => $topSlider,
 
-            'price' => $price
+            'price' => $price,
+
+            'phone' => false
 
         ]);
     }

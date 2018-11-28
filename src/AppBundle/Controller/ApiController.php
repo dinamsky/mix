@@ -40,6 +40,27 @@ class ApiController extends Controller
         $extra_fotos = $this->db->fetchAll('SELECT id,folder FROM foto WHERE card_id = ? AND is_main!=1', array($id));
 
         if($card) {
+
+            $sub_fields = $this->db->fetchAll("SELECT t.header_en as header, f.field_id, t.form_element_type FROM card_field as f 
+                LEFT JOIN field_type as t ON t.id = f.field_id               
+                WHERE f.general_type_id = ?", array($card['vehicle_type_id']));
+
+            foreach ($sub_fields as $i=>$sf){
+
+                if($sf['form_element_type'] == 'numberInput') {
+                    $v = $this->db->fetchAssoc('SELECT value FROM field_integer WHERE card_id = ? AND card_field_id=?', array($card['id'], $sf['field_id']));
+                    $sub_fields[$i]['value'] = $v['value'];
+                }
+                if($sf['form_element_type'] == 'ajaxMenu') {
+                    $v = $this->db->fetchAssoc('SELECT url FROM sub_field WHERE field_id = ?', array($sf['field_id']));
+                    $sub_fields[$i]['value'] = $v['url'];
+                }
+                unset($sub_fields[$i]['form_element_type']);
+                unset($sub_fields[$i]['field_id']);
+            }
+
+            $card['subfields'] = $sub_fields;
+
             $card['status'] = 'OK';
             $card['prices'] = $prices;
             $card['main_foto_url'] = $this->base_url.'/assets/images/cards/'.$main_foto['folder'].'/'.$main_foto['id'].'.jpg';
@@ -53,7 +74,7 @@ class ApiController extends Controller
         }
         else {
             $status = 'error';
-            $code = '500';
+            $code = '422';
             $rez = array('code'=>400);
         }
 
@@ -86,13 +107,20 @@ class ApiController extends Controller
 
         if(
             isset($data['vehicle_type_id']) and
-            isset($data['city_id']) and
-            isset($data['model_id'])
+            isset($data['city_id'])
         ){
 //            $cards = $this->db->fetchAll('SELECT id,header,content,user_id,views FROM card WHERE model_id = ? AND general_type_id=? AND city_id=? ',
 //            array($data['model_id'],$data['vehicle_type_id'],$data['city_id']));
 
-            $cards = $this->db->fetchAll('SELECT 
+
+
+            $sort = '';
+            $condition = '';
+            if(isset($data['popular'])) $sort = ' ORDER BY c.likes DESC ';
+            if(isset($data['ids'])) $condition = ' AND c.id IN ('.implode(",",$data['ids']).') ';
+
+            if(isset($data['model_id'])) {
+                $cards = $this->db->fetchAll('SELECT 
                 c.id,c.header,c.content,c.user_id,c.views,c.city_id,c.model_id,m.header as model,k.header as mark,k.id as mark_id,s.header as city,c.prod_year,g.url as category,c.general_type_id as vehicle_type_id 
                 FROM card as c 
                 LEFT JOIN car_model as m ON m.id = c.model_id 
@@ -102,8 +130,20 @@ class ApiController extends Controller
                 
                 WHERE c.model_id = ? AND c.general_type_id=? AND c.city_id=?
                 
-                ',array($data['model_id'],$data['vehicle_type_id'],$data['city_id']));
-
+                '.$condition.$sort, array($data['model_id'], $data['vehicle_type_id'], $data['city_id']));
+            } else {
+                $cards = $this->db->fetchAll('SELECT 
+                c.id,c.header,c.content,c.user_id,c.views,c.city_id,c.model_id,m.header as model,k.header as mark,k.id as mark_id,s.header as city,c.prod_year,g.url as category,c.general_type_id as vehicle_type_id 
+                FROM card as c 
+                LEFT JOIN car_model as m ON m.id = c.model_id 
+                LEFT JOIN car_mark as k ON k.id = m.car_mark_id 
+                LEFT JOIN city as s ON s.id = c.city_id 
+                LEFT JOIN general_type as g ON g.id = c.general_type_id 
+                
+                WHERE c.general_type_id=? AND c.city_id=?
+                
+                '.$condition.$sort, array($data['model_id'], $data['vehicle_type_id'], $data['city_id']));
+            }
 
             if($cards) {
                 foreach ($cards as $c) {
@@ -115,13 +155,13 @@ class ApiController extends Controller
 
                 $status = 'OK';
             } else {
-                $code = '500';
+                $code = '422';
                 $rez = array('code'=>400);
                 $status = 'error';
             }
 
         } else {
-            $code = '500';
+            $code = '422';
             $rez = array('code'=>300);
             $status = 'error';
         }
@@ -147,7 +187,7 @@ class ApiController extends Controller
         if($vt){
             foreach ($vt as $v) $rez[] = $v;
         } else {
-            $code = '500';
+            $code = '422';
             $rez = array('code'=>900);
             $status = 'error';
         }
@@ -171,7 +211,7 @@ class ApiController extends Controller
         if($m){
             $rez = $m;
         } else {
-            $code = '500';
+            $code = '422';
             $rez = array('code'=>400);
             $status = 'error';
         }
@@ -196,7 +236,7 @@ class ApiController extends Controller
         if($m){
             $rez = $m;
         } else {
-            $code = '500';
+            $code = '422';
             $rez = array('code'=>400);
             $status = 'error';
         }
@@ -222,7 +262,7 @@ class ApiController extends Controller
         if($m){
             $rez = $m;
         } else {
-            $code = '500';
+            $code = '422';
             $rez = array('code'=>400);
             $status = 'error';
         }
@@ -272,13 +312,13 @@ class ApiController extends Controller
                 $r['result'] = array('token'=>$token_name,'server_hash'=>$server_hash);
             } else {
                 $r['status'] = 'error';
-                $code = '500';
+                $code = '422';
                 $r['result'] = array('code'=>110); // wrong password
             }
 
         } else {
             $r['status'] = 'error';
-            $code = '500';
+            $code = '422';
             $r['result'] = array('code'=>100); // no user
         }
 
@@ -291,7 +331,7 @@ class ApiController extends Controller
 //        if($m){
 //            $rez = $m;
 //        } else {
-//            $code = '500';
+//            $code = '422';
 //            $rez = array('code'=>400);
 //            $status = 'error';
 //        }
@@ -350,7 +390,7 @@ class ApiController extends Controller
         } else {
             $r['status'] = 'error';
             $r['result'] = array('code'=>100);
-            $code = '500';
+            $code = '422';
         }
 
 
@@ -376,7 +416,7 @@ class ApiController extends Controller
         if($u) return $this->get_user($u['id']);
         else{
             $r['status'] = 'error';
-            $code = 500;
+            $code = 422;
             $r['result'] = array('code'=>100); // no user
             return new Response(json_encode($r, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
         }
@@ -397,11 +437,96 @@ class ApiController extends Controller
             return $this->get_user($i['user_id']);
         } else {
             $r['status'] = 'error';
-            $code = 500;
+            $code = 422;
             $r['result'] = array('code'=>100); // no user
             return new Response(json_encode($r, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
         }
 
+    }
+
+    /**
+     * @Route("/api/send_verification_code_SMS", name="send_verification_code")
+     */
+    public function send_verification_code()
+    {
+        $code = 200;
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $i = $this->db->fetchAssoc("SELECT user_id FROM user_info WHERE ui_key='phone' AND ui_value=?", array($data['phone']));
+
+        if (isset($data['phone']) and isset($data['code'])) {
+            $rq = array(
+            "user-id"=>"mixrent",
+            "api-key"=>"xXFkynY1f4OmLHwNZGhWQ4rnn1mPSFGWF8e5Gg86qg1Loy05",
+            "number"=>$data['phone'],
+            "security-code"=>$data['code']
+            );
+            $rq = json_encode($rq);
+            $url = "https://neutrinoapi.com/sms-verify";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($rq))
+            );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $rq);
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            $r['status'] = 'OK';
+            $r['result'] = array();
+        } else {
+            $r['status'] = 'error';
+            $code = 422;
+            $r['result'] = array('code'=>300);
+        }
+
+        return new Response(json_encode($r, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
+    }
+
+
+    /**
+     * @Route("/api/send_SMS_message", name="send_SMS_message")
+     */
+    public function send_SMS_message()
+    {
+        $code = 200;
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        if (isset($data['phone']) and isset($data['message'])) {
+            $rq = array(
+            "user-id"=>"mixrent",
+            "api-key"=>"xXFkynY1f4OmLHwNZGhWQ4rnn1mPSFGWF8e5Gg86qg1Loy05",
+            "number"=>$data['phone'],
+            "message"=>$data['message']
+            );
+            $rq = json_encode($rq);
+            $url = "https://neutrinoapi.com/sms-message";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($rq))
+            );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $rq);
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            $r['status'] = 'OK';
+            $r['result'] = array();
+
+        } else {
+            $r['status'] = 'error';
+            $code = 422;
+            $r['result'] = array('code'=>300);
+
+        }
+
+        return new Response(json_encode($r, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
     }
 
 }

@@ -148,7 +148,8 @@ $( document ).ready(function() {
         monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         today: 'Today',
         clear: 'Clear',
-        dateFormat: 'mm/dd/yyyy',
+        //dateFormat: 'mm/dd/yyyy',
+        dateFormat: 'yyyy.mm.dd',
         timeFormat: 'hh:ii aa',
         firstDay: 0
     };
@@ -157,6 +158,59 @@ $( document ).ready(function() {
         minDate: new Date(document.getElementById('user_book_form').getAttribute('data-res')),
         language: 'en'
 
+    });
+
+    $('#qreg_1').on('click', function () {
+        //var email = $('#nrf input[name="email"]').val().trim();
+        //var password = $('#nrf input[name="password"]').val().trim();
+        var phone = $('#nrf input[name="phone"]').val().trim();
+        var back_url = $('#nrf input[name="back_url"]').val();
+        var t = $(this);
+
+        $(this).remove();
+
+        if(phone!=='') {
+            $.ajax({
+                url: '/qreg_ajax_1',
+                type: 'POST',
+                data: {phone: phone,back_url:back_url},
+                success: function (html) {
+                    if(html ==='ok') {
+                        $('.rb_1').remove();
+                        $('.rb_2').removeClass('uk-hidden');
+                    } else {
+                        UIkit.notification('User with this mobile phone number is already in Mix Rent base!',{status:'danger',timeout:100000});
+                    }
+                }
+            });
+        } else {
+            UIkit.notification('All fields is required!',{status:'danger',timeout:100000});
+        }
+    });
+
+
+
+    $('#qreg_2').on('click', function () {
+        var regcode = $('#nrf input[name="regcode"]').val();
+        var t = $(this);
+
+        $(this).remove();
+
+        $.ajax({
+            url: '/qreg_ajax_2',
+            type: 'POST',
+            data: {regcode: regcode},
+            success: function (html) {
+                if(html!=='bad') {
+                    $('.rb_2').remove();
+                    $('.rb_3').removeClass('uk-hidden');
+                    $('#bk_phn').remove();
+                    $('#nbf_form').append('<input type="hidden" name="phone" id="phone" value="'+html+'">');
+                } else {
+                    UIkit.notification('Wrong code!',{status:'danger',timeout:100000});
+                }
+            }
+        });
     });
 
 });

@@ -3,7 +3,8 @@
     <div class="uk-visible@s">
         <a class="c_blue" href="/profile">{% trans %}Мой профиль{% endtrans %}</a><br>
         <a class="c_blue" href="/user/cards">{% trans %}Мои объявления{% endtrans %}</a><br>
-        <a class="c_blue" href="/user/messages">{% trans %}Мои сообщения{% endtrans %}</a>
+        {#<a class="c_blue" href="/user/messages">{% trans %}Мои сообщения{% endtrans %}</a>#}
+        {#<a class="c_blue" href="/user/orders">My orders</a>#}
 
         {% if t3_new.getUnread>0 %}<span class="uk-badge">{{ t3_new.getUnread }}</span>{% endif %}
         <br>

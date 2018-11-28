@@ -327,8 +327,19 @@
             <div class="uk-width-1-4@s">
 
 
-                <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom" uk-toggle="target: #user_book_form" style="padding:10px 0;">{% trans %}Отправить заявку{% endtrans %}</button>
+                {#{% if app.session.has('logged_user') %}#}
+                    {#<button class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom" uk-toggle="target: #user_book_form" style="padding:10px 0;">#}
+                        {#{% trans %}Отправить заявку{% endtrans %}#}
+                    {#</button>#}
+                {#{% else %}#}
+                    {#<button class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom" uk-toggle="target: #nonreged_user_book_form" style="padding:10px 0;">#}
+                        {#{% trans %}Отправить заявку{% endtrans %}#}
+                    {#</button>#}
+                {#{% endif %}#}
 
+                <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom" uk-toggle="target: #user_book_form" style="padding:10px 0;">
+                    {% trans %}Отправить заявку{% endtrans %}
+                </button>
 
 
                 {% if not is_mobile() %}
@@ -515,6 +526,7 @@
         {{ app.session.remove('first_card') }}
     {% endif %}
 
+    {{ include(':card/order_forms:nonreged_form.html.twig') }}
 
     {{ include(':main_page:top_slider.html.twig') }}
 
