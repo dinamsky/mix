@@ -142,7 +142,7 @@ class ApiController extends Controller
                 
                 WHERE c.general_type_id=? AND c.city_id=?
                 
-                '.$condition.$sort, array($data['model_id'], $data['vehicle_type_id']));
+                '.$condition.$sort, array($data['vehicle_type_id'], $data['city_id']));
             }
 
             if($cards) {
