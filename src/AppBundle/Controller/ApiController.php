@@ -121,7 +121,7 @@ class ApiController extends Controller
 
             if(isset($data['model_id'])) {
                 $cards = $this->db->fetchAll('SELECT 
-                c.id,c.header,c.content,c.user_id,c.views,c.city_id,c.model_id,m.header as model,k.header as mark,k.id as mark_id,s.header as city,c.prod_year,g.url as category,c.general_type_id as vehicle_type_id 
+                c.id,c.header,c.content,c.user_id,c.views,c.city_id,c.model_id,c.likes,m.header as model,k.header as mark,k.id as mark_id,s.header as city,c.prod_year,g.url as category,c.general_type_id as vehicle_type_id 
                 FROM card as c 
                 LEFT JOIN car_model as m ON m.id = c.model_id 
                 LEFT JOIN car_mark as k ON k.id = m.car_mark_id 
