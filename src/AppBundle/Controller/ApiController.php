@@ -61,7 +61,7 @@ class ApiController extends Controller
 
             $card['subfields'] = $sub_fields;
 
-            $card['status'] = 'OK';
+            //$card['status'] = 'OK';
             $card['prices'] = $prices;
             $card['main_foto_url'] = $this->base_url.'/assets/images/cards/'.$main_foto['folder'].'/'.$main_foto['id'].'.jpg';
             $card['main_foto_url_thumb'] = $this->base_url.'/assets/images/cards/'.$main_foto['folder'].'/t/'.$main_foto['id'].'.jpg';
@@ -142,7 +142,7 @@ class ApiController extends Controller
                 
                 WHERE c.general_type_id=? AND c.city_id=?
                 
-                '.$condition.$sort, array($data['model_id'], $data['vehicle_type_id'], $data['city_id']));
+                '.$condition.$sort, array($data['model_id'], $data['vehicle_type_id']));
             }
 
             if($cards) {
