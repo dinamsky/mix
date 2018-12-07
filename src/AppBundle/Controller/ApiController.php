@@ -61,6 +61,27 @@ class ApiController extends Controller
 
             $card['subfields'] = $sub_fields;
 
+
+            foreach($this->db->fetchAll("SELECT * FROM card_feature WHERE card_id=?",array($card['id'])) as $cf){
+                $cff[$cf['feature_id']] = 1;
+            }
+
+            foreach($this->db->fetchAll("SELECT * FROM feature WHERE parent_id IS NULL") as $af){
+                $aff[] = $af;
+            }
+
+            foreach($this->db->fetchAll("SELECT * FROM feature WHERE parent_id IS NOT NULL ") as $ff){
+                $zff[$ff['parent_id']][] = $ff;
+            }
+
+            foreach ($aff as $afff) {
+                foreach ($zff[$afff['id']] as $zf) {
+                    if(isset($cff[$zf['id']])) $fff[$afff['header_en']][] = $zf['header_en'];
+                }
+            }
+
+            $card['features'] = $fff;
+
             //$card['status'] = 'OK';
             $card['prices'] = $prices;
             $card['main_foto_url'] = $this->base_url.'/assets/images/cards/'.$main_foto['folder'].'/'.$main_foto['id'].'.jpg';
@@ -95,6 +116,85 @@ class ApiController extends Controller
     }
 
     /**
+     * @Route("/api/vtype/{id}", name="api_vtype")
+     */
+    public function api_vtype($id)
+    {
+        $code = 200;
+        $status = 'OK';
+        $id = (int)$id;
+
+        $sub_fields = $this->db->fetchAll("SELECT t.header_en as header, f.field_id, t.form_element_type FROM card_field as f 
+            LEFT JOIN field_type as t ON t.id = f.field_id               
+            WHERE f.general_type_id = ?", array($id));
+
+        if($sub_fields)
+        {
+            foreach ($sub_fields as $i=>$sf){
+
+                $sub_fields[$i]['type'] = $sf['form_element_type'] == 'ajaxMenu' ? 'select' : 'integer';
+
+//                if($sf['form_element_type'] == 'numberInput') {
+//                    $v = $this->db->fetchAssoc('SELECT value FROM field_integer WHERE card_id = ? AND card_field_id=?', array($card['id'], $sf['field_id']));
+//                    $sub_fields[$i]['value'] = $v['value'];
+//                }
+                if($sf['form_element_type'] == 'ajaxMenu') {
+                    $v = $this->db->fetchAll('SELECT url FROM sub_field WHERE field_id = ?', array($sf['field_id']));
+                    $sub_fields[$i]['variants'] = $v;
+                }
+                unset($sub_fields[$i]['form_element_type']);
+                unset($sub_fields[$i]['field_id']);
+            }
+
+
+            $rez = $sub_fields;
+        }
+        else {
+            $status = 'error';
+            $code = '422';
+            $rez = array('code'=>400);
+        }
+
+        $send['status'] = $status;
+        $send['result'] = $rez;
+
+        return new Response(json_encode($send, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
+    }
+
+    /**
+     * @Route("/api/features", name="api_features")
+     */
+    public function api_features()
+    {
+        $code = 200;
+        $status = 'OK';
+
+        $fts = $this->db->fetchAll("SELECT * FROM feature");
+        $ft = array();
+        foreach ($fts as $f){
+            unset($f['group_name']);
+            unset($f['header']);
+            unset($f['gts']);
+            if($f['parent_id'] == null) $f['parent_id'] = 0;
+            $ft[(int)$f['parent_id']][] = $f;
+        }
+
+        if($ft){
+            $rez = $ft;
+        } else {
+            $status = 'error';
+            $code = '422';
+            $rez = array('code'=>400);
+        }
+
+        $send['status'] = $status;
+        $send['result'] = $rez;
+
+        return new Response(json_encode($send, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
+
+    }
+
+    /**
      * @Route("/api/list", name="api_list")
      */
     public function api_list()
@@ -116,7 +216,12 @@ class ApiController extends Controller
 
             $sort = '';
             $condition = '';
+            $limit = '';
             if(isset($data['popular'])) $sort = ' ORDER BY c.likes DESC ';
+            if(isset($data['best'])) $sort = ' ORDER BY c.is_best DESC, c.date_update DESC ';
+
+            if(isset($data['limit']) and (int)$data['limit'] != 0 ) $limit = ' LIMIT '.(int)$data['limit'];
+
             if(isset($data['ids'])) $condition = ' AND c.id IN ('.implode(",",$data['ids']).') ';
 
             if(isset($data['model_id'])) {
@@ -130,7 +235,7 @@ class ApiController extends Controller
                 
                 WHERE c.model_id = ? AND c.general_type_id=? AND c.city_id=?
                 
-                '.$condition.$sort, array($data['model_id'], $data['vehicle_type_id'], $data['city_id']));
+                '.$condition.$sort.$limit, array($data['model_id'], $data['vehicle_type_id'], $data['city_id']));
             } else {
                 $cards = $this->db->fetchAll('SELECT 
                 c.id,c.header,c.content,c.user_id,c.views,c.city_id,c.model_id,c.likes,m.header as model,k.header as mark,k.id as mark_id,s.header as city,c.prod_year,g.url as category,c.general_type_id as vehicle_type_id 
@@ -142,7 +247,7 @@ class ApiController extends Controller
                 
                 WHERE c.general_type_id=? AND c.city_id=?
                 
-                '.$condition.$sort, array($data['vehicle_type_id'], $data['city_id']));
+                '.$condition.$sort.$limit, array($data['vehicle_type_id'], $data['city_id']));
             }
 
             if($cards) {
@@ -181,7 +286,7 @@ class ApiController extends Controller
     {
         $status = 'OK';
         $code = 200;
-        $vt = $this->db->fetchAll('SELECT id,url as header,car_type_ids as car_type_id FROM general_type WHERE parent_id IS NOT NULL ',array());
+        $vt = $this->db->fetchAll('SELECT id,url as header,car_type_ids as car_type_id, (SELECT COUNT(id) FROM card WHERE card.general_type_id = general_type.id) as qty FROM general_type WHERE parent_id IS NOT NULL ',array());
         //$vt = $this->db->fetchAll('SELECT id,url as header FROM general_type WHERE parent_id IS NOT NULL ',array());
 
         if($vt){
@@ -271,75 +376,6 @@ class ApiController extends Controller
         $send['result'] = $rez;
 
         return new Response(json_encode($send, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
-
-    }
-
-    /**
-     * @Route("/api/authorize", name="authorize")
-     */
-    public function authorize()
-    {
-        $code = 200;
-
-        $r = array();
-
-        $data = json_decode(file_get_contents("php://input"),true);
-
-        $user = $this->db->fetchAssoc('SELECT * FROM user WHERE email = ? AND is_activated=1', array($data['email']));
-
-        if($user){
-
-            $password = new Password();
-
-            if ($password->CheckPassword($data['password'], $user['password'])){
-
-                $token_name = hash("sha256",uniqid($user['id']));
-                $server_hash = hash("sha256",uniqid($token_name));
-
-                $this->db->executeQuery("INSERT INTO tokens SET 
-                  user_id = ?,
-                  token_name = ?,
-                  server_hash = ?,
-                  client_hash = ? 
-                  ",array(
-                      $user['id'],
-                      $token_name,
-                      $server_hash,
-                      $data['client_hash']
-                ));
-
-                $r['status'] = 'OK';
-                $r['result'] = array('token'=>$token_name,'server_hash'=>$server_hash);
-            } else {
-                $r['status'] = 'error';
-                $code = '422';
-                $r['result'] = array('code'=>110); // wrong password
-            }
-
-        } else {
-            $r['status'] = 'error';
-            $code = '422';
-            $r['result'] = array('code'=>100); // no user
-        }
-
-
-//        header('Content-Type: application/json');
-//        echo json_encode($r, JSON_PRETTY_PRINT);
-//        return new Response();
-//
-//
-//        if($m){
-//            $rez = $m;
-//        } else {
-//            $code = '422';
-//            $rez = array('code'=>400);
-//            $status = 'error';
-//        }
-
-//        $send['status'] = $status;
-//        $send['result'] = $rez;
-
-        return new Response(json_encode($r, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
 
     }
 
@@ -529,6 +565,58 @@ class ApiController extends Controller
         return new Response(json_encode($r, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
     }
 
+
+    /**
+     * @Route("/api/authorize", name="authorize")
+     */
+    public function authorize()
+    {
+        $code = 200;
+
+        $r = array();
+
+        $data = json_decode(file_get_contents("php://input"),true);
+
+        $user = $this->db->fetchAssoc('SELECT * FROM user WHERE email = ? AND is_activated=1', array($data['email']));
+
+        if($user){
+
+            $password = new Password();
+
+            if ($password->CheckPassword($data['password'], $user['password'])){
+
+                $token_name = hash("sha256",uniqid($user['id']));
+                $server_hash = hash("sha256",uniqid($token_name));
+
+                $this->db->executeQuery("INSERT INTO tokens SET 
+                  user_id = ?,
+                  token_name = ?,
+                  server_hash = ?,
+                  client_hash = ? 
+                  ",array(
+                      $user['id'],
+                      $token_name,
+                      $server_hash,
+                      $data['client_hash']
+                ));
+
+                $r['status'] = 'OK';
+                $r['result'] = array('token'=>$token_name,'server_hash'=>$server_hash);
+            } else {
+                $r['status'] = 'error';
+                $code = '422';
+                $r['result'] = array('code'=>110); // wrong password
+            }
+
+        } else {
+            $r['status'] = 'error';
+            $code = '422';
+            $r['result'] = array('code'=>100); // no user
+        }
+
+
+        return new Response(json_encode($r, JSON_PRETTY_PRINT), $code, ['Content-Type'=>'application/json']);
+    }
 }
 
 // 100 - no user
