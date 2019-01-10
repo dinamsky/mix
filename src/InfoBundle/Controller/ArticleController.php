@@ -43,6 +43,18 @@ class ArticleController extends Controller
     }
     
     /**
+     * @Route("/privacypolicy")
+     */
+    public function privacypolicyAction()
+    {
+        $city = $this->get('session')->get('city');
+        return $this->render('InfoBundle::privacypolicy.html.twig', [
+            'city' => $city,
+            'lang' => $_SERVER['LANG']
+        ]);
+    }
+    
+    /**
      * @Route("/contacts")
      */
     public function contactsAction()
